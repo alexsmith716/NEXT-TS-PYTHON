@@ -1,0 +1,7 @@
+{
+	"watchForFileChanges": false,
+	"screenshotOnRunFailure": false,
+	"video": false,
+	"modifyObstructiveCode": false,
+	"pluginsFile": false
+}
