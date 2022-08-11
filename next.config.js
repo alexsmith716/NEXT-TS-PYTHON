@@ -20,18 +20,18 @@ module.exports = {
 		return config;
 	},
 
-	async rewrites() {
-		return {
-			beforeFiles: [
-				{
-					source: '/todosapi/:path*',
-					destination: 'http://localhost:8000/todosapi/:path*'
-				},
-				{
-					source: '/fibonacci',
-					destination: 'http://localhost:8000/fibonacci'
-				},
-			],
-		};
-	},
+  async rewrites() {
+  	return {
+  		beforeFiles: [
+  			{
+  				source: '/todosapi/:path*',
+  				destination: 'http://localhost:8000/todosapi/:path*'
+  			},
+  			{
+  				source: '/fibonacci',
+  				destination: 'http://localhost:8000/fibonacci'
+  			},
+  		],
+  	};
+  },
 };
