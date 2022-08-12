@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from typing import Union
 
 from .modules.fibonacci import fib_func
 
@@ -47,9 +48,9 @@ async def get_fibonacci() -> dict:
 	return { "data": fib }
 
 @app.get('/nyccounty/{id}', tags=['nyc_county'])
-async def get_nyc_county(id: int):
+async def get_nyc_county(id: int) -> Union[dict, str]:
 	# print(">>>>> index > @app.get > /nyccounty: ", id)
 	if id in nyc_counties:
-		return {"nyc_county": nyc_counties[id]}
+		return {"data": nyc_counties[id]}
 	else:
-		raise HTTPException(status_code=404, detail="Id not found")
+	 raise HTTPException(status_code=404, detail="ID not found")
