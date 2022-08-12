@@ -1,7 +1,7 @@
 export const NavLinks = [
 	{
-		title: 'Straw',
-		url: 'strawberryapi',
+		title: 'PyRun',
+		url: 'pythonapi',
 		linkType: 'navLink',
 	},
 	{

@@ -13,18 +13,6 @@ interface StrawberryAPIProps {
 const StrawberryAPI: NextPage<StrawberryAPIProps> = ({ documentTitle }) => {
 	const [title, setTitle] = useState('');
 	const [queryError, setQueryError] = useState(false);
-	//const [todos, setTodos] = useState([]);
-
-  //const fetchTodos = async () => {
-  //	const response = await fetch("/todosapi/todo");
-  //	const todos = await response.json();
-  //	console.log('>>> StrawberryAPI > fetchTodos(): ', todos);
-  //	setTodos(todos.data);
-  //};
-
-  //useEffect(() => {
-  //	fetchTodos();
-  //}, []);
 
 	useEffect(() => {
 		setTitle(documentTitle+':\u0020Strawberry\u0020API');
