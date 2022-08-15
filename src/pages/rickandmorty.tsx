@@ -24,7 +24,7 @@ const RickAndMorty: NextPage<RickAndMortyPageProps> = ({ documentTitle }) => {
 	const [charactersLoaded, setCharactersLoaded] = useState<number | null>(null);
 	const [allCharactersLoaded, setAllCharactersLoaded] = useState(false);
 	const [queryError, setQueryError] = useState(false);
-	const [openModal, setOpenModal] = useState<boolean>(false);
+	const [openModal, setOpenModal] = useState(false);
 	const [currentModalCharacter, setCurrentModalCharacter] = useState<any|null>(null);
 
 	const {

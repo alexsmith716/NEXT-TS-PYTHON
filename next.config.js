@@ -28,8 +28,8 @@ module.exports = {
 					destination: 'http://localhost:8000/todosapi/:path*'
 				},
 				{
-					source: '/fibonacci',
-					destination: 'http://localhost:8000/fibonacci'
+					source: '/fibonacci/:path*',
+					destination: 'http://localhost:8000/fibonacci/:path*'
 				},
 				{
 					source: '/nyccounty/:path*',

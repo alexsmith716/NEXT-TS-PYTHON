@@ -2,8 +2,9 @@
 from fastapi import FastAPI, Request
 # from fastapi.exceptions import HTTPException
 from fastapi.responses import JSONResponse
-
 from .modules.fibonacci import fib_func
+
+# https://fastapi.tiangolo.com/python-types/#type-hints-in-fastapi
 
 todos = [
 	{
@@ -43,42 +44,29 @@ async def MyCustomExceptionHandler(request: Request, exception: CustomException)
 
 @app.get('/todosapi', tags=['todos_root'])
 async def read_root() -> dict:
-	# print(">>>>> index > @app.get > todosapi <<<<<")
 	return {"message": "The Todo List API."}
 
 @app.get('/todosapi/todos', tags=['todos'])
 async def get_todos() -> dict:
-	# print(">>>>> index > @app.get > /todosapi/todos <<<<<")
-	return { "data": todos }
-
-@app.get('/fibonacci', tags=['fibonacci'])
-async def get_fibonacci() -> dict:
-	fib = fib_func(100)
-	# print(">>>>> index > @app.get > /todosapi/fibonacci: ", fib)
-	return { "data": fib }
-
-@app.get('/nyccounty/{id}', tags=['nyc_county'])
-async def get_nyc_county(id: int) -> dict:
-	# print(">>>>> index > @app.get > /nyccounty: ", id)
-	if id in nyc_counties:
-		return {"data": nyc_counties[id]}
+	if todos:
+		return { "data": todos }
 	else:
 		raise CustomException(name = "error")
 
-# @app.get('/nyccounty/{id}', tags=['nyc_county'])
-# async def get_nyc_county(id: int) -> dict:
-# 	# print(">>>>> index > @app.get > /nyccounty: ", id)
-# 	if id in nyc_counties:
-# 		return {"data": nyc_counties[id]}
-# 	else:
-# 	 raise HTTPException(status_code=404, detailX="Required Path Parameter 'id' not found")
+@app.get('/fibonacci/{len}', tags=['fibonacci'])
+async def get_fibonacci(len: int) -> dict:
+	if len > 1:
+		try:
+			fib = fib_func(len)
+			return { "data": fib }
+		except:
+			raise CustomException(name = "error")
+	else:
+		raise CustomException(name = "error")
 
-#	@app.get('/nyccounty/{id}', tags=['nyc_county'])
-#	async def get_nyc_county(response: Response, id: int) -> dict:
-#		# print(">>>>> index > @app.get > /nyccounty: ", id)
-#		if id in nyc_counties:
-#			response.status_code = status.HTTP_200_OK
-#			return {"data": nyc_counties[id]}
-#		else:
-#			response.status_code = status.HTTP_400_BAD_REQUEST
-#			return {'error': "Required Path Parameter 'id' not found"}
+@app.get('/nyccounty/{id}', tags=['nyc_county'])
+async def get_nyc_county(id: int) -> dict:
+	if id > 0 and id < 6:
+		return {"data": nyc_counties[id]}
+	else:
+		raise CustomException(name = "error")

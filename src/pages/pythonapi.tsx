@@ -1,34 +1,65 @@
 import type { NextPage } from 'next';
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
-import Loading from '../components/Loading';
+//import Loading from '../components/Loading';
 import Button from '../components/Button';
 
 interface PythonAPIProps {
 	documentTitle?: string;
 };
 
+type TodosType = {
+	data: Array<{
+		id: number
+		item: string
+	}>
+};
+
+type FibonacciType = {
+	data: Array<number>
+};
+
+type NycCountyType = {
+	data: string
+};
+
+//type FetchDataErrorTypeException = {
+//  error: string
+//};
+
+//type FetchDataErrorTypePyTypeHint = {
+//  detail: Array<{
+//    loc: Array<string>
+//    msg: string
+//    type: string
+//  }>
+//};
+
 const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
-	const [title, setTitle] = useState('');
-	const [queryError, setQueryError] = useState(false);
-	const [todos, setTodos] = useState([]);
-	const [nycCounty, setNycCounty] = useState([]);
+	const [title, setTitle] = useState("");
+	//const [todos, setTodos] = useState([]);
+	//const [nycCounty, setNycCounty] = useState("");
+	//const [fibonacci, setFibonacci] = useState([]);
 
-	const fetchData = async () => {
-		const todosRes = await fetch("/todosapi/todos");
-		const todos = await todosRes.json();
-		console.log('>>> PythonAPI > todos: ', todos);
-		setTodos(todos.data);
-
-		const countyRes = await fetch("/nyccounty/4");
-		const county = await countyRes.json();
-		console.log('>>> PythonAPI > county: ', county);
-		setNycCounty(county.data);
+	function fetchData<T>(route: string, param: string): Promise<T> {
+		return fetch('/'+route+'/'+param, {
+			method: 'GET',
+			headers: {
+				'Content-type': 'application/json'
+			},
+		})
+		.then(async res => {
+			if (!res.ok) {
+				throw await res.json();
+			}
+			return res.json() as Promise<T>
+		})
+		.catch((error: Error) => {
+			console.error(error);
+			throw error;
+			//return Promise.reject(error);
+		});
 	};
-
-	useEffect(() => {
-		fetchData();
-	}, []);
 
 	useEffect(() => {
 		setTitle(documentTitle+':\u0020Python\u0020API');
@@ -52,9 +83,17 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 					<div className="mb-3">
 						<Button
 							type="button"
-							className="btn-danger btn-md"
-							onClick={() => console.log('>>> client.extract(): ', client.extract())}
-							buttonText="Cache"
+							className="btn-primary btn-md"
+							onClick={() => {
+								fetchData<TodosType>('todosapi', 'todos')
+									.then(data => {
+										console.log(data);
+									})
+									.catch(error => {
+										console.error(error);
+									})
+							}}
+							buttonText="todosapi"
 						/>
 					</div>
 
@@ -63,12 +102,34 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 							type="button"
 							className="btn-primary btn-md"
 							onClick={() => {
-								addAuthor({ variables: { name: 'Elmer Fudd' } });
+								fetchData<FibonacciType>('fibonacci', '200')
+									.then(data => {
+										console.log(data);
+									})
+									.catch(error => {
+										console.error(error);
+									})
 							}}
-							buttonText="AddAuthor"
+							buttonText="fibonacci"
 						/>
 					</div>
 
+					<div className="mb-3">
+						<Button
+							type="button"
+							className="btn-primary btn-md"
+							onClick={() => {
+								fetchData<NycCountyType>('nyccounty', '1')
+									.then(data => {
+										console.log(data);
+									})
+									.catch(error => {
+										console.error(error);
+									})
+							}}
+							buttonText="nyccounty"
+						/>
+					</div>
 				</div>
 			</div>
 		</>
