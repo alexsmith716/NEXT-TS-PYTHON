@@ -1,7 +1,7 @@
 export const NavLinks = [
 	{
-		title: 'PyRun',
-		url: 'pythonapi',
+		title: 'PyApi',
+		url: 'pyapi',
 		linkType: 'navLink',
 	},
 	{
@@ -21,12 +21,12 @@ export const NavLinks = [
 	},
 	{
 		title: 'GraphQLQuery',
-		url: 'rickandmorty',
+		url: 'graphqlquery',
 		linkType: 'navLink',
 	},
 	{
 		title: 'AWSS3',
-		url: 'bridgeratings',
+		url: 'awss3',
 		linkType: 'navLink',
 	},
 ];

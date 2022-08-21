@@ -46,8 +46,8 @@ export function loadAboutCSVB(): AnyAction {
 	const limit: number = Math.floor(Math.random() * 6) + 1;
 	return {
 		type: [ABOUTCSVB_LOAD, ABOUTCSVB_SUCCESS, ABOUTCSVB_FAIL],
-		// line 50 below is used to test
-		// httpClientPromise: ({httpClient}: {httpClient: AxiosInstance}) => httpClient.get(`https://jsonplaceholder.typicode.com/posts`, {params: {_limit:1}})
+		// line 50 below is used to test /cypress/e2e/nodeEvents/loadAboutSsr_getServerSideProps_spec.ts
+		//httpClientPromise: ({httpClient}: {httpClient: AxiosInstance}) => httpClient.get(`https://jsonplaceholder.typicode.com/posts`, {params: {_limit:1}})
 		httpClientPromise: ({httpClient}: {httpClient: AxiosInstance}) => httpClient.get(`https://jsonplaceholder.typicode.com/posts`, {params: {_limit:`${limit}`}})
 			.then((response) => {
 				return {
