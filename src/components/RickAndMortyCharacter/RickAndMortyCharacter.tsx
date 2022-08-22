@@ -1,12 +1,14 @@
 import React from 'react';
+import { Character } from '../../apollo/generated/react-apollo';
 
 import { Thumbnail, ThumbnailImage } from '../../styles';
 
-function RickAndMortyCharacter({ character, index }) {
+function RickAndMortyCharacter({character, index}: {character: Character; index: number}) {
 	return (
 		<div className="cursor-pointer">
 			<Thumbnail>
 				{character.image ? (
+					//@ts-ignore
 					<ThumbnailImage src={character.image} alt={character.name} />
 				) : (
 					<div className="text-center">
