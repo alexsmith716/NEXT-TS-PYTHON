@@ -21,5 +21,5 @@ def test_invalid_id_path_param():
 	response = client.get('/nyccounty/1000')
 	assert response.status_code == 400
 	assert response.json() == {
-		"error": "error"
+		"error": "Error attempting to fetch resource."
 	}
