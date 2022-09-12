@@ -8,20 +8,24 @@ interface PythonAPIProps {
 	documentTitle?: string;
 };
 
-type TodosType = {
-	data: Array<{
-		id: number
-		item: string
-	}>
-};
+//type TodosType = {
+//  data: Array<{
+//    id: number
+//    item: string
+//  }>
+//};
 
-type FibonacciType = {
-	data: Array<number>
-};
+//type FibonacciType = {
+//  data: Array<number>
+//};
 
-type NycCountyType = {
-	data: string
-};
+//type NycCountyType = {
+//  data: string
+//};
+
+//type AwsSdkPython = {
+//  data: any
+//};
 
 //type FetchDataErrorTypeException = {
 //  error: string
@@ -41,23 +45,47 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 	//const [nycCounty, setNycCounty] = useState("");
 	//const [fibonacci, setFibonacci] = useState([]);
 
-	function fetchData<T>(route: string, param: string): Promise<T> {
-		return fetch('/'+route+'/'+param, {
+	//function fetchData<T>(route: string, param?: string): Promise<T> {
+	//  return fetch('/'+route+`${param?'/'+param:''}`, {
+	//    method: 'GET',
+	//  })
+	//  .then(res => {
+	//    if (!res.ok) {
+	//      throw res;
+	//    }
+	//    if(res.headers.get('content-type')?.includes('application/json')){
+	//      return res.json() as Promise<T>
+	//    } else if(res.headers.get('content-type')?.includes('text/csv')){
+	//      return res.text() as Promise<T>
+	//    } else {
+	//      return res as Promise<T>
+	//    }
+	//  })
+	//  .catch((error: Error) => {
+	//    //throw error;
+	//    return Promise.reject(error);
+	//  });
+	//};
+
+	function fetchData(route: string, param?: string): Promise<any> {
+		return fetch('/'+route+`${param?'/'+param:''}`, {
 			method: 'GET',
-			headers: {
-				'Content-type': 'application/json'
-			},
 		})
-		.then(async res => {
+		.then(res => {
 			if (!res.ok) {
-				throw await res.json();
+				throw res;
 			}
-			return res.json() as Promise<T>
+			if(res.headers.get('content-type')?.includes('application/json')){
+				return res.json()
+			} else if(res.headers.get('content-type')?.includes('text/csv')){
+				return res.text()
+			} else {
+				return res
+			}
 		})
 		.catch((error: Error) => {
-			console.error(error);
-			throw error;
-			//return Promise.reject(error);
+			//throw error;
+			return Promise.reject(error);
 		});
 	};
 
@@ -85,15 +113,15 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 							type="button"
 							className="btn-primary btn-md"
 							onClick={() => {
-								fetchData<TodosType>('todosapi', 'todos')
+								fetchData('todosapi/todos')
 									.then(data => {
-										console.log(data);
+										console.log(data)
 									})
 									.catch(error => {
 										console.error(error);
 									})
 							}}
-							buttonText="todosapi"
+							buttonText="Get The Todos"
 						/>
 					</div>
 
@@ -102,15 +130,15 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 							type="button"
 							className="btn-primary btn-md"
 							onClick={() => {
-								fetchData<FibonacciType>('fibonacci', '200')
+								fetchData('fibonacci', '200')
 									.then(data => {
-										console.log(data);
+										console.log(data)
 									})
 									.catch(error => {
 										console.error(error);
 									})
 							}}
-							buttonText="fibonacci"
+							buttonText="Get Fibonacci Length 200"
 						/>
 					</div>
 
@@ -119,15 +147,49 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 							type="button"
 							className="btn-primary btn-md"
 							onClick={() => {
-								fetchData<NycCountyType>('nyccounty', '1')
+								fetchData('nyccounty', '1')
 									.then(data => {
-										console.log(data);
+										console.log(data)
 									})
 									.catch(error => {
 										console.error(error);
 									})
 							}}
-							buttonText="nyccounty"
+							buttonText="Get NYC County"
+						/>
+					</div>
+
+					<div className="mb-3">
+						<Button
+							type="button"
+							className="btn-primary btn-md"
+							onClick={() => {
+								fetchData('botosssgetobject/brooklynbridgesreplacementcost')
+									.then(data => {
+										console.log(data)
+									})
+									.catch(error => {
+										console.error(error);
+									})
+							}}
+							buttonText="Get Brooklyn Bridges Replacement Cost"
+						/>
+					</div>
+
+					<div className="mb-3">
+						<Button
+							type="button"
+							className="btn-primary btn-md"
+							onClick={() => {
+								fetchData('botosssgetobject/streambridgeratings')
+									.then(data => {
+										console.log(data)
+									})
+									.catch(error => {
+										console.error(error);
+									})
+							}}
+							buttonText="Stream Bridge Ratings CSV"
 						/>
 					</div>
 				</div>

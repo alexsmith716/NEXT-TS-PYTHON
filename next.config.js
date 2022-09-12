@@ -35,6 +35,10 @@ module.exports = {
 					source: '/nyccounty/:path*',
 					destination: 'http://localhost:8000/nyccounty/:path*'
 				},
+				{
+					source: '/botosssgetobject/:path*',
+					destination: 'http://localhost:8000/botosssgetobject/:path*'
+				},
 			],
 		};
 	},

@@ -1,29 +1,41 @@
-# from fastapi import FastAPI, Response, status
+import os
 from fastapi import FastAPI, Request
-# from fastapi.exceptions import HTTPException
-from fastapi.responses import JSONResponse
-from .modules.fibonacci import fib_func
+from fastapi.responses import JSONResponse, StreamingResponse
 
-# https://fastapi.tiangolo.com/python-types/#type-hints-in-fastapi
+from .modules.fibonacci import fib_func
+from .modules.verifyCredentials import verify_credentials
+from .modules.brooklynBridgesReplacementCostPipeline import brooklyn_bridges_replacement_cost_pipeline
+from .modules.fetchS3 import fetch_s3
 
 todos = [
 	{
-		"id": "1",
+		"id": 1,
 		"item": "Todo number one."
 	},
 	{
-		"id": "2",
+		"id": 2,
 		"item": "Todo number two."
 	},
 	{
-		"id": "3",
+		"id": 3,
 		"item": "Todo number three."
 	},
 	{
-		"id": "4",
+		"id": 4,
 		"item": "Todo number four."
 	},
 ]
+
+awsAccess = {
+	"region": os.environ.get('NEXT_PUBLIC_S3_REGION'),
+	"ak": os.environ.get('ACCESS_KEY'),
+	"sk": os.environ.get('SECRET_KEY'),
+}
+
+awssdkpython = {
+	"bucket": os.environ.get('NEXT_PUBLIC_S3_BUCKET'),
+	"key": os.environ.get('NEXT_PUBLIC_S3_BUCKET_KEY'),
+}
 
 nyc_counties = {}
 nyc_counties[1] = "Bronx"
@@ -39,8 +51,8 @@ class CustomException(Exception):
 app = FastAPI()
 
 @app.exception_handler(CustomException)
-async def MyCustomExceptionHandler(request: Request, exception: CustomException):
-	return JSONResponse (status_code = 400, content = {"error": "error"})
+async def CustomExceptionHandler(request: Request, exception: CustomException):
+	return JSONResponse(status_code=400, content={"error": "Error attempting to fetch resource."})
 
 @app.get('/todosapi', tags=['todos_root'])
 async def read_root() -> dict:
@@ -70,3 +82,56 @@ async def get_nyc_county(id: int) -> dict:
 		return {"data": nyc_counties[id]}
 	else:
 		raise CustomException(name = "error")
+
+@app.get('/botosssgetobject/brooklynbridgesreplacementcost', tags=['brooklyn_bridges_replacement_cost'])
+async def get_brooklyn_bridges_replacement_cost():
+	try:
+		if verify_credentials(awsAccess, awssdkpython):
+			#for i in brooklyn_bridges_replacement_cost_pipeline(awsAccess, awssdkpython):
+			# return i
+			return brooklyn_bridges_replacement_cost_pipeline(awsAccess, awssdkpython).__next__()
+	except Exception as error:
+		print(error)
+		raise CustomException(name = "error")
+
+@app.get('/botosssgetobject/streambridgeratings', tags=['stream_bridge_ratings'])
+async def stream_bridge_ratings():
+	try:
+		if verify_credentials(awsAccess, awssdkpython):
+			return StreamingResponse(
+				fetch_s3(awsAccess, awssdkpython, False),
+				media_type="text/csv",
+				headers={
+					"Content-Type": "text/csv",
+				}
+			)
+	except Exception as error:
+		print(error)
+		raise CustomException(name = "error")
+
+	# @app.get('/botosssgetobject/brooklynbridgesreplacementcost', tags=['brooklyn_bridges_replacement_cost'])
+	# async def get_brooklyn_bridges_replacement_cost():
+	# 	try:
+	# 		if await verify_credentials(awsAccess, awssdkpython):
+	# 			# async for i in brooklyn_bridges_replacement_cost_pipeline(awsAccess, awssdkpython):
+	# 			#   return i
+	# 			return await brooklyn_bridges_replacement_cost_pipeline(awsAccess, awssdkpython).__anext__()
+	# 
+	# 	except Exception as error:
+	# 		print(error)
+	# 		raise CustomException(name = "error")
+
+	# @app.get('/botosssgetobject/streambridgeratings', tags=['stream_bridge_ratings'])
+	# async def stream_bridge_ratings():
+	# 	try:
+	# 		if await verify_credentials(awsAccess, awssdkpython):
+	# 			return StreamingResponse(
+	# 				fetch_s3(awsAccess, awssdkpython, False),
+	# 				media_type="text/csv",
+	# 				headers={
+	# 					"Content-Type": "text/csv",
+	# 				}
+	# 			)
+	# 	except Exception as error:
+	# 		print(error)
+	# 		raise CustomException(name = "error")
