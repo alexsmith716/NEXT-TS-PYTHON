@@ -4,12 +4,14 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-fastapi = "~=0.79.0"
-requests = "~=2.28.1"
-uvicorn = "~=0.18.2"
+boto3 = "*"
+fastapi = "*"
+uvicorn = "*"
 
 [dev-packages]
-pytest = "~=7.1.2"
+moto = "*"
+pytest = "*"
+requests = "*"
 
 [requires]
 python_version = "3.9"
