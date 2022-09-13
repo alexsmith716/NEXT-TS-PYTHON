@@ -87,8 +87,8 @@ async def get_nyc_county(id: int) -> dict:
 async def get_brooklyn_bridges_replacement_cost():
 	try:
 		if verify_credentials(awsAccess, awssdkpython):
-			#for i in brooklyn_bridges_replacement_cost_pipeline(awsAccess, awssdkpython):
-			# return i
+			# for i in brooklyn_bridges_replacement_cost_pipeline(awsAccess, awssdkpython):
+			#  return i
 			return brooklyn_bridges_replacement_cost_pipeline(awsAccess, awssdkpython).__next__()
 	except Exception as error:
 		print(error)
