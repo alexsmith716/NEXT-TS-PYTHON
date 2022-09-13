@@ -10,7 +10,7 @@ def verify_credentials(awsAccess: dict, awssdkpython: dict) -> bool:
 			aws_secret_access_key=awsAccess['sk'],
 		)
 
-		s3_ob = s3.get_object(
+		s3.get_object(
 			Bucket=awssdkpython['bucket'],
 			Key=awssdkpython['key'],
 		)
