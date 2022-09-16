@@ -1,6 +1,7 @@
 import { AppContext, AppInitialProps } from 'next/app';
 import Error from 'next/error';
 import { ApolloProvider } from '@apollo/client';
+import { Provider } from 'react-redux';
 import { useApollo } from '../apollo/apolloClient';
 import { wrapper } from '../redux/store';
 import { ThemeContext } from '../styled/ThemeContext';
@@ -11,23 +12,25 @@ import { getUserAgent, isBot } from '../utils/userAgent';
 import { LatLonType } from '../types';
 import '../styled/fonts.css';
 
-const App = ({ Component, pageProps }: AppContext & AppInitialProps) => {
-	const clientApollo = useApollo(pageProps.initialApolloState);
+const App = ({ Component, ...initialProps }: AppContext & AppInitialProps) => {
+	const {store, props} = wrapper.useWrappedStore(initialProps);
+	const clientApollo = useApollo(props.pageProps.initialApolloState);
 
 	return (
 		<>
 			<ApolloProvider client={clientApollo}>
-				<ThemeContext>
-					<Layout>
-						<Component {...pageProps} />
-					</Layout>
-				</ThemeContext>
+				<Provider store={store}>
+					<ThemeContext>
+						<Layout>
+							<Component {...props.pageProps} />
+						</Layout>
+					</ThemeContext>
+				</Provider>
 			</ApolloProvider>
 		</>
 	);
 };
 
-// remove getInitialProps
 App.getInitialProps = wrapper.getInitialAppProps((store) => async ({ Component, ctx }) => {
 	const isServer = typeof window === 'undefined' && !ctx.req?.url?.startsWith('/_next/data');
 
@@ -54,12 +57,7 @@ App.getInitialProps = wrapper.getInitialAppProps((store) => async ({ Component, 
 	}
 
 	const pageProps = {
-		...(Component.getInitialProps
-			? await Component.getInitialProps({
-					...ctx,
-					store,
-				})
-			: {}),
+		...(Component.getInitialProps ? await Component.getInitialProps({...ctx,store,}) : {}),
 		documentTitle: 'Alex Smith\'s App',
 	};
 
@@ -68,4 +66,4 @@ App.getInitialProps = wrapper.getInitialAppProps((store) => async ({ Component, 
 	};
 });
 
-export default wrapper.withRedux(App);
+export default App;
