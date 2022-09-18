@@ -56,12 +56,12 @@ async def CustomExceptionHandler(request: Request, exception: CustomException):
 
 @app.get('/todosapi', tags=['todos_root'])
 async def read_root() -> dict:
-	return {"message": "The Todo List API."}
+	return { 'message': "The Todo List API." }
 
 @app.get('/todosapi/todos', tags=['todos'])
 async def get_todos() -> dict:
 	if todos:
-		return { "data": todos }
+		return { 'data': todos }
 	else:
 		raise CustomException(name = "error")
 
@@ -69,8 +69,7 @@ async def get_todos() -> dict:
 async def get_fibonacci(len: int) -> dict:
 	if len > 1:
 		try:
-			fib = fib_func(len)
-			return { "data": fib }
+			return { 'data': fib_func(len) }
 		except:
 			raise CustomException(name = "error")
 	else:
@@ -79,7 +78,7 @@ async def get_fibonacci(len: int) -> dict:
 @app.get('/nyccounty/{id}', tags=['nyc_county'])
 async def get_nyc_county(id: int) -> dict:
 	if id > 0 and id < 6:
-		return {"data": nyc_counties[id]}
+		return { 'data': nyc_counties[id] }
 	else:
 		raise CustomException(name = "error")
 
@@ -88,7 +87,7 @@ async def get_brooklyn_bridges_replacement_cost():
 	try:
 		if verify_credentials(awsAccess, awssdkpython):
 			# for i in brooklyn_bridges_replacement_cost_pipeline(awsAccess, awssdkpython):
-			#  return i
+			#   return i
 			return brooklyn_bridges_replacement_cost_pipeline(awsAccess, awssdkpython).__next__()
 	except Exception as error:
 		print(error)
@@ -109,29 +108,29 @@ async def stream_bridge_ratings():
 		print(error)
 		raise CustomException(name = "error")
 
-	# @app.get('/botosssgetobject/brooklynbridgesreplacementcost', tags=['brooklyn_bridges_replacement_cost'])
-	# async def get_brooklyn_bridges_replacement_cost():
-	# 	try:
-	# 		if await verify_credentials(awsAccess, awssdkpython):
-	# 			# async for i in brooklyn_bridges_replacement_cost_pipeline(awsAccess, awssdkpython):
-	# 			#   return i
-	# 			return await brooklyn_bridges_replacement_cost_pipeline(awsAccess, awssdkpython).__anext__()
-	# 
-	# 	except Exception as error:
-	# 		print(error)
-	# 		raise CustomException(name = "error")
+# @app.get('/botosssgetobject/brooklynbridgesreplacementcost', tags=['brooklyn_bridges_replacement_cost'])
+# async def get_brooklyn_bridges_replacement_cost():
+#   try:
+#     if await verify_credentials(awsAccess, awssdkpython):
+#       # async for i in brooklyn_bridges_replacement_cost_pipeline(awsAccess, awssdkpython):
+#       #   return i
+#       return await brooklyn_bridges_replacement_cost_pipeline(awsAccess, awssdkpython).__anext__()
+# 
+#   except Exception as error:
+#     print(error)
+#     raise CustomException(name = "error")
 
-	# @app.get('/botosssgetobject/streambridgeratings', tags=['stream_bridge_ratings'])
-	# async def stream_bridge_ratings():
-	# 	try:
-	# 		if await verify_credentials(awsAccess, awssdkpython):
-	# 			return StreamingResponse(
-	# 				fetch_s3(awsAccess, awssdkpython, False),
-	# 				media_type="text/csv",
-	# 				headers={
-	# 					"Content-Type": "text/csv",
-	# 				}
-	# 			)
-	# 	except Exception as error:
-	# 		print(error)
-	# 		raise CustomException(name = "error")
+# @app.get('/botosssgetobject/streambridgeratings', tags=['stream_bridge_ratings'])
+# async def stream_bridge_ratings():
+#   try:
+#     if await verify_credentials(awsAccess, awssdkpython):
+#       return StreamingResponse(
+#         fetch_s3(awsAccess, awssdkpython, False),
+#         media_type="text/csv",
+#         headers={
+#           "Content-Type": "text/csv",
+#         }
+#       )
+#   except Exception as error:
+#     print(error)
+#     raise CustomException(name = "error")
