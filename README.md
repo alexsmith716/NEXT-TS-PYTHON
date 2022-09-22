@@ -35,10 +35,10 @@ The goal of this project is to work on Next.JS, TypeScript, core Python (data st
 * Flake8
 
 ## TODO:
+* Deploy to Vercel
+* Add basic UI to component `PythonAPI` responses
 * Add more unit and E2E testing
 * Build bigger & better Python pipelines
 * Build-out Strawberry GraphQL example
 * Implement Apollo Federation & Strawberry
 * Start the new React Native project
-
-
