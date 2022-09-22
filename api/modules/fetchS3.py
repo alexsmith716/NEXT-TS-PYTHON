@@ -1,18 +1,19 @@
+import os
 import boto3
 from typing import Generator
 
-def fetch_s3(awsAccess: dict, awssdkpython: dict, iterLines: bool) -> Generator[bytes, None, None]:
+def fetch_s3(iterLines: bool) -> Generator[bytes, None, None]:
 	session = boto3.Session()
 	s3 = session.client(
 		's3',
-		region_name=awsAccess['region'],
-		aws_access_key_id=awsAccess['ak'],
-		aws_secret_access_key=awsAccess['sk'],
+		region_name=os.environ.get('VERCEL_PUBLIC_S3_REGION'),
+		aws_access_key_id=os.environ.get('VERCEL_PUBLIC_ACCESS_KEY'),
+		aws_secret_access_key=os.environ.get('VERCEL_PUBLIC_SECRET_KEY'),
 	)
 
 	s3_ob = s3.get_object(
-		Bucket=awssdkpython['bucket'],
-		Key=awssdkpython['key'],
+		Bucket=os.environ.get('VERCEL_PUBLIC_S3_BUCKET'),
+		Key=os.environ.get('VERCEL_PUBLIC_S3_BUCKET_KEY'),
 	)
 
 	if iterLines:

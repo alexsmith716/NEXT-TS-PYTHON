@@ -21,23 +21,24 @@ module.exports = {
 	},
 
 	async rewrites() {
+		const env = process.env.NODE_ENV;
 		return {
 			beforeFiles: [
 				{
 					source: '/todosapi/:path*',
-					destination: 'http://localhost:8000/todosapi/:path*'
+					destination: `${ env == 'development' ? 'http://localhost:8000' : '' }` + '/todosapi/:path*'
 				},
 				{
 					source: '/fibonacci/:path*',
-					destination: 'http://localhost:8000/fibonacci/:path*'
+					destination: `${ env == 'development' ? 'http://localhost:8000' : '' }` + '/fibonacci/:path*'
 				},
 				{
 					source: '/nyccounty/:path*',
-					destination: 'http://localhost:8000/nyccounty/:path*'
+					destination: `${ env == 'development' ? 'http://localhost:8000' : '' }` + '/nyccounty/:path*'
 				},
 				{
 					source: '/botosssgetobject/:path*',
-					destination: 'http://localhost:8000/botosssgetobject/:path*'
+					destination: `${ env == 'development' ? 'http://localhost:8000' : '' }` + '/botosssgetobject/:path*'
 				},
 			],
 		};
