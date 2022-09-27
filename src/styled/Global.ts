@@ -195,6 +195,12 @@ export const GlobalStyle = createGlobalStyle`
 		flex-direction: row;
 	}
 
+	.container-padding-border-1 {
+		padding: 10px 10px;
+		border: 1px solid #0d6efd;
+		background: #ffe4b5;
+	}
+
 	.container-padding-border-radius-1 {
 		padding: 10px 10px;
 		border: 1px solid #090;
@@ -210,6 +216,15 @@ export const GlobalStyle = createGlobalStyle`
 	.container-padding-radius-10 {
 		padding: 10px 10px;
 		border-radius: 10px;
+	}
+
+	.container-overflow-height-small {
+		overflow: auto;
+		height: 110px;
+	}
+
+	.width-fit-content {
+		width: fit-content;
 	}
 
 	.align-items-start {
@@ -450,6 +465,10 @@ export const GlobalStyle = createGlobalStyle`
 		}
 	}
 
+	.mt-1 {
+		margin-top: 0.10rem;
+	}
+
 	.mt-2 {
 		margin-top: 0.75rem;
 	}
@@ -466,6 +485,10 @@ export const GlobalStyle = createGlobalStyle`
 		margin-top: 3rem;
 	}
 
+	.mb-1 {
+		margin-bottom: .25rem;
+	}
+
 	.mb-2 {
 		margin-bottom: .5rem;
 	}
@@ -480,6 +503,14 @@ export const GlobalStyle = createGlobalStyle`
 
 	.mb-5 {
 		margin-bottom: 3rem;
+	}
+
+	.ml-2 {
+		margin-left: .5rem;
+	}
+
+	.mr-2 {
+		margin-right: .5rem;
 	}
 
 	.m-2 {
@@ -780,114 +811,5 @@ export const GlobalStyle = createGlobalStyle`
 
 	.row-color-even {
 		background-color: ${colors.grayThree};
-	}
-
-	@media screen and (max-width: 992px) {
-		.collection-container {
-			display: grid;
-			grid-template-columns: 1fr 1fr;
-			grid-gap: 20px;
-		}
-
-		.collection-container > li:first-child {
-			display: none;
-		}
-
-		.attribute::before {
-			border-right: 1px solid #808080;
-			content: attr(data-name);
-		}
-
-		.attribute {
-			border-left: 1px solid #808080;
-			border-right: 1px solid #808080;
-			border-bottom: 1px solid #808080;
-			padding-left: 2px;
-			display: grid;
-			gap: 2px;
-			grid-template-columns: minmax(9em, 30%) 1fr;
-		}
-
-		.item > div:first-of-type {
-			border-top: 1px solid #808080;
-		}
-	}
-
-	@media screen and (max-width: 575px) {
-		.collection-container {
-			display: grid;
-			grid-template-columns: 1fr;
-		}
-	}
-
-	@media screen and (min-width: 993px) {
-		.item-container {
-			display: grid;
-			grid-template-columns: 2em 2em 10fr 2fr 2fr 2fr 2fr 5em 5em;
-		}
-
-		.attribute-container {
-			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(var(--column-width-min), 1fr));
-		}
-
-		.part-information {
-			--column-width-min: 10em;
-		}
-
-		.part-id {
-			--column-width-min: 10em;
-		}
-
-		.vendor-information {
-			--column-width-min: 8em;
-		}
-
-		.quantity {
-			--column-width-min: 5em;
-		}
-
-		.cost {
-			--column-width-min: 5em;
-		}
-
-		.duty {
-			--column-width-min: 5em;
-		}
-
-		.freight {
-			--column-width-min: 5em;
-		}
-
-		.collection {
-			border-top: 1px solid #808080;
-			border-left: 1px solid #808080;
-		}
-
-		.attribute {
-			border-right: 1px solid #808080;
-			border-bottom: 1px solid #808080;
-			padding-left: 2px;
-			overflow: hidden;
-			white-space: nowrap;
-			text-overflow: ellipsis;
-		}
-
-		.item-container:hover {
-			background-color: ${colors.lightsteelblue};
-		}
-
-		.collection-container > .item-container:first-child {
-			background-color: ${colors.khaki};
-		}
-
-		.collection-container > .item-container:first-child .attribute {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			text-overflow: initial;
-			overflow: auto;
-			white-space: normal;
-		}
 	}
 `;

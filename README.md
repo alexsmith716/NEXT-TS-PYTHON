@@ -35,7 +35,7 @@ The goal of this project is to work on Next.JS, TypeScript, core Python (data st
 * Flake8
 
 ## TODO:
-* Add basic UI to component `PythonAPI` responses
+* Add `pyapi.tsx` api responses to state container
 * Add more unit and E2E testing
 * Build bigger & better Python pipelines
 * Build-out Strawberry GraphQL example
