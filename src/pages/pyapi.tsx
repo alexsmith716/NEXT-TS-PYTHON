@@ -1,71 +1,65 @@
 import type { NextPage } from 'next';
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
-//import Loading from '../components/Loading';
 import Button from '../components/Button';
+//import { useSelector, useDispatch } from 'react-redux';
+//import { AppState } from '../redux/store';
+//import { loadNYCBridgeRatings } from '../redux/reducers/nycBridgeRatingsSlice';
+import Loading from '../components/Loading';
 
 interface PythonAPIProps {
 	documentTitle?: string;
 };
 
-//type TodosType = {
-//  data: Array<{
-//    id: number
-//    item: string
-//  }>
-//};
+type TodosType = {
+	data?: {
+		id: number
+		item: string
+	}[];
+	error?: string;
+};
 
-//type FibonacciType = {
-//  data: Array<number>
-//};
+type FibonacciType = {
+	data?: number[];
+	error?: string;
+};
 
-//type NycCountyType = {
-//  data: string
-//};
+type NycCountyType = {
+	data?: string;
+	error?: string;
+};
 
-//type AwsSdkPython = {
-//  data: any
-//};
+type BbReplacementCostType = {
+	data?: string;
+	error?: string;
+};
 
-//type FetchDataErrorTypeException = {
-//  error: string
-//};
+type BridgeRatingsFullType = {
+	data?: string;
+	error?: string;
+};
 
-//type FetchDataErrorTypePyTypeHint = {
-//  detail: Array<{
-//    loc: Array<string>
-//    msg: string
-//    type: string
-//  }>
-//};
+type BridgeRatingsType = {
+	data?: string;
+	error?: string;
+};
 
 const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 	const [title, setTitle] = useState("");
-	//const [todos, setTodos] = useState([]);
-	//const [nycCounty, setNycCounty] = useState("");
-	//const [fibonacci, setFibonacci] = useState([]);
 
-	//function fetchData<T>(route: string, param?: string): Promise<T> {
-	//  return fetch('/'+route+`${param?'/'+param:''}`, {
-	//    method: 'GET',
-	//  })
-	//  .then(res => {
-	//    if (!res.ok) {
-	//      throw res;
-	//    }
-	//    if(res.headers.get('content-type')?.includes('application/json')){
-	//      return res.json() as Promise<T>
-	//    } else if(res.headers.get('content-type')?.includes('text/csv')){
-	//      return res.text() as Promise<T>
-	//    } else {
-	//      return res as Promise<T>
-	//    }
-	//  })
-	//  .catch((error: Error) => {
-	//    //throw error;
-	//    return Promise.reject(error);
-	//  });
-	//};
+	const [todosLoading, setTodosLoading] = useState(false);
+	const [fibonacciLoading, setFibonacciLoading] = useState(false);
+	const [nycCountyLoading, setNycCountyLoading] = useState(false);
+	const [bBReplacementCostLoading, setBBReplacementCostLoading] = useState(false);
+	const [bridgeRatingsFullLoading, setBridgeRatingsFullLoading] = useState(false);
+	const [bridgeRatingsLoading, setBridgeRatingsLoading] = useState(false);
+
+	const [todos, setTodos] = useState<TodosType>();
+	const [fibonacci, setFibonacci] = useState<FibonacciType>();
+	const [nycCounty, setNycCounty] = useState<NycCountyType>();
+	const [bBReplacementCost, setBBReplacementCost] = useState<BbReplacementCostType>();
+	const [bridgeRatingsFull, setBridgeRatingsFull] = useState<BridgeRatingsFullType>();
+	const [bridgeRatings, setBridgeRatings] = useState<BridgeRatingsType>();
 
 	function fetchData(route: string, param?: string): Promise<any> {
 		return fetch('/'+route+`${param?'/'+param:''}`, {
@@ -75,9 +69,9 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 			if (!res.ok) {
 				throw res;
 			}
-			if(res.headers.get('content-type')?.includes('application/json')){
+			if(res.headers.get('content-type')?.includes('application/json')) {
 				return res.json()
-			} else if(res.headers.get('content-type')?.includes('text/csv')){
+			} else if(res.headers.get('content-type')?.includes('text/csv')) {
 				return res.text()
 			} else {
 				return res
@@ -89,9 +83,39 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 		});
 	};
 
+	// revisit TS typing here later
+	function addCurrencyCommas(amount: any) {
+		if(amount.length > 0 || amount > 0) {
+			return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		} else {
+			return '0';
+		}
+	};
+
 	useEffect(() => {
 		setTitle(documentTitle+':\u0020Python\u0020API');
 	}, [documentTitle]);
+
+	useEffect(() => {
+		if(todos) {
+			setTodosLoading(false)
+		}
+		if(fibonacci) {
+			setFibonacciLoading(false)
+		}
+		if(nycCounty) {
+			setNycCountyLoading(false)
+		}
+		if(bBReplacementCost) {
+			setBBReplacementCostLoading(false)
+		}
+		if(bridgeRatingsFull) {
+			setBridgeRatingsFullLoading(false)
+		}
+		if(bridgeRatings) {
+			setBridgeRatingsLoading(false)
+		}
+	}, [todos, fibonacci, nycCounty, bBReplacementCost, bridgeRatingsFull, bridgeRatings]);
 
 	return (
 		<>
@@ -113,16 +137,44 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 							type="button"
 							className="btn-primary btn-md"
 							onClick={() => {
+								setTodosLoading(true)
 								fetchData('todosapi/todos')
 									.then(data => {
-										console.log(data)
+										setTodos(data);
 									})
 									.catch(error => {
+										setTodos({ error: 'Error when attempting to fetch resource.' })
 										console.error(error);
 									})
 							}}
 							buttonText="Get The Todos"
 						/>
+
+						{todosLoading && (
+							<div className="mt-1 ml-2">
+								<Loading text="Loading" />
+							</div>
+						)}
+
+						{!todosLoading && (
+							<>
+								{todos && todos.error && (
+									<div className="mt-1 ml-2">
+										<div className="bg-warn-red container-padding-radius-10 width-fit-content text-color-white">
+											Error when attempting to fetch resource.
+										</div>
+									</div>
+								)}
+
+								{todos && todos.data && (
+									<div className="mt-1 ml-2 container-padding-border-1 width-fit-content">
+										<pre>
+											{JSON.stringify(todos.data)}
+										</pre>
+									</div>
+								)}
+							</>
+						)}
 					</div>
 
 					<div className="mb-3">
@@ -130,16 +182,44 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 							type="button"
 							className="btn-primary btn-md"
 							onClick={() => {
+								setFibonacciLoading(true)
 								fetchData('fibonacci', '200')
 									.then(data => {
-										console.log(data)
+										console.log('FFFFFFF: ', data)
+										setFibonacci(data);
 									})
 									.catch(error => {
+										setFibonacci({ error: 'Error when attempting to fetch resource.' })
 										console.error(error);
 									})
 							}}
 							buttonText="Get Fibonacci Length 200"
 						/>
+						{fibonacciLoading && (
+							<div className="mt-1 ml-2">
+								<Loading text="Loading" />
+							</div>
+						)}
+
+						{!fibonacciLoading && (
+							<>
+								{fibonacci && fibonacci.error && (
+									<div className="mt-1 ml-2">
+										<div className="bg-warn-red container-padding-radius-10 width-fit-content text-color-white">
+											Error when attempting to fetch resource.
+										</div>
+									</div>
+								)}
+
+								{fibonacci && fibonacci.data && (
+									<div className="mt-1 ml-2 container-padding-border-1 width-fit-content">
+										<pre>
+											{JSON.stringify(fibonacci.data)}
+										</pre>
+									</div>
+								)}
+							</>
+						)}
 					</div>
 
 					<div className="mb-3">
@@ -147,16 +227,43 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 							type="button"
 							className="btn-primary btn-md"
 							onClick={() => {
+								setNycCountyLoading(true)
 								fetchData('nyccounty', '1')
 									.then(data => {
-										console.log(data)
+										setNycCounty(data);
 									})
 									.catch(error => {
+										setNycCounty({ error: 'Error when attempting to fetch resource.' })
 										console.error(error);
 									})
 							}}
 							buttonText="Get NYC County"
 						/>
+						{nycCountyLoading && (
+							<div className="mt-1 ml-2">
+								<Loading text="Loading" />
+							</div>
+						)}
+
+						{!nycCountyLoading && (
+							<>
+								{nycCounty && nycCounty.error && (
+									<div className="mt-1 ml-2">
+										<div className="bg-warn-red container-padding-radius-10 width-fit-content text-color-white">
+											Error when attempting to fetch resource.
+										</div>
+									</div>
+								)}
+
+								{nycCounty && nycCounty.data && (
+									<div className="mt-1 ml-2 container-padding-border-1 width-fit-content">
+										<pre>
+											{nycCounty.data}
+										</pre>
+									</div>
+								)}
+							</>
+						)}
 					</div>
 
 					<div className="mb-3">
@@ -164,16 +271,43 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 							type="button"
 							className="btn-primary btn-md"
 							onClick={() => {
+								setBBReplacementCostLoading(true)
 								fetchData('botosssgetobject/brooklynbridgesreplacementcost')
 									.then(data => {
-										console.log(data)
+										setBBReplacementCost(data);
 									})
 									.catch(error => {
+										setBBReplacementCost({ error: 'Error when attempting to fetch resource.' })
 										console.error(error);
 									})
 							}}
 							buttonText="Get Brooklyn Bridges Replacement Cost"
 						/>
+						{bBReplacementCostLoading && (
+							<div className="mt-1 ml-2">
+								<Loading text="Loading" />
+							</div>
+						)}
+
+						{!bBReplacementCostLoading && (
+							<>
+								{bBReplacementCost && bBReplacementCost.error && (
+									<div className="mt-1 ml-2">
+										<div className="bg-warn-red container-padding-radius-10 width-fit-content text-color-white">
+											Error when attempting to fetch resource.
+										</div>
+									</div>
+								)}
+
+								{bBReplacementCost && bBReplacementCost.data && (
+									<div className="mt-1 ml-2 container-padding-border-1 width-fit-content">
+										<pre>
+											${addCurrencyCommas(bBReplacementCost.data)}
+										</pre>
+									</div>
+								)}
+							</>
+						)}
 					</div>
 
 					<div className="mb-3">
@@ -181,16 +315,89 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 							type="button"
 							className="btn-primary btn-md"
 							onClick={() => {
+								setBridgeRatingsFullLoading(true)
 								fetchData('botosssgetobject/streambridgeratings')
 									.then(data => {
-										console.log(data)
+										setBridgeRatingsFull({'data': data});
 									})
 									.catch(error => {
+										setBridgeRatingsFull({ error: 'Error when attempting to fetch resource.' })
 										console.error(error);
 									})
 							}}
-							buttonText="Stream Bridge Ratings CSV"
+							buttonText="Get Full Bridge Ratings"
 						/>
+
+						{bridgeRatingsFullLoading && (
+							<div className="mt-1 ml-2">
+								<Loading text="Loading" />
+							</div>
+						)}
+
+						{!bridgeRatingsFullLoading && (
+							<>
+								{bridgeRatingsFull && bridgeRatingsFull.error && (
+									<div className="mt-1 ml-2">
+										<div className="bg-warn-red container-padding-radius-10 width-fit-content text-color-white">
+											Error when attempting to fetch resource.
+										</div>
+									</div>
+								)}
+
+								{bridgeRatingsFull && bridgeRatingsFull.data && (
+									<div className="mt-1 ml-2 container-padding-border-1 container-overflow-height-small">
+										<pre>
+											{bridgeRatingsFull.data}
+										</pre>
+									</div>
+								)}
+							</>
+						)}
+					</div>
+
+					<div className="mb-3">
+						<Button
+							type="button"
+							className="btn-primary btn-md"
+							onClick={() => {
+								setBridgeRatingsLoading(true)
+								fetchData('botosssgetobject/bridgeratings')
+									.then(data => {
+										setBridgeRatings({'data': data});
+									})
+									.catch(error => {
+										setBridgeRatings({ error: 'Error when attempting to fetch resource.' })
+										console.error(error);
+									})
+							}}
+							buttonText="Get Bridge Ratings"
+						/>
+
+						{bridgeRatingsLoading && (
+							<div className="mt-1 ml-2">
+								<Loading text="Loading" />
+							</div>
+						)}
+
+						{!bridgeRatingsLoading && (
+							<>
+								{bridgeRatings && bridgeRatings.error && (
+									<div className="mt-1 ml-2">
+										<div className="bg-warn-red container-padding-radius-10 width-fit-content text-color-white">
+											Error when attempting to fetch resource.
+										</div>
+									</div>
+								)}
+
+								{bridgeRatings && bridgeRatings.data && (
+									<div className="mt-1 ml-2 container-padding-border-1 container-overflow-height-small">
+										<pre>
+											{bridgeRatings.data}
+										</pre>
+									</div>
+								)}
+							</>
+						)}
 					</div>
 				</div>
 			</div>

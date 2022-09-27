@@ -4,6 +4,7 @@ from fastapi.responses import JSONResponse, StreamingResponse
 from .modules.fibonacci import fib_func
 from .modules.verifyCredentials import verify_credentials
 from .modules.brooklynBridgesReplacementCostPipeline import brooklyn_bridges_replacement_cost_pipeline
+from .modules.bridgeRatingsPipeline import bridge_ratings_pipeline
 from .modules.fetchS3 import fetch_s3
 
 todos = [
@@ -82,7 +83,7 @@ async def get_brooklyn_bridges_replacement_cost():
 		raise CustomException(name = "error")
 
 @app.get('/botosssgetobject/streambridgeratings', tags=['stream_bridge_ratings'])
-async def stream_bridge_ratings():
+async def get_stream_bridge_ratings():
 	try:
 		if verify_credentials():
 			return StreamingResponse(
@@ -96,29 +97,17 @@ async def stream_bridge_ratings():
 		print(error)
 		raise CustomException(name = "error")
 
-# @app.get('/botosssgetobject/brooklynbridgesreplacementcost', tags=['brooklyn_bridges_replacement_cost'])
-# async def get_brooklyn_bridges_replacement_cost():
-# 	try:
-# 		if await verify_credentials(awsAccess, awssdkpython):
-# 			# async for i in brooklyn_bridges_replacement_cost_pipeline(awsAccess, awssdkpython):
-# 			#   return i
-# 			return await brooklyn_bridges_replacement_cost_pipeline(awsAccess, awssdkpython).__anext__()
-# 
-# 	except Exception as error:
-# 		print(error)
-# 		raise CustomException(name = "error")
-
-# @app.get('/botosssgetobject/streambridgeratings', tags=['stream_bridge_ratings'])
-# async def stream_bridge_ratings():
-# 	try:
-# 		if await verify_credentials(awsAccess, awssdkpython):
-# 			return StreamingResponse(
-# 				fetch_s3(awsAccess, awssdkpython, False),
-# 				media_type="text/csv",
-# 				headers={
-# 					"Content-Type": "text/csv",
-# 				}
-# 			)
-# 	except Exception as error:
-# 		print(error)
-# 		raise CustomException(name = "error")
+@app.get('/botosssgetobject/bridgeratings', tags=['bridge_ratings_pipeline'])
+async def get_bridge_ratings_pipeline():
+	try:
+		if verify_credentials():
+			return StreamingResponse(
+				bridge_ratings_pipeline(),
+				media_type="text/csv",
+				headers={
+					"Content-Type": "text/csv",
+				}
+			)
+	except Exception as error:
+		print(error)
+		raise CustomException(name = "error")
