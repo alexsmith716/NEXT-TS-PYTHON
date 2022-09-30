@@ -24,6 +24,7 @@ The goal of this project is to work on Next.JS, TypeScript, core Python (data st
 * Cypress
 * Jest
 * React Testing Library
+* AWS SDK v3 Client mock
 * Nock
 * Python 3.9.13
 * FastAPI
@@ -35,6 +36,7 @@ The goal of this project is to work on Next.JS, TypeScript, core Python (data st
 * Flake8
 
 ## TODO:
+* Further review/narrow all TS typing
 * Add `pyapi.tsx` api responses to state container
 * Add more unit and E2E testing
 * Build bigger & better Python pipelines
