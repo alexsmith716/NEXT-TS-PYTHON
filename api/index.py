@@ -44,7 +44,7 @@ async def CustomExceptionHandler(request: Request, exception: CustomException):
 	return JSONResponse(status_code=400, content={"error": "Error attempting to fetch resource."})
 
 @app.get('/todosapi', tags=['todos_root'])
-async def read_root() -> dict:
+def read_root() -> dict:
 	return { 'message': "The Todo List API." }
 
 @app.get('/todosapi/todos', tags=['todos'])
@@ -55,7 +55,7 @@ async def get_todos() -> dict:
 		raise CustomException(name = "error")
 
 @app.get('/fibonacci/{len}', tags=['fibonacci'])
-async def get_fibonacci(len: int) -> dict:
+def get_fibonacci(len: int) -> dict:
 	if len > 1:
 		try:
 			return { 'data': fib_func(len) }
@@ -65,14 +65,14 @@ async def get_fibonacci(len: int) -> dict:
 		raise CustomException(name = "error")
 
 @app.get('/nyccounty/{id}', tags=['nyc_county'])
-async def get_nyc_county(id: int) -> dict:
+def get_nyc_county(id: int) -> dict:
 	if id > 0 and id < 6:
 		return { 'data': nyc_counties[id] }
 	else:
 		raise CustomException(name = "error")
 
 @app.get('/botosssgetobject/brooklynbridgesreplacementcost', tags=['brooklyn_bridges_replacement_cost'])
-async def get_brooklyn_bridges_replacement_cost():
+def get_brooklyn_bridges_replacement_cost():
 	try:
 		if verify_credentials():
 			# for i in brooklyn_bridges_replacement_cost_pipeline():
@@ -83,7 +83,7 @@ async def get_brooklyn_bridges_replacement_cost():
 		raise CustomException(name = "error")
 
 @app.get('/botosssgetobject/streambridgeratings', tags=['stream_bridge_ratings'])
-async def get_stream_bridge_ratings():
+def get_stream_bridge_ratings():
 	try:
 		if verify_credentials():
 			return StreamingResponse(
@@ -98,7 +98,7 @@ async def get_stream_bridge_ratings():
 		raise CustomException(name = "error")
 
 @app.get('/botosssgetobject/bridgeratings', tags=['bridge_ratings_pipeline'])
-async def get_bridge_ratings_pipeline():
+def get_bridge_ratings_pipeline():
 	try:
 		if verify_credentials():
 			return StreamingResponse(

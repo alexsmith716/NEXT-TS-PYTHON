@@ -185,7 +185,6 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 								setFibonacciLoading(true)
 								fetchData('fibonacci', '200')
 									.then(data => {
-										console.log('FFFFFFF: ', data)
 										setFibonacci(data);
 									})
 									.catch(error => {
@@ -214,7 +213,7 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 								{fibonacci && fibonacci.data && (
 									<div className="mt-1 ml-2 container-padding-border-1 width-fit-content">
 										<pre>
-											{JSON.stringify(fibonacci.data)}
+											{fibonacci.data.join(' ')}
 										</pre>
 									</div>
 								)}
