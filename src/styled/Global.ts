@@ -195,6 +195,19 @@ export const GlobalStyle = createGlobalStyle`
 		flex-direction: row;
 	}
 
+	.container-padding-2-border-1 {
+		border: 1px solid ${colors.graySix};
+		border-radius: 3px;
+		background: ${colors.white};
+	}
+
+	.star-rating {
+		gap: 4px;
+		align-items: center;
+		font-size: 14px;
+		font-weight: 600;
+	}
+
 	.container-padding-border-1 {
 		padding: 10px 10px;
 		border: 1px solid #0d6efd;
@@ -529,6 +542,14 @@ export const GlobalStyle = createGlobalStyle`
 		margin-bottom: 3rem;
 	}
 
+	.pl-1 {
+		padding-left: 0.25rem;
+	}
+
+	.pr-1 {
+		padding-right: 0.25rem;
+	}
+
 	.pt-2 {
 		padding-top: 0.75rem;
 	}
@@ -779,6 +800,10 @@ export const GlobalStyle = createGlobalStyle`
 
 	.bg-color-turquoise-1 {
 		background-color: #00f5ff;
+	}
+
+	.bg-color-star-gold {
+		background-color: #ffb90f;
 	}
 
 	.bg-color-darkgoldenrod-1 {

@@ -11,6 +11,7 @@ import RickAndMortyCharacter from '../components/RickAndMortyCharacter/RickAndMo
 import Modal from '../components/Modal/Modal';
 import RickAndMortyModalView from '../components/RickAndMortyModalView/RickAndMortyModalView';
 import { GetAllRickAndMortyCharactersDocument } from '../apollo/generated/react-apollo';
+import StarRating from '../components/StarRating';
 
 interface RickAndMortyPageProps {
 	documentTitle?: string;
@@ -103,6 +104,27 @@ const RickAndMorty: NextPage<RickAndMortyPageProps> = ({ documentTitle }) => {
 
 	const client = useApolloClient();
 
+	//function onRenderCallback(
+	//	id, // the "id" prop of the Profiler tree that has just committed
+	//	phase, // either "mount" (if the tree just mounted) or "update" (if it re-rendered)
+	//	actualDuration, // time spent rendering the committed update
+	//	baseDuration, // estimated time to render the entire subtree without memoization
+	//	startTime, // when React began rendering this update
+	//	commitTime, // when React committed this update
+	//	interactions // the Set of interactions belonging to this update
+	//) {
+	//	// Aggregate or log render timings...
+	//}
+
+	//const logTimes = (id, phase, actualTime, baseTime, startTime, commitTime) => {
+	//	console.log(`${id}'s ${phase} phase:`);
+	//	console.log(`Actual time: ${actualTime}`);
+	//	console.log(`Base time: ${baseTime}`);
+	//	console.log(`Start time: ${startTime}`);
+	//	console.log(`Commit time: ${commitTime}`);
+	//	console.log(`==============================================`);
+	//};
+
 	return (
 		<>
 			<Head>
@@ -155,15 +177,18 @@ const RickAndMorty: NextPage<RickAndMortyPageProps> = ({ documentTitle }) => {
 
 					<div className="row-grid-rickandmorty">
 						{data && data.characters.results.map((character: Character, index:number) => (
-							<div
-								key={index}
-								className="mb-3 container-padding-border-radius-2"
-								onClick={() => {
-									toggleModal();
-									onView(character.id);
-								}}
-							>
-								<RickAndMortyCharacter character={character} index={index} />
+							<div key={index} className="mb-3 container-padding-border-radius-2">
+								<div className="mb-2">
+									<StarRating rating={ (Math.floor(Math.random() * (100 - 1)) + 1) } />
+								</div>
+								<div
+									onClick={() => {
+										toggleModal();
+										onView(character.id);
+									}}
+								>
+									<RickAndMortyCharacter character={character} index={index} />
+								</div>
 							</div>
 						))}
 						<div ref={ref}></div>
