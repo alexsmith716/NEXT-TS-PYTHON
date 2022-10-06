@@ -1,6 +1,6 @@
 import { PageConfig } from 'next';
 import { ApolloServer } from 'apollo-server-micro';
-import { text } from 'micro';
+//import { text } from 'micro';
 import { MicroRequest } from 'apollo-server-micro/dist/types';
 import { send } from 'micro';
 import { ServerResponse } from 'http';
@@ -27,10 +27,7 @@ const apolloServer = new ApolloServer({
 const startServer = apolloServer.start();
 
 export default async function handler(req: MicroRequest, res: ServerResponse) {
-	const reqQuery = await text(req);
-	if(reqQuery){
-		console.log('>>>>> apolloServer > reqQuery: ', reqQuery);
-	}
+	//const reqQuery = await text(req);
 	try {
 		await startServer;
 		await apolloServer.createHandler({path: '/api/graphql'})(req, res);
