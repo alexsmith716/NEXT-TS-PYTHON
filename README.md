@@ -36,10 +36,9 @@ The goal of this project is to work on Next.JS, TypeScript, core Python (data st
 * Flake8
 
 ## TODO:
-* Further review/narrow all TS typing
+* `StarRating` percentage generation needs finer accuracy
+* Performance refactoring and TS checks are needed (`StarRating`, `graphqlquery`, `useMemo`)
+* `StarRating` responds to user generated rating
+* Fix all TS type-checks (`pyapi.tsx`)
 * Add `pyapi.tsx` api responses to state container
 * Add more unit and E2E testing
-* Build bigger & better Python pipelines
-* Build-out Strawberry GraphQL example
-* Implement Apollo Federation & Strawberry
-* Start the new React Native project
