@@ -1,8 +1,8 @@
 overwrite: true
 schema:
-  - 'http://127.0.0.1:8000/graphql'
   - 'https://rickandmortyapi.com/graphql'
   - 'src/apollo/type-defs.ts'
+  - 'src/apollo/client-schema.graphql'
 documents:
   - './src/apollo/queries/*.{ts,graphql}'
   - '!node_modules'

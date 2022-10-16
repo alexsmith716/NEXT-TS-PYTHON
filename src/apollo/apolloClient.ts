@@ -7,6 +7,7 @@ import { useMemo } from 'react';
 import merge from 'deepmerge';
 import schema from './schema';
 import { Character } from '../types';
+import { GetRickAndMortyCharacterStarRatingDocument} from './generated/react-apollo';
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | undefined;
 
@@ -53,11 +54,29 @@ export const cache: InMemoryCache = new InMemoryCache({
 			fields: {
 				characters: {
 					keyArgs: false,
-					merge(existing = {}, incoming,) {
+					merge(existing = {}, incoming, { readField, }) {
 						let results: Character[] = [];
 
 						if (existing && existing.results) {
 							results = results.concat(existing.results);
+						}
+
+						if (incoming && apolloClient) {
+							for(let i=0; i < incoming.results.length; i++) {
+								apolloClient.writeQuery({
+									query: GetRickAndMortyCharacterStarRatingDocument,
+									data: {
+										character: {
+											__typename: 'Character',
+											id: readField('id', incoming.results[i]),
+											rating: (Math.floor(Math.random() * (100 - 1)) + 1)
+										},
+									},
+									variables: {
+										id: readField('id', incoming.results[i])
+									}
+								});
+							}
 						}
 
 						if (incoming && incoming.results) {
@@ -70,20 +89,7 @@ export const cache: InMemoryCache = new InMemoryCache({
 					}
 				}
 			}
-		},
-
-		//Mutation: {
-		//	fields: {
-		//		addAuthor: {
-		//			keyArgs: false,
-		//			merge(existing = {}, incoming,) {
-		//				if (incoming) {
-		//					//console.log('>>> InMemoryCache > Mutation > addAuthor > incoming: ', incoming);
-		//				}
-		//			}
-		//		}
-		//	}
-		//}
+		}
 	}
 });
 
@@ -91,7 +97,7 @@ function createApolloClient(context?: ResolverContext) {
 	return new ApolloClient({
 		ssrMode: typeof window === 'undefined',
 		link: from([errorLink, createIsomorphLink(context)]),
-		cache: cache
+		cache: cache,
 	});
 };
 

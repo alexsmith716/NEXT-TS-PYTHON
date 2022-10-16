@@ -89,6 +89,9 @@ export const typeDefs = gql`
 		# The gender of the character ('Female', 'Male', 'Genderless' or 'unknown').
 		gender: String
 
+		#
+		#starRating: Int
+
 		# The character's origin location
 		origin: Location
 
