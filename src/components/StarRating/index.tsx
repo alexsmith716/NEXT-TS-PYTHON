@@ -8,14 +8,13 @@ type StarsProps = {
 const StarRating = ({ rating=0 }: StarsProps) => {
 
 	const formatter = new Intl.NumberFormat('en-US', {
-		minimumFractionDigits: 1,
-		maximumFractionDigits: 1,
+		minimumFractionDigits: 2,
+		maximumFractionDigits: 2,
 	});
 
 	const asPercentage = formatter.format((rating * .01) * 5);
 	let starComponents = [];
 
-	// fix needed for the close or at a .5
 	for(let i=0; i<5; i++) {
 		if(Math.floor(rating/20) > 0) {
 			rating -= 20;
