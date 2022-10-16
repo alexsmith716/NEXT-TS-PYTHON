@@ -64,7 +64,7 @@ export type Character = {
   /** The gender of the character ('Female', 'Male', 'Genderless' or 'unknown'). */
   gender?: Maybe<Scalars['String']>;
   /** The id of the character. */
-  id?: Maybe<Scalars['ID']>;
+  id: Scalars['ID'];
   /**
    * Link to the character's image.
    * All images are 300x300px and most are medium shots or portraits since they are intended to be used as avatars.
@@ -76,6 +76,7 @@ export type Character = {
   name?: Maybe<Scalars['String']>;
   /** The character's origin location */
   origin?: Maybe<Location>;
+  rating: Scalars['Int'];
   /** The species of the character. */
   species?: Maybe<Scalars['String']>;
   /** The status of the character ('Alive', 'Dead' or 'unknown'). */
@@ -187,7 +188,7 @@ export type Query = {
   authors: Array<Maybe<Author>>;
   books: Array<Maybe<Book>>;
   /** Get a specific character by ID */
-  character?: Maybe<Character>;
+  character: Character;
   /** Get the list of all characters */
   characters?: Maybe<Characters>;
   /** Get a list of characters selected by ids */
@@ -255,13 +256,17 @@ export type QueryLocationsByIdsArgs = {
   ids: Array<Scalars['ID']>;
 };
 
-export type FragmentCharacterFragment = { __typename?: 'Character', id?: string | null, status?: string | null, species?: string | null, type?: string | null, gender?: string | null, origin?: { __typename?: 'Location', name?: string | null, type?: string | null, dimension?: string | null } | null, location?: { __typename?: 'Location', id?: string | null, name?: string | null, type?: string | null, dimension?: string | null } | null };
+export type FragmentAuthorFieldsFragment = { __typename?: 'Author', id: string, name: string };
 
-export type FragmentCharacterEpisodesFragment = { __typename?: 'Character', id?: string | null, episode: Array<{ __typename?: 'Episode', id?: string | null, name?: string | null, air_date?: string | null, episode?: string | null } | null> };
+export type FragmentBookFieldsFragment = { __typename?: 'Book', id: string, name: string, author?: { __typename?: 'Author', name: string } | null };
 
-export type FragmentCharacterLocationResidentsFragment = { __typename?: 'Character', id?: string | null, location?: { __typename?: 'Location', id?: string | null, residents: Array<{ __typename?: 'Character', name?: string | null, id?: string | null, status?: string | null, species?: string | null, type?: string | null, gender?: string | null, origin?: { __typename?: 'Location', name?: string | null, type?: string | null, dimension?: string | null } | null, location?: { __typename?: 'Location', id?: string | null, name?: string | null, type?: string | null, dimension?: string | null } | null } | null> } | null };
+export type FragmentCharacterFragment = { __typename?: 'Character', id: string, status?: string | null, species?: string | null, type?: string | null, gender?: string | null, origin?: { __typename?: 'Location', name?: string | null, type?: string | null, dimension?: string | null } | null, location?: { __typename?: 'Location', id?: string | null, name?: string | null, type?: string | null, dimension?: string | null } | null };
 
-export type FragmentEpisodeCharactersFragment = { __typename?: 'Character', id?: string | null, episode: Array<{ __typename?: 'Episode', id?: string | null, characters: Array<{ __typename?: 'Character', id?: string | null, status?: string | null, species?: string | null, type?: string | null, gender?: string | null, origin?: { __typename?: 'Location', name?: string | null, type?: string | null, dimension?: string | null } | null, location?: { __typename?: 'Location', id?: string | null, name?: string | null, type?: string | null, dimension?: string | null } | null } | null> } | null> };
+export type FragmentCharacterEpisodesFragment = { __typename?: 'Character', id: string, episode: Array<{ __typename?: 'Episode', id?: string | null, name?: string | null, air_date?: string | null, episode?: string | null } | null> };
+
+export type FragmentCharacterLocationResidentsFragment = { __typename?: 'Character', id: string, location?: { __typename?: 'Location', id?: string | null, residents: Array<{ __typename?: 'Character', name?: string | null, id: string, status?: string | null, species?: string | null, type?: string | null, gender?: string | null, origin?: { __typename?: 'Location', name?: string | null, type?: string | null, dimension?: string | null } | null, location?: { __typename?: 'Location', id?: string | null, name?: string | null, type?: string | null, dimension?: string | null } | null } | null> } | null };
+
+export type FragmentEpisodeCharactersFragment = { __typename?: 'Character', id: string, episode: Array<{ __typename?: 'Episode', id?: string | null, characters: Array<{ __typename?: 'Character', id: string, status?: string | null, species?: string | null, type?: string | null, gender?: string | null, origin?: { __typename?: 'Location', name?: string | null, type?: string | null, dimension?: string | null } | null, location?: { __typename?: 'Location', id?: string | null, name?: string | null, type?: string | null, dimension?: string | null } | null } | null> } | null> };
 
 export type HelloWorldQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -274,35 +279,42 @@ export type GetAllRickAndMortyCharactersQueryVariables = Exact<{
 }>;
 
 
-export type GetAllRickAndMortyCharactersQuery = { __typename?: 'Query', characters?: { __typename?: 'Characters', info?: { __typename?: 'Info', next?: number | null, prev?: number | null, pages?: number | null, count?: number | null } | null, results?: Array<{ __typename?: 'Character', id?: string | null, name?: string | null, image?: string | null } | null> | null } | null };
+export type GetAllRickAndMortyCharactersQuery = { __typename?: 'Query', characters?: { __typename?: 'Characters', info?: { __typename?: 'Info', count?: number | null, pages?: number | null, next?: number | null, prev?: number | null } | null, results?: Array<{ __typename?: 'Character', id: string, name?: string | null, image?: string | null } | null> | null } | null };
+
+export type GetRickAndMortyCharacterStarRatingQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetRickAndMortyCharacterStarRatingQuery = { __typename?: 'Query', character: { __typename?: 'Character', id: string, rating: number } };
 
 export type GetRickAndMortyCharacterQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetRickAndMortyCharacterQuery = { __typename?: 'Query', character?: { __typename?: 'Character', id?: string | null, status?: string | null, species?: string | null, type?: string | null, gender?: string | null, origin?: { __typename?: 'Location', name?: string | null, type?: string | null, dimension?: string | null } | null, location?: { __typename?: 'Location', id?: string | null, name?: string | null, type?: string | null, dimension?: string | null } | null } | null };
+export type GetRickAndMortyCharacterQuery = { __typename?: 'Query', character: { __typename?: 'Character', id: string, status?: string | null, species?: string | null, type?: string | null, gender?: string | null, origin?: { __typename?: 'Location', name?: string | null, type?: string | null, dimension?: string | null } | null, location?: { __typename?: 'Location', id?: string | null, name?: string | null, type?: string | null, dimension?: string | null } | null } };
 
 export type GetRickAndMortyCharacterLocationResidentsQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetRickAndMortyCharacterLocationResidentsQuery = { __typename?: 'Query', character?: { __typename?: 'Character', id?: string | null, location?: { __typename?: 'Location', id?: string | null, residents: Array<{ __typename?: 'Character', name?: string | null, id?: string | null, status?: string | null, species?: string | null, type?: string | null, gender?: string | null, origin?: { __typename?: 'Location', name?: string | null, type?: string | null, dimension?: string | null } | null, location?: { __typename?: 'Location', id?: string | null, name?: string | null, type?: string | null, dimension?: string | null } | null } | null> } | null } | null };
+export type GetRickAndMortyCharacterLocationResidentsQuery = { __typename?: 'Query', character: { __typename?: 'Character', id: string, location?: { __typename?: 'Location', id?: string | null, residents: Array<{ __typename?: 'Character', name?: string | null, id: string, status?: string | null, species?: string | null, type?: string | null, gender?: string | null, origin?: { __typename?: 'Location', name?: string | null, type?: string | null, dimension?: string | null } | null, location?: { __typename?: 'Location', id?: string | null, name?: string | null, type?: string | null, dimension?: string | null } | null } | null> } | null } };
 
 export type GetRickAndMortyCharacterEpisodesQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetRickAndMortyCharacterEpisodesQuery = { __typename?: 'Query', character?: { __typename?: 'Character', id?: string | null, episode: Array<{ __typename?: 'Episode', id?: string | null, name?: string | null, air_date?: string | null, episode?: string | null } | null> } | null };
+export type GetRickAndMortyCharacterEpisodesQuery = { __typename?: 'Query', character: { __typename?: 'Character', id: string, episode: Array<{ __typename?: 'Episode', id?: string | null, name?: string | null, air_date?: string | null, episode?: string | null } | null> } };
 
 export type GetRickAndMortyEpisodeCharactersQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetRickAndMortyEpisodeCharactersQuery = { __typename?: 'Query', character?: { __typename?: 'Character', id?: string | null, episode: Array<{ __typename?: 'Episode', id?: string | null, characters: Array<{ __typename?: 'Character', id?: string | null, status?: string | null, species?: string | null, type?: string | null, gender?: string | null, origin?: { __typename?: 'Location', name?: string | null, type?: string | null, dimension?: string | null } | null, location?: { __typename?: 'Location', id?: string | null, name?: string | null, type?: string | null, dimension?: string | null } | null } | null> } | null> } | null };
+export type GetRickAndMortyEpisodeCharactersQuery = { __typename?: 'Query', character: { __typename?: 'Character', id: string, episode: Array<{ __typename?: 'Episode', id?: string | null, characters: Array<{ __typename?: 'Character', id: string, status?: string | null, species?: string | null, type?: string | null, gender?: string | null, origin?: { __typename?: 'Location', name?: string | null, type?: string | null, dimension?: string | null } | null, location?: { __typename?: 'Location', id?: string | null, name?: string | null, type?: string | null, dimension?: string | null } | null } | null> } | null> } };
 
 export type GetBooksQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -314,9 +326,12 @@ export type GetAuthorsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetAuthorsQuery = { __typename?: 'Query', authors: Array<{ __typename?: 'Author', id: string, name: string } | null> };
 
-export type BookFieldsFragment = { __typename?: 'Book', id: string, name: string, author?: { __typename?: 'Author', name: string } | null };
+export type MutateAddAuthorMutationVariables = Exact<{
+  name: Scalars['String'];
+}>;
 
-export type AuthorFieldsFragment = { __typename?: 'Author', id: string, name: string };
+
+export type MutateAddAuthorMutation = { __typename?: 'Mutation', addAuthor: { __typename: 'Author', id: string, name: string } | { __typename: 'AuthorExists', message: string } };
 
 export type MutateAddBookMutationVariables = Exact<{
   name: Scalars['String'];
@@ -326,13 +341,21 @@ export type MutateAddBookMutationVariables = Exact<{
 
 export type MutateAddBookMutation = { __typename?: 'Mutation', addBook: { __typename: 'AuthorNameMissing' } | { __typename: 'AuthorNotFound' } | { __typename: 'Book', id: string, name: string, author?: { __typename?: 'Author', name: string } | null } };
 
-export type MutateAddAuthorMutationVariables = Exact<{
-  name: Scalars['String'];
-}>;
-
-
-export type MutateAddAuthorMutation = { __typename?: 'Mutation', addAuthor: { __typename: 'Author', id: string, name: string } | { __typename: 'AuthorExists', message: string } };
-
+export const FragmentAuthorFieldsFragmentDoc = gql`
+    fragment fragmentAuthorFields on Author {
+  id
+  name
+}
+    `;
+export const FragmentBookFieldsFragmentDoc = gql`
+    fragment fragmentBookFields on Book {
+  id
+  name
+  author {
+    name
+  }
+}
+    `;
 export const FragmentCharacterEpisodesFragmentDoc = gql`
     fragment fragmentCharacterEpisodes on Character {
   id
@@ -387,21 +410,6 @@ export const FragmentEpisodeCharactersFragmentDoc = gql`
   }
 }
     ${FragmentCharacterFragmentDoc}`;
-export const BookFieldsFragmentDoc = gql`
-    fragment BookFields on Book {
-  id
-  name
-  author {
-    name
-  }
-}
-    `;
-export const AuthorFieldsFragmentDoc = gql`
-    fragment AuthorFields on Author {
-  id
-  name
-}
-    `;
 export const HelloWorldDocument = gql`
     query HelloWorld {
   helloWorld
@@ -438,10 +446,10 @@ export const GetAllRickAndMortyCharactersDocument = gql`
     query GetAllRickAndMortyCharacters($page: Int, $filter: FilterCharacter) {
   characters(page: $page, filter: $filter) {
     info {
+      count
+      pages
       next
       prev
-      pages
-      count
     }
     results {
       id
@@ -480,6 +488,42 @@ export function useGetAllRickAndMortyCharactersLazyQuery(baseOptions?: Apollo.La
 export type GetAllRickAndMortyCharactersQueryHookResult = ReturnType<typeof useGetAllRickAndMortyCharactersQuery>;
 export type GetAllRickAndMortyCharactersLazyQueryHookResult = ReturnType<typeof useGetAllRickAndMortyCharactersLazyQuery>;
 export type GetAllRickAndMortyCharactersQueryResult = Apollo.QueryResult<GetAllRickAndMortyCharactersQuery, GetAllRickAndMortyCharactersQueryVariables>;
+export const GetRickAndMortyCharacterStarRatingDocument = gql`
+    query GetRickAndMortyCharacterStarRating($id: ID!) {
+  character(id: $id) {
+    id
+    rating @client
+  }
+}
+    `;
+
+/**
+ * __useGetRickAndMortyCharacterStarRatingQuery__
+ *
+ * To run a query within a React component, call `useGetRickAndMortyCharacterStarRatingQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRickAndMortyCharacterStarRatingQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRickAndMortyCharacterStarRatingQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetRickAndMortyCharacterStarRatingQuery(baseOptions: Apollo.QueryHookOptions<GetRickAndMortyCharacterStarRatingQuery, GetRickAndMortyCharacterStarRatingQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetRickAndMortyCharacterStarRatingQuery, GetRickAndMortyCharacterStarRatingQueryVariables>(GetRickAndMortyCharacterStarRatingDocument, options);
+      }
+export function useGetRickAndMortyCharacterStarRatingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRickAndMortyCharacterStarRatingQuery, GetRickAndMortyCharacterStarRatingQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetRickAndMortyCharacterStarRatingQuery, GetRickAndMortyCharacterStarRatingQueryVariables>(GetRickAndMortyCharacterStarRatingDocument, options);
+        }
+export type GetRickAndMortyCharacterStarRatingQueryHookResult = ReturnType<typeof useGetRickAndMortyCharacterStarRatingQuery>;
+export type GetRickAndMortyCharacterStarRatingLazyQueryHookResult = ReturnType<typeof useGetRickAndMortyCharacterStarRatingLazyQuery>;
+export type GetRickAndMortyCharacterStarRatingQueryResult = Apollo.QueryResult<GetRickAndMortyCharacterStarRatingQuery, GetRickAndMortyCharacterStarRatingQueryVariables>;
 export const GetRickAndMortyCharacterDocument = gql`
     query GetRickAndMortyCharacter($id: ID!) {
   character(id: $id) {
@@ -693,17 +737,58 @@ export function useGetAuthorsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type GetAuthorsQueryHookResult = ReturnType<typeof useGetAuthorsQuery>;
 export type GetAuthorsLazyQueryHookResult = ReturnType<typeof useGetAuthorsLazyQuery>;
 export type GetAuthorsQueryResult = Apollo.QueryResult<GetAuthorsQuery, GetAuthorsQueryVariables>;
+export const MutateAddAuthorDocument = gql`
+    mutation MutateAddAuthor($name: String!) {
+  addAuthor(name: $name) {
+    __typename
+    ... on AuthorExists {
+      __typename
+      message
+    }
+    ... on Author {
+      __typename
+      ...fragmentAuthorFields
+    }
+  }
+}
+    ${FragmentAuthorFieldsFragmentDoc}`;
+export type MutateAddAuthorMutationFn = Apollo.MutationFunction<MutateAddAuthorMutation, MutateAddAuthorMutationVariables>;
+
+/**
+ * __useMutateAddAuthorMutation__
+ *
+ * To run a mutation, you first call `useMutateAddAuthorMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useMutateAddAuthorMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [mutateAddAuthorMutation, { data, loading, error }] = useMutateAddAuthorMutation({
+ *   variables: {
+ *      name: // value for 'name'
+ *   },
+ * });
+ */
+export function useMutateAddAuthorMutation(baseOptions?: Apollo.MutationHookOptions<MutateAddAuthorMutation, MutateAddAuthorMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<MutateAddAuthorMutation, MutateAddAuthorMutationVariables>(MutateAddAuthorDocument, options);
+      }
+export type MutateAddAuthorMutationHookResult = ReturnType<typeof useMutateAddAuthorMutation>;
+export type MutateAddAuthorMutationResult = Apollo.MutationResult<MutateAddAuthorMutation>;
+export type MutateAddAuthorMutationOptions = Apollo.BaseMutationOptions<MutateAddAuthorMutation, MutateAddAuthorMutationVariables>;
 export const MutateAddBookDocument = gql`
     mutation MutateAddBook($name: String!, $authorName: String!) {
   addBook(name: $name, authorName: $authorName) {
     __typename
     ... on Book {
       __typename
-      ...BookFields
+      ...fragmentBookFields
     }
   }
 }
-    ${BookFieldsFragmentDoc}`;
+    ${FragmentBookFieldsFragmentDoc}`;
 export type MutateAddBookMutationFn = Apollo.MutationFunction<MutateAddBookMutation, MutateAddBookMutationVariables>;
 
 /**
@@ -731,44 +816,3 @@ export function useMutateAddBookMutation(baseOptions?: Apollo.MutationHookOption
 export type MutateAddBookMutationHookResult = ReturnType<typeof useMutateAddBookMutation>;
 export type MutateAddBookMutationResult = Apollo.MutationResult<MutateAddBookMutation>;
 export type MutateAddBookMutationOptions = Apollo.BaseMutationOptions<MutateAddBookMutation, MutateAddBookMutationVariables>;
-export const MutateAddAuthorDocument = gql`
-    mutation MutateAddAuthor($name: String!) {
-  addAuthor(name: $name) {
-    __typename
-    ... on AuthorExists {
-      __typename
-      message
-    }
-    ... on Author {
-      __typename
-      ...AuthorFields
-    }
-  }
-}
-    ${AuthorFieldsFragmentDoc}`;
-export type MutateAddAuthorMutationFn = Apollo.MutationFunction<MutateAddAuthorMutation, MutateAddAuthorMutationVariables>;
-
-/**
- * __useMutateAddAuthorMutation__
- *
- * To run a mutation, you first call `useMutateAddAuthorMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useMutateAddAuthorMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [mutateAddAuthorMutation, { data, loading, error }] = useMutateAddAuthorMutation({
- *   variables: {
- *      name: // value for 'name'
- *   },
- * });
- */
-export function useMutateAddAuthorMutation(baseOptions?: Apollo.MutationHookOptions<MutateAddAuthorMutation, MutateAddAuthorMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<MutateAddAuthorMutation, MutateAddAuthorMutationVariables>(MutateAddAuthorDocument, options);
-      }
-export type MutateAddAuthorMutationHookResult = ReturnType<typeof useMutateAddAuthorMutation>;
-export type MutateAddAuthorMutationResult = Apollo.MutationResult<MutateAddAuthorMutation>;
-export type MutateAddAuthorMutationOptions = Apollo.BaseMutationOptions<MutateAddAuthorMutation, MutateAddAuthorMutationVariables>;

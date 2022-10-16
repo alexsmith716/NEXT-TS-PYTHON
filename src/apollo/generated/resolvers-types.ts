@@ -63,7 +63,7 @@ export type Character = {
   /** The gender of the character ('Female', 'Male', 'Genderless' or 'unknown'). */
   gender?: Maybe<Scalars['String']>;
   /** The id of the character. */
-  id?: Maybe<Scalars['ID']>;
+  id: Scalars['ID'];
   /**
    * Link to the character's image.
    * All images are 300x300px and most are medium shots or portraits since they are intended to be used as avatars.
@@ -75,6 +75,7 @@ export type Character = {
   name?: Maybe<Scalars['String']>;
   /** The character's origin location */
   origin?: Maybe<Location>;
+  rating: Scalars['Int'];
   /** The species of the character. */
   species?: Maybe<Scalars['String']>;
   /** The status of the character ('Alive', 'Dead' or 'unknown'). */
@@ -186,7 +187,7 @@ export type Query = {
   authors: Array<Maybe<Author>>;
   books: Array<Maybe<Book>>;
   /** Get a specific character by ID */
-  character?: Maybe<Character>;
+  character: Character;
   /** Get the list of all characters */
   characters?: Maybe<Characters>;
   /** Get a list of characters selected by ids */
@@ -426,11 +427,12 @@ export type CharacterResolvers<ContextType = any, ParentType extends ResolversPa
   created?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   episode?: Resolver<Array<Maybe<ResolversTypes['Episode']>>, ParentType, ContextType>;
   gender?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   image?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   location?: Resolver<Maybe<ResolversTypes['Location']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   origin?: Resolver<Maybe<ResolversTypes['Location']>, ParentType, ContextType>;
+  rating?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   species?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   status?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -491,7 +493,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   authors?: Resolver<Array<Maybe<ResolversTypes['Author']>>, ParentType, ContextType>;
   books?: Resolver<Array<Maybe<ResolversTypes['Book']>>, ParentType, ContextType>;
-  character?: Resolver<Maybe<ResolversTypes['Character']>, ParentType, ContextType, RequireFields<QueryCharacterArgs, 'id'>>;
+  character?: Resolver<ResolversTypes['Character'], ParentType, ContextType, RequireFields<QueryCharacterArgs, 'id'>>;
   characters?: Resolver<Maybe<ResolversTypes['Characters']>, ParentType, ContextType, Partial<QueryCharactersArgs>>;
   charactersByIds?: Resolver<Maybe<Array<Maybe<ResolversTypes['Character']>>>, ParentType, ContextType, RequireFields<QueryCharactersByIdsArgs, 'ids'>>;
   episode?: Resolver<Maybe<ResolversTypes['Episode']>, ParentType, ContextType, RequireFields<QueryEpisodeArgs, 'id'>>;

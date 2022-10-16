@@ -10,16 +10,23 @@ query HelloWorld {
 query GetAllRickAndMortyCharacters($page: Int, $filter: FilterCharacter){
 	characters(page: $page, filter: $filter) {
 		info {
+			count
+			pages
 			next
 			prev
-			pages
-			count
 		}
 		results {
 			id
 			name
 			image
 		}
+	}
+}
+
+query GetRickAndMortyCharacterStarRating($id: ID!) {
+	character(id: $id) {
+		id
+		rating @client
 	}
 }
 
