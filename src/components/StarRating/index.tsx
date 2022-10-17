@@ -33,8 +33,9 @@ const StarRating = ({ rating=0 }: StarsProps) => {
 		};
 	};
 
-	function handleClick() {
-		console.log(`Rating: ${asPercentage} out of 5`) 
+	const handleClick = (e) => {
+		console.log(`Rating: ${asPercentage} out of 5`);
+		e.stopPropagation();
 	};
 
 	return (
