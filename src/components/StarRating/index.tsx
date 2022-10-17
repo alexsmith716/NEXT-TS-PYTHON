@@ -33,7 +33,7 @@ const StarRating = ({ rating=0 }: StarsProps) => {
 		};
 	};
 
-	const handleClick = (e) => {
+	const handleClick = (e: React.MouseEvent<HTMLInputElement>) => {
 		console.log(`Rating: ${asPercentage} out of 5`);
 		e.stopPropagation();
 	};
