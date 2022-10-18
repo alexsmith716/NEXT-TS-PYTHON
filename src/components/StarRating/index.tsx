@@ -23,25 +23,34 @@ const StarRating = ({ rating=0 }: StarsProps) => {
 	for(let i=0; i<5; i++) {
 		if(Math.floor(rating/20) > 0) {
 			rating -= 20;
-			starComponents.push( <div key={i} onClick={(e: React.MouseEvent<HTMLInputElement>) => handleStarItemClick(e, i)}><StarStar type="full" /></div> );
+			starComponents.push(
+				<div className="display-flex align-items-center" key={i} onClick={(e: React.MouseEvent<HTMLInputElement>) => handleStarItemClick(e, i)}>
+					<StarStar type="full" />
+				</div>
+			);
 
 		} else if(Math.floor(rating/10) > 0) {
 			rating -= 10;
-			starComponents.push( <div key={i} onClick={(e: React.MouseEvent<HTMLInputElement>) => handleStarItemClick(e, i)}><StarStar type="half" /></div> );
+			starComponents.push(
+				<div className="display-flex align-items-center" key={i} onClick={(e: React.MouseEvent<HTMLInputElement>) => handleStarItemClick(e, i)}>
+					<StarStar type="half" />
+				</div>
+			);
 
 		} else {
-			starComponents.push( <div key={i} onClick={(e: React.MouseEvent<HTMLInputElement>) => handleStarItemClick(e, i)}><StarStar type="empty" /></div> );
+			starComponents.push(
+				<div className="display-flex align-items-center" key={i} onClick={(e: React.MouseEvent<HTMLInputElement>) => handleStarItemClick(e, i)}>
+					<StarStar type="empty" />
+				</div>
+			);
 		}
 
 		if(i === 4) {
-			starComponents.push( <div key={i+1}>{asPercentage} out of 5</div> );
+			starComponents.push(
+				<div key={i+1}>{asPercentage} out of 5</div>
+			);
 		};
 	};
-
-	//const handleStarComponentClick = (e: React.MouseEvent<HTMLInputElement>) => {
-	//	console.log(`Rating: ${asPercentage} out of 5`);
-	//	e.stopPropagation();
-	//};
 
 	return (
 		<div
