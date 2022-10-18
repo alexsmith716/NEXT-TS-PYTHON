@@ -15,17 +15,22 @@ const StarRating = ({ rating=0 }: StarsProps) => {
 	const asPercentage = formatter.format((rating * .01) * 5);
 	let starComponents = [];
 
+	const handleStarItemClick = (e: React.MouseEvent<HTMLInputElement>, i: number) => {
+		console.log(`Star ${i} clicked on Rating ${asPercentage}`);
+		e.stopPropagation();
+	};
+
 	for(let i=0; i<5; i++) {
 		if(Math.floor(rating/20) > 0) {
 			rating -= 20;
-			starComponents.push( <StarStar key={i} type="full" /> );
+			starComponents.push( <div key={i} onClick={(e: React.MouseEvent<HTMLInputElement>) => handleStarItemClick(e, i)}><StarStar type="full" /></div> );
 
 		} else if(Math.floor(rating/10) > 0) {
 			rating -= 10;
-			starComponents.push( <StarStar key={i} type="half" /> );
+			starComponents.push( <div key={i} onClick={(e: React.MouseEvent<HTMLInputElement>) => handleStarItemClick(e, i)}><StarStar type="half" /></div> );
 
 		} else {
-			starComponents.push( <StarStar key={i} type="empty" /> );
+			starComponents.push( <div key={i} onClick={(e: React.MouseEvent<HTMLInputElement>) => handleStarItemClick(e, i)}><StarStar type="empty" /></div> );
 		}
 
 		if(i === 4) {
@@ -33,15 +38,14 @@ const StarRating = ({ rating=0 }: StarsProps) => {
 		};
 	};
 
-	const handleClick = (e: React.MouseEvent<HTMLInputElement>) => {
-		console.log(`Rating: ${asPercentage} out of 5`);
-		e.stopPropagation();
-	};
+	//const handleStarComponentClick = (e: React.MouseEvent<HTMLInputElement>) => {
+	//	console.log(`Rating: ${asPercentage} out of 5`);
+	//	e.stopPropagation();
+	//};
 
 	return (
 		<div
 			className="container-padding-2-border-1 flex-row flex-nowrap star-rating pl-1 pr-1 width-fit-content cursor-pointer"
-			onClick={handleClick}
 		>
 			{starComponents}
 		</div>
