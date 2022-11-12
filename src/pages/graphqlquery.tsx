@@ -35,11 +35,43 @@ const RickAndMorty: NextPage<RickAndMortyPageProps> = ({ documentTitle }) => {
 		fetchMore,
 	} = useQuery(GetAllRickAndMortyCharactersDocument, {
 		notifyOnNetworkStatusChange: true,
-		onError: (error) => {
+		// ***** still going over this. getting a React warning but setState inside 'onCompleted' should work? *****
+		//	onError: (error) => {
+		//		console.error(error);
+		//		setQueryError(true);
+		//	},
+		//	onCompleted: (data) => {
+		//		setQueryPage(data.characters.info.next);
+		//		setQueryError(false);
+		//		const { characters: { info } } = data;
+		//		if (info) {
+		//			setRickAndMortyCharactersInfo(info);
+		//			if (!info.prev && info.next) {
+		//				setRickAndMortyCharactersCurrentPage(1);
+		//				setCharactersLoaded((info.next - 1)*20);
+		//			} else if (info.next && info.prev) {
+		//				setRickAndMortyCharactersCurrentPage(info.next - 1);
+		//				setCharactersLoaded((info.next - 1)*20);
+		//			} else {
+		//				setRickAndMortyCharactersCurrentPage(info.pages);
+		//				setCharactersLoaded(info.count);
+		//				setAllCharactersLoaded(true);
+		//			}
+		//		}
+		//	},
+	});
+
+	const isFetchingMore = networkStatus === NetworkStatus.fetchMore;
+
+	useEffect(() => {
+		if(error) {
 			console.error(error);
 			setQueryError(true);
-		},
-		onCompleted: (data) => {
+		}
+	}, [error]);
+
+	useEffect(() => {
+		if(data && data.characters.info) {
 			setQueryPage(data.characters.info.next);
 			setQueryError(false);
 			const { characters: { info } } = data;
@@ -57,10 +89,8 @@ const RickAndMorty: NextPage<RickAndMortyPageProps> = ({ documentTitle }) => {
 					setAllCharactersLoaded(true);
 				}
 			}
-		},
-	});
-
-	const isFetchingMore = networkStatus === NetworkStatus.fetchMore;
+		}
+	}, [data]);
 
 	useEffect(() => {
 		setTitle(documentTitle+':\u0020Rick\u0020And\u0020Morty\u0020Query');
@@ -189,7 +219,7 @@ const RickAndMorty: NextPage<RickAndMortyPageProps> = ({ documentTitle }) => {
 									try{
 										await fetchMore({
 											variables: {
-												page: !queryPage ? 1 : queryPage, 
+												page: !queryPage ? 1 : queryPage,
 											}
 										});
 									} catch(error) {
