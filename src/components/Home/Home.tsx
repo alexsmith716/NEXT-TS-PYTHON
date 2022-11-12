@@ -1,5 +1,4 @@
 import React, { useEffect, useReducer } from 'react';
-import Link from 'next/link';
 import { NavLinks } from '../../components/NavBar/NavLinks';
 import * as Styles from './styles';
 
@@ -41,9 +40,7 @@ export default function Home() {
 						... check out samples of my work.
 					</Styles.MastheadBlurbElipsis>
 
-					<Link href={`/${NavLinks[int].url}`} passHref>
-						<Styles.MastheadLink className="btn btn-lg btn-success" data-testid="mastheadLink">{`${NavLinks[int].title}`}&nbsp;&gt;&gt;</Styles.MastheadLink>
-					</Link>
+					<Styles.MastheadLink href={`/${NavLinks[int].url}`} passHref className="btn btn-lg btn-success" data-testid="mastheadLink">{`${NavLinks[int].title}`}&nbsp;&gt;&gt;</Styles.MastheadLink>
 
 				</div>
 			</Styles.Masthead>

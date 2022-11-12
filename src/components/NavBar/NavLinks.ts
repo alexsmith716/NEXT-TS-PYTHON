@@ -1,6 +1,6 @@
 export const NavLinks = [
 	{
-		title: 'PyApi',
+		title: 'Py',
 		url: 'pyapi',
 		linkType: 'navLink',
 	},
@@ -10,17 +10,17 @@ export const NavLinks = [
 		linkType: 'navLink',
 	},
 	{
-		title: 'AboutSWR',
+		title: 'SWR',
 		url: 'aboutswr',
 		linkType: 'navLink',
 	},
 	{
-		title: 'AboutSSR',
+		title: 'SSR',
 		url: 'aboutssr',
 		linkType: 'navLink',
 	},
 	{
-		title: 'GraphQLQuery',
+		title: 'GraphQL',
 		url: 'graphqlquery',
 		linkType: 'navLink',
 	},

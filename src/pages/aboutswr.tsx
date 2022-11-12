@@ -66,7 +66,7 @@ const AboutSwr: NextPage<AboutSwrPageProps> = ({documentTitle}) => {
 									{data.map(({id}: {id: any}) => (
 										<li key={`user_${id}`}>
 											<Link href="/user/[id]" as={`/user/${id}`}>
-												<a>{`User ${id}`}</a>
+												{`User ${id}`}
 											</Link>
 										</li>
 									))}
