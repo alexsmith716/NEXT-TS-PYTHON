@@ -5,10 +5,13 @@ module.exports = {
 	reactStrictMode: true,
 	env: {},
 
-	webpack: (config, {dev, webpack, isServer}) => {
+	experimental: {
+		appDir: true
+	},
+
+	webpack: (config, { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack }) => {
 		config.module.rules.push({
 			test: /\.(graphql|gql)$/,
-			exclude: /node_modules/,
 			loader: 'graphql-tag/loader',
 		});
 		config.plugins.push(

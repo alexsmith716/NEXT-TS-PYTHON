@@ -115,6 +115,6 @@ export const MastheadButton = styled(Link)`
 	font-size: 1.1rem;
 `;
 
-export const MastheadLink = styled.a`
+export const MastheadLink = styled(Link)`
 	text-decoration: none;
 `;

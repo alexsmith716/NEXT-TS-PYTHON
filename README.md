@@ -7,7 +7,7 @@ The goal of this project is to work on Next.JS, TypeScript, core Python (data st
 [The app is deployed here.](https://portfolio-alexsmith716.vercel.app)
 
 ## Technologies Used:
-* Next.js
+* Next.js 13
 * TypeScript
 * React 18
 * Redux
@@ -35,9 +35,12 @@ The goal of this project is to work on Next.JS, TypeScript, core Python (data st
 * Mypy
 * Flake8
 
-## TODO:
-* `StarRating` percentage generation needs finer accuracy
-* Performance refactoring and TS checks are needed (`StarRating`, `graphqlquery`, `useMemo`)
+## TODO: 
+* Address issue possibly related to "apollographql/apollo-client#9801" (on the way)
+* Take advantage of `@cypress/webpack-preprocessor` (on the way)
+* Migrate Next.js 13 from pages to app (still in progress)
+* Fix, Refactor and add new Cypress Tests (will add soon)
+* Performance refactoring and TS checks are needed
 * `StarRating` responds to user generated rating
 * Fix all TS type-checks (`pyapi.tsx`)
 * Add `pyapi.tsx` api responses to state container

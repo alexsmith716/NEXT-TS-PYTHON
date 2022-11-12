@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
+import React, { useEffect, useState, } from 'react';
 import { useRouter } from 'next/router';
 import { NavLinks } from './NavLinks';
 import * as Styles from './styles-navbar';
@@ -19,15 +18,17 @@ const NavBar = () => {
 		setActiveRoute(location);
 	}, [location]);
 
+	//const memoizedValue = useMemo(() => {
+	//  return location
+	//}, [location]);
+
 	return (
 		<Styles.NavBar>
 			<div className="container">
 				<Styles.Expand>
-					<Link href="/" passHref>
-						<Styles.NavBarBrandLink data-testid="navbar-brand-link" onClick={() => setClicked(false)}>
-							{activeRoute !== '/' ? 'Home' : null}
-						</Styles.NavBarBrandLink>
-					</Link>
+					<Styles.NavBarBrandLink href="/" passHref data-testid="navbar-brand-link" onClick={() => setClicked(false)}>
+						{activeRoute !== '/' ? 'Home' : null}
+					</Styles.NavBarBrandLink>
 
 					<Styles.NavBarNav data-testid="navbar-nav" clicked={clicked} className={clicked ? 'clicked' : ''}>
 						<li>
@@ -37,7 +38,7 @@ const NavBar = () => {
 									setClicked(false);
 								}}
 							>
-								{themeMode.mode === 'dark' ? `Light` : `Dark`}Theme
+								{themeMode.mode === 'dark' ? `Light` : `Dark`}
 							</Styles.NavBarNavA>
 						</li>
 
@@ -45,12 +46,7 @@ const NavBar = () => {
 							const a = activeRoute === `/${item.url}`;
 							return (
 								<li key={index}>
-									<Link
-										href={`/${item.url}`}
-										passHref
-									>
-										<Styles.NavBarNavLink activelink={a.toString()} onClick={()=> setClicked(false)}>{item.title}</Styles.NavBarNavLink>
-									</Link>
+									<Styles.NavBarNavLink href={`/${item.url}`} passHref activelink={a.toString()} onClick={()=> setClicked(false)}>{item.title}</Styles.NavBarNavLink>
 								</li>
 							);
 						})}
@@ -68,4 +64,3 @@ const NavBar = () => {
 };
 
 export default NavBar;
-
