@@ -34,10 +34,10 @@ The goal of this project is to work on Next.JS, TypeScript, core Python (data st
 * Moto
 * Mypy
 * Flake8
+* webpack 5
+* Cypress Webpack Preprocessor
 
 ## TODO: 
-* Address issue possibly related to "apollographql/apollo-client#9801" (on the way)
-* Take advantage of `@cypress/webpack-preprocessor` (on the way)
 * Migrate Next.js 13 from pages to app (still in progress)
 * Fix, Refactor and add new Cypress Tests (will add soon)
 * Performance refactoring and TS checks are needed
