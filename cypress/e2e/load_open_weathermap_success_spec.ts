@@ -1,4 +1,4 @@
-describe('Load OpenWeathermap Success!!!!', () => {
+describe('Load OpenWeathermap Success', () => {
 
 	context('Index page - OpenWeathermap Component - Dispatch loadOpenWeathermap() - Success', () => {
 		beforeEach(() => {

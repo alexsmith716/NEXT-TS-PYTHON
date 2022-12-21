@@ -9,6 +9,9 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 //
+
+// Alot can be done with commands
+
 //
 // -- This is a parent command --
 // Cypress.Commands.add('login', (email, password) => { ... })
