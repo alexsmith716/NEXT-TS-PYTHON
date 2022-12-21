@@ -13,7 +13,7 @@ uvicorn = "*"
 [dev-packages]
 moto = "*"
 pytest = "*"
-requests = "*"
+httpx = "*"
 
 [requires]
 python_version = "3.9"
