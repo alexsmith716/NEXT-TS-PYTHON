@@ -7,6 +7,11 @@ const ABOUTCSVB_LOAD = 'ABOUTCSVB_LOAD';
 const ABOUTCSVB_SUCCESS = 'ABOUTCSVB_SUCCESS';
 const ABOUTCSVB_FAIL = 'ABOUTCSVB_FAIL';
 
+const headers = {
+	//'Content-Type': 'application/json;',
+	'Accept-Encoding': '', //gzip,deflate,compress
+};
+
 const reducer = (state = {}, action: ActionLoadPromiseType | HydrateActionType) => {
 	switch (action.type) {
 		case HYDRATE:
@@ -47,8 +52,8 @@ export function loadAboutCSVB(): AnyAction {
 	return {
 		type: [ABOUTCSVB_LOAD, ABOUTCSVB_SUCCESS, ABOUTCSVB_FAIL],
 		// line 50 below is used to test /cypress/e2e/nodeEvents/loadAboutSsr_getServerSideProps_spec.ts
-		//httpClientPromise: ({httpClient}: {httpClient: AxiosInstance}) => httpClient.get(`https://jsonplaceholder.typicode.com/posts`, {params: {_limit:1}})
-		httpClientPromise: ({httpClient}: {httpClient: AxiosInstance}) => httpClient.get(`https://jsonplaceholder.typicode.com/posts`, {params: {_limit:`${limit}`}})
+		//httpClientPromise: ({httpClient}: {httpClient: AxiosInstance}) => httpClient.get(`https://jsonplaceholder.typicode.com/posts`, {params: {_limit:1}, headers: headers})
+		httpClientPromise: ({httpClient}: {httpClient: AxiosInstance}) => httpClient.get(`https://jsonplaceholder.typicode.com/posts`, {params: {_limit:`${limit}`}, headers: headers})
 			.then((response) => {
 				return {
 					props: {
