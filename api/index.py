@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse, StreamingResponse
+from os import environ as env
 
 from .modules.fibonacci import fib_func
 from .modules.verifyCredentials import verify_credentials
@@ -87,7 +88,7 @@ def get_stream_bridge_ratings():
 	try:
 		if verify_credentials():
 			return StreamingResponse(
-				fetch_s3(False),
+				fetch_s3(False, False),
 				media_type="text/csv",
 				headers={
 					"Content-Type": "text/csv",

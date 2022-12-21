@@ -1,20 +1,45 @@
-import os
+from os import environ as env
 import boto3
 from typing import Generator
 #from sys import getsizeof
 
-def fetch_s3(iterLines: bool) -> Generator[bytes, None, None]:
+def fetch_s3(test: bool, iterLines: bool, testConfigObj: dict={}) -> Generator[bytes, None, None]:
+	if test == True and "region" in testConfigObj:
+		try:
+			VERCEL_PUBLIC_S3_REGION = testConfigObj['region']
+			VERCEL_PUBLIC_ACCESS_KEY = testConfigObj['ak']
+			VERCEL_PUBLIC_SECRET_KEY = testConfigObj['sk']
+			VERCEL_PUBLIC_S3_BUCKET = testConfigObj['bucket']
+			VERCEL_PUBLIC_S3_BUCKET_KEY = testConfigObj['key']
+		except Exception as error:
+			print(error)
+			raise
+	elif test == False and not "region" in testConfigObj:
+		try:
+			VERCEL_PUBLIC_S3_REGION = env['VERCEL_PUBLIC_S3_REGION']
+			VERCEL_PUBLIC_ACCESS_KEY = env['VERCEL_PUBLIC_ACCESS_KEY']
+			VERCEL_PUBLIC_SECRET_KEY = env['VERCEL_PUBLIC_SECRET_KEY']
+			VERCEL_PUBLIC_S3_BUCKET = env['VERCEL_PUBLIC_S3_BUCKET']
+			VERCEL_PUBLIC_S3_BUCKET_KEY = env['VERCEL_PUBLIC_S3_BUCKET_KEY']
+		except Exception as error:
+			print(error)
+			raise
+	else:
+		print('*** fetch_s3() is Missing Required Arguments ***')
+		raise
+
 	session = boto3.Session()
+
 	s3 = session.client(
 		's3',
-		region_name=os.environ.get('VERCEL_PUBLIC_S3_REGION'),
-		aws_access_key_id=os.environ.get('VERCEL_PUBLIC_ACCESS_KEY'),
-		aws_secret_access_key=os.environ.get('VERCEL_PUBLIC_SECRET_KEY'),
+		region_name=VERCEL_PUBLIC_S3_REGION,
+		aws_access_key_id=VERCEL_PUBLIC_ACCESS_KEY,
+		aws_secret_access_key=VERCEL_PUBLIC_SECRET_KEY,
 	)
 
 	s3_ob = s3.get_object(
-		Bucket=os.environ.get('VERCEL_PUBLIC_S3_BUCKET'),
-		Key=os.environ.get('VERCEL_PUBLIC_S3_BUCKET_KEY'),
+		Bucket=VERCEL_PUBLIC_S3_BUCKET,
+		Key=VERCEL_PUBLIC_S3_BUCKET_KEY,
 	)
 
 	if iterLines:
