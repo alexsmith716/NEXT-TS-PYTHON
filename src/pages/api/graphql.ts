@@ -1,38 +1,38 @@
-import { PageConfig } from 'next';
-import { ApolloServer } from 'apollo-server-micro';
-//import { text } from 'micro';
-import { MicroRequest } from 'apollo-server-micro/dist/types';
-import { send } from 'micro';
-import { ServerResponse } from 'http';
+import { ApolloServer } from '@apollo/server';
+import { startServerAndCreateNextHandler } from '@as-integrations/next';
+import { NextApiRequest, NextApiResponse } from 'next';
 import schema from '../../apollo/schema';
 import { RickAndMortyAPI } from '../../apollo/rickAndMortyAPI';
-import { StrawberryAPI } from '../../apollo/strawberryAPI';
+//import { StrawberryAPI } from '../../apollo/strawberryAPI';
 
-export const config: PageConfig = {
-	api: {
-		bodyParser: false,
-	},
-};
+//@ts-ignore
+const isDevelopment = process.env.NODE_ENV === "development";
 
 const apolloServer = new ApolloServer({
 	schema,
-	dataSources: () => {
+	//plugins: [
+	//	isDevelopment ? :,
+	//],
+	//introspection: isDevelopment ? true : false,
+	introspection: isDevelopment ? true : false,
+});
+
+const apolloHandler = startServerAndCreateNextHandler(apolloServer, {
+	//@ts-ignore
+	context: async (req: NextApiRequest, res: NextApiResponse) => {
 		return {
-			rickAndMorty: new RickAndMortyAPI(),
-			strawberryAPI: new StrawberryAPI(),
+			dataSources: {
+				rickAndMorty: new RickAndMortyAPI(),
+			},
 		};
 	},
 });
 
-const startServer = apolloServer.start();
-
-export default async function handler(req: MicroRequest, res: ServerResponse) {
-	//const reqQuery = await text(req);
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	try {
-		await startServer;
-		await apolloServer.createHandler({path: '/api/graphql'})(req, res);
+		await apolloHandler(req, res);
 	} catch (error) {
-		//send(res, 400, {error: 'Error when attempting to fetch resource.'});
-		send(res, (error as any).statusCode || 400, (error as Error).message);
+		//res.send(res, (error as any).statusCode || 500, (error as Error).message);
+		res.status(500).send('Error when attempting to fetch resource.');
 	}
 };

@@ -10,7 +10,7 @@ import Button from '../components/Button';
 import RickAndMortyCharacter from '../components/RickAndMortyCharacter/RickAndMortyCharacter';
 import Modal from '../components/Modal/Modal';
 import RickAndMortyModalView from '../components/RickAndMortyModalView/RickAndMortyModalView';
-import { GetAllRickAndMortyCharactersDocument} from '../apollo/generated/react-apollo';
+import { GetAllRickAndMortyCharactersDocument } from '../apollo/generated/react-apollo';
 
 interface RickAndMortyPageProps {
 	documentTitle?: string;
