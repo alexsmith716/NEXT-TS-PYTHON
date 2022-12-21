@@ -1,29 +1,3 @@
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
-
-# testing
-/coverage
-*.tsbuildinfo
-
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
-.swc
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
 # local env files
 .env
 .env.build
@@ -33,9 +7,6 @@ yarn-error.log*
 .env.production.local
 env/
 venv/
-
-# vercel
-.vercel
 
 # cypress
 cypress.env.json
@@ -65,3 +36,53 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 cover/
+
+# build output
+dist
+.next
+target
+packages/next/wasm/@next
+
+# dependencies
+node_modules
+package-lock.json
+yarn.lock
+!/yarn.lock
+test/node_modules
+.pnpm-store/
+
+# logs & pids
+*.log
+pids
+*.cpuprofile
+
+# coverage
+.nyc_output
+coverage
+
+# test output
+test/**/out*
+test/**/next-env.d.ts
+.DS_Store
+/e2e-tests
+test/tmp/**
+
+# Editors
+**/.idea
+**/.#*
+.nvmrc
+
+# examples
+examples/**/out
+examples/**/.env*.local
+
+pr-stats.md
+test-timings.json
+
+# Vercel
+.vercel
+.now
+
+# Cache
+*.tsbuildinfo
+.swc/
