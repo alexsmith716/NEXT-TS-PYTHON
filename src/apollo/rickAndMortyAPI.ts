@@ -1,4 +1,3 @@
-import { DataSource } from 'apollo-datasource';
 import axios from 'axios';
 import { print } from 'graphql/language/printer';
 
@@ -12,17 +11,25 @@ import {
 
 import { FilterCharacter } from './generated/react-apollo';
 
-export class RickAndMortyAPI extends DataSource {
-	constructor() {
-		super();
-	};
+export class RickAndMortyAPI {
+	constructor() { }
 
 	graphqlClient({ query = '', variables = {}, }) {
+		const endpoint = 'https://rickandmortyapi.com/graphql';
+		const headers = {
+			//'Content-Type': 'application/json;',
+			'Accept-Encoding': '', //gzip,deflate,compress
+		};
 		const params = {
 			query: query,
 			variables: { ...variables },
 		};
-		return axios.get('https://rickandmortyapi.com/graphql', { params: params })
+		return axios({
+			url: endpoint,
+			method: 'post',
+			headers: headers,
+			data: params
+		})
 			.then((response) => {
 				if(response.data && response.data.characters) {
 					const {data: { characters },} = response.data;
@@ -30,6 +37,8 @@ export class RickAndMortyAPI extends DataSource {
 						return Promise.reject();
 					}
 				}
+				//console.log('>>>>>>> RickAndMortyAPI > axios > response:', response)
+				//console.log('>>>>>>> RickAndMortyAPI > axios > response.data:', JSON.stringify(response.data))
 
 				return response.data;
 			})
