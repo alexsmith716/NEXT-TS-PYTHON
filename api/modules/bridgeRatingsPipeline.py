@@ -5,7 +5,7 @@ from typing import Generator
 from .fetchS3 import fetch_s3
 
 def bridge_ratings_pipeline() -> Generator[str, None, None]:
-	rows = (i.decode('utf-8').rstrip().split(',') for i in fetch_s3(True))
+	rows = (i.decode('utf-8').rstrip().split(',') for i in fetch_s3(False, True))
 
 	heading = rows.__next__()
 	dictionaries = (dict(zip(heading, data)) for data in rows)
