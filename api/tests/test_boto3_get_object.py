@@ -4,12 +4,10 @@ from moto import mock_s3
 from ..modules.verifyCredentials import verify_credentials
 from ..modules.fetchS3 import fetch_s3
 
-awsAccess = {
+testConfigObj = {
 	"region": 'us-east-1',
 	"ak": 'testing',
 	"sk": 'testing',
-}
-awssdkpython = {
 	"bucket": 'testbucket',
 	"key": 'test_file.csv',
 }
@@ -55,7 +53,7 @@ def test_get_object():
 		with open('./api/tests/fixtures/test_file.csv') as s:
 			a = s.read()
 
-		b = fetch_s3(awsAccess, awssdkpython, False).__next__().decode('utf-8')
+		b = fetch_s3(True, False, testConfigObj).__next__().decode('utf-8')
 
-		# 6 passed in 1.06s
+		# 6 passed in 1.36s
 		assert a == b
