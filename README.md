@@ -21,7 +21,6 @@ The goal of this project is to work on Next.JS, TypeScript, core Python (data st
 * Apollo Client
 * Apollo Server 4
 * GraphQL Code Generator
-* Cypress
 * Jest
 * React Testing Library
 * AWS SDK v3 Client mock
@@ -35,10 +34,11 @@ The goal of this project is to work on Next.JS, TypeScript, core Python (data st
 * Mypy
 * Flake8
 * webpack 5
+* Cypress 12
 * Cypress Webpack Preprocessor
 
 ## TODO:
-* Add error handling to SWR hooks and fix the v2 update error. 
+* Add error handling to SWR hooks and fix the v2 update error.
 * Make `Home` component's `backgroundColorPalette` animation background dynamic
 * Add several more Python features
 * Add Strawberry GraphQL feature
