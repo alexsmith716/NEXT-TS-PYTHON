@@ -37,7 +37,8 @@ The goal of this project is to work on Next.JS, TypeScript, core Python (data st
 * webpack 5
 * Cypress Webpack Preprocessor
 
-## TODO: 
+## TODO:
+* Add error handling to SWR hooks and fix the v2 update error. 
 * Make `Home` component's `backgroundColorPalette` animation background dynamic
 * Add several more Python features
 * Add Strawberry GraphQL feature
