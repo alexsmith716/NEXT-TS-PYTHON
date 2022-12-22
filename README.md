@@ -19,7 +19,7 @@ The goal of this project is to work on Next.JS, TypeScript, core Python (data st
 * Styled Components
 * GraphQL.js
 * Apollo Client
-* Apollo Server
+* Apollo Server 4
 * GraphQL Code Generator
 * Cypress
 * Jest
@@ -38,8 +38,11 @@ The goal of this project is to work on Next.JS, TypeScript, core Python (data st
 * Cypress Webpack Preprocessor
 
 ## TODO: 
-* Migrate Next.js 13 from pages to app (still in progress)
-* Fix, Refactor and add new Cypress Tests (will add soon)
+* Make `Home` component's `backgroundColorPalette` animation background dynamic
+* Add several more Python features
+* Add Strawberry GraphQL feature
+* Migrate Next.js 13 from pages to app (in a slow progress)
+* Add new Cypress Tests
 * Performance refactoring and TS checks are needed
 * `StarRating` responds to user generated rating
 * Fix all TS type-checks (`pyapi.tsx`)
