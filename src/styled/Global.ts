@@ -48,6 +48,11 @@ export const GlobalStyle = createGlobalStyle`
 		white-space: pre-wrap;
 	}
 
+	.comment-grid-container {
+		display: grid;
+		row-gap: 10px;
+	}
+
 	.block-element-p {
 		margin-top: 16px;
 		margin-right: 16px;
@@ -800,10 +805,6 @@ export const GlobalStyle = createGlobalStyle`
 
 	.bg-color-turquoise-1 {
 		background-color: #00f5ff;
-	}
-
-	.bg-color-star-gold {
-		background-color: #ffb90f;
 	}
 
 	.bg-color-darkgoldenrod-1 {
