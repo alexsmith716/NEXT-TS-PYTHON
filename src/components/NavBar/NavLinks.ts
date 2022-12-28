@@ -10,11 +10,6 @@ export const NavLinks = [
 		linkType: 'navLink',
 	},
 	{
-		title: 'AboutSWR',
-		url: 'aboutswr',
-		linkType: 'navLink',
-	},
-	{
 		title: 'AboutSSR',
 		url: 'aboutssr',
 		linkType: 'navLink',
