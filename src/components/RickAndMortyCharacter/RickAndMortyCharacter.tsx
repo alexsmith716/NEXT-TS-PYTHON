@@ -17,7 +17,7 @@ function RickAndMortyCharacter({character, index}: {character: Character; index:
 			variables: { id: character.id },
 		});
 		setTheStarRating(rating);
-	}, []);
+	}, [client, character.id]);
 
 	return (
 		<>

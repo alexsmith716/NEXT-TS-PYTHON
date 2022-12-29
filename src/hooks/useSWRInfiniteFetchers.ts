@@ -15,7 +15,12 @@ export const usePaginationTypicodeComments = () => {
 	const { data, error, size, setSize } = useSWRInfinite(
 		(index: number) => {
 			return `https://jsonplaceholder.typicode.com/comments?_page=${index + 1}&_limit=40`},
-			fetcher
+			fetcher,
+			{
+				revalidateIfStale: false,
+				revalidateOnFocus: false,
+				revalidateOnReconnect: false,
+			}
 		);
 
 	const comments = data ? data.flat(1) : [];
