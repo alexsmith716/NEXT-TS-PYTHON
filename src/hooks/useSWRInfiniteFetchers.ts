@@ -1,6 +1,17 @@
 import useSWRInfinite from 'swr/infinite';
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+const fetchData = (url: string) => {
+	return fetch(url)
+		.then((res) => {
+			if (!res.ok) {
+				throw new Error('Network response error');
+			}
+			return res.json()
+		})
+		.catch((error: Error) => {
+			throw error;
+		});
+}
 
 // data: an array of fetch response values of each page
 // error: error thrown by fetcher (or undefined)
@@ -15,11 +26,15 @@ export const usePaginationTypicodeComments = () => {
 	const { data, error, size, setSize } = useSWRInfinite(
 		(index: number) => {
 			return `https://jsonplaceholder.typicode.com/comments?_page=${index + 1}&_limit=40`},
-			fetcher,
+			fetchData,
 			{
-				revalidateIfStale: false,
-				revalidateOnFocus: false,
-				revalidateOnReconnect: false,
+				shouldRetryOnError: true, //retry when fetcher has an error
+				revalidateIfStale: false, //automatically revalidate even if there is stale data
+				revalidateOnFocus: false, //automatically revalidate when window gets focused
+				revalidateOnReconnect: false, //automatically revalidate when the browser regains a network connection (via navigator.onLine)
+				//refreshInterval: 40000, //automatically refetch data
+				revalidateAll: false, //always try to revalidate all pages
+				persistSize: true,
 			}
 		);
 

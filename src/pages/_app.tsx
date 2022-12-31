@@ -15,19 +15,18 @@ import '../styled/fonts.css';
 const App = ({ Component, ...initialProps }: AppContext & AppInitialProps) => {
 	const {store, props} = wrapper.useWrappedStore(initialProps);
 	const clientApollo = useApollo(props.pageProps.initialApolloState);
+	// *** `SWRConfig` global configurations ***
 
 	return (
-		<>
-			<ApolloProvider client={clientApollo}>
-				<Provider store={store}>
-					<ThemeContext>
-						<Layout>
-							<Component {...props.pageProps} />
-						</Layout>
-					</ThemeContext>
-				</Provider>
-			</ApolloProvider>
-		</>
+		<ApolloProvider client={clientApollo}>
+			<Provider store={store}>
+				<ThemeContext>
+					<Layout>
+						<Component {...props.pageProps} />
+					</Layout>
+				</ThemeContext>
+			</Provider>
+		</ApolloProvider>
 	);
 };
 

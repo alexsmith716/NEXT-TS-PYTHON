@@ -12,13 +12,17 @@ interface AboutSWRInfinitePageProps {
 };
 
 const AboutSWRInfinite: NextPage<AboutSWRInfinitePageProps> = ({ documentTitle }) => {
-	const { comments, error, isFetchingMore, size, setSize, allDataLoaded } = usePaginationTypicodeComments();
+	const { comments, error, size, setSize, } = usePaginationTypicodeComments();
 
 	const [title, setTitle] = useState('');
 
 	useEffect(() => {
 		setTitle(documentTitle+':\u0020About\u0020SWR\u0020Two');
 	}, [documentTitle]);
+
+	const handleFetchCommentsClick = () => {
+		setSize(size + 1)
+	};
 
 	return (
 		<>
@@ -67,8 +71,8 @@ const AboutSWRInfinite: NextPage<AboutSWRInfinitePageProps> = ({ documentTitle }
 							<div className="display-flex align-items-center justify-content-center">
 								<Button
 									type="button"
-                  className={`btn-success btn-md mt-2 ${isFetchingMore || allDataLoaded ? 'disabled' : ''}`}
-									onClick={() => setSize(size + 1)}
+									className={`btn-success btn-md mt-2`}
+									onClick={handleFetchCommentsClick}
 									buttonText="Fetch Comments"
 								/>
 							</div>
