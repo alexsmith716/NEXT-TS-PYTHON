@@ -1,14 +1,15 @@
+
 export type Props = {
+	disabled?: boolean;
 	className?: string;
-	onClick?: () => void;
+	onClick(event: React.MouseEvent<HTMLButtonElement>): void;
 	type?: 'button' | 'submit' | 'reset' | undefined;
 	buttonText?: string;
-	disabled?: boolean;
 };
 
-export default function Button({ className, onClick, type = 'button', buttonText = 'button' }: Props) {
+export default function Button({ disabled=false, className, onClick, type='button', buttonText='button' }: Props) {
 	return (
-		<button className={`btn ${className}`} onClick={onClick} type={type}>
+		<button disabled={disabled} className={`btn ${className}`} onClick={onClick} type={type}>
 			{buttonText}
 		</button>
 	);
