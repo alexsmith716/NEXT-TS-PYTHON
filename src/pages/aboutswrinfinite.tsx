@@ -37,7 +37,7 @@ const AboutSWRInfinite: NextPage<AboutSWRInfinitePageProps> = ({ documentTitle }
 
 				{/* ---------------------------------------------- */}
 
-				<div className="bg-color-ivory container-padding-border-radius-1 overflow-wrap-break-word mb-5">
+				<div className="bg-color-ivory container-padding-border-radius-1 mb-5">
 
 					{!comments && (
 						<div className="flex-column align-items-center">
