@@ -1,25 +1,16 @@
-export default function Comment({ index }: { index: any; }) {
+export default function Comment({ index, className }: { index: any; className: any; }) {
+
+	let commentId = `\u0020${index?.id}`;
+	let commentName = `\u0020${index?.name}`;
+	let commentEmail = `\u0020${index?.email}`;
+	let commentBody = `\u0020${index?.body}`;
+
 	return (
-		<>
-			<div className="overflow-wrap-break-word bg-color-cadetblue container-padding-radius-10">
-				<b>id:</b>&nbsp;{index?.id}
-				<br/>
-				<b>name:</b>&nbsp;{index?.name}
-				<br/>
-				<b>email:</b>&nbsp;{index?.email}
-				<br/>
-				<b>comment:</b>&nbsp;{index?.body}
-			</div>
-		</>
+		<div className={`${className}`}>
+			<b>id:</b>{commentId}<br/>
+			<b>name:</b>{commentName}<br/>
+			<b>email:</b>{commentEmail}<br/>
+			<b>comment:</b>{commentBody}
+		</div>
 	);
 };
-
-//[
-//	{
-//		"postId": 1,
-//		"id": 1,
-//		"name": "id labore ex et quam laborum",
-//		"email": "Eliseo@gardner.biz",
-//		"body": "laudantium enim quasi est quidem magnam voluptate ipsam eos\ntempora quo necessitatibus\ndolor quam autem quasi\nreiciendis et nam sapiente accusantium"
-//	}
-//]

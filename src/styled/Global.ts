@@ -232,7 +232,7 @@ export const GlobalStyle = createGlobalStyle`
 	}
 
 	.container-padding-radius-10 {
-		padding: 10px 10px;
+		padding: 10px;
 		border-radius: 10px;
 	}
 

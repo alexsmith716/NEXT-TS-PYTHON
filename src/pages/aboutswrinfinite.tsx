@@ -64,11 +64,11 @@ const AboutSWRInfinite: NextPage<AboutSWRInfinitePageProps> = ({ documentTitle }
 							<div className="container-padding-border-radius-2">
 								<div className="comment-grid-container">
 									{comments.map((pageIndex: any) => (
-										<Comment index={pageIndex} key={pageIndex.id} />
+										<Comment key={pageIndex.id} index={pageIndex} className="bg-color-cadetblue container-padding-radius-10"/>
 									))}
 								</div>
 							</div>
-							<div className="display-flex align-items-center justify-content-center">
+							<div className={`display-flex align-items-center justify-content-center`}>
 								<Button
 									type="button"
 									className={`btn-success btn-md mt-2`}
