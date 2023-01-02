@@ -12,7 +12,7 @@ interface AboutSWRInfinitePageProps {
 };
 
 const AboutSWRInfinite: NextPage<AboutSWRInfinitePageProps> = ({ documentTitle }) => {
-	const { comments, error, size, setSize, } = usePaginationTypicodeComments();
+	const { comments, error, size, setSize, allDataLoaded } = usePaginationTypicodeComments();
 
 	const [title, setTitle] = useState('');
 
@@ -70,8 +70,9 @@ const AboutSWRInfinite: NextPage<AboutSWRInfinitePageProps> = ({ documentTitle }
 							</div>
 							<div className={`display-flex align-items-center justify-content-center`}>
 								<Button
+									disabled={allDataLoaded ? true : false}
 									type="button"
-									className={`btn-success btn-md mt-2`}
+									className={`btn-success btn-md mt-2 ${allDataLoaded ? 'disabled' : ''}`}
 									onClick={handleFetchCommentsClick}
 									buttonText="Fetch Comments"
 								/>
