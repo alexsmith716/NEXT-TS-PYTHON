@@ -12,7 +12,15 @@ interface AboutSWRInfinitePageProps {
 };
 
 const AboutSWRInfinite: NextPage<AboutSWRInfinitePageProps> = ({ documentTitle }) => {
-	const { comments, error, size, setSize, allDataLoaded } = usePaginationTypicodeComments();
+	const {
+		comments,
+		error,
+		isLoading,
+		isFetchingMore,
+		size,
+		setSize,
+		allDataLoaded,
+	} = usePaginationTypicodeComments();
 
 	const [title, setTitle] = useState('');
 
@@ -39,7 +47,7 @@ const AboutSWRInfinite: NextPage<AboutSWRInfinitePageProps> = ({ documentTitle }
 
 				<div className="bg-color-ivory container-padding-border-radius-1 mb-5">
 
-					{!comments && (
+					{(isLoading || isFetchingMore) && !error && (
 						<div className="flex-column align-items-center">
 							<div className="text-center">
 								<div className="container-padding-radius-10">

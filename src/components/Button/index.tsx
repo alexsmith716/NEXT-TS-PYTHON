@@ -1,8 +1,7 @@
-
 export type Props = {
 	disabled?: boolean;
 	className?: string;
-	onClick(event: React.MouseEvent<HTMLButtonElement>): void;
+	onClick?(event: React.MouseEvent<HTMLButtonElement>): void;
 	type?: 'button' | 'submit' | 'reset' | undefined;
 	buttonText?: string;
 };
