@@ -1,9 +1,9 @@
 export default function Comment({ index, className }: { index: any; className: any; }) {
 
-	let commentId = `\u0020${index?.id}`;
-	let commentName = `\u0020${index?.name}`;
-	let commentEmail = `\u0020${index?.email}`;
-	let commentBody = `\u0020${index?.body}`;
+	const commentId = `\u0020${index?.id}`;
+	const commentName = `\u0020${index?.name}`;
+	const commentEmail = `\u0020${index?.email}`;
+	const commentBody = `\u0020${index?.body}`;
 
 	return (
 		<div className={`${className}`}>
