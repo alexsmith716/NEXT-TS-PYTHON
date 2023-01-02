@@ -15,7 +15,7 @@ const fetchData = (url: string) => {
 
 // data: an array of fetch response values of each page
 // error: error thrown by fetcher (or undefined)
-// isLoading: error: error thrown by fetcher (or undefined)
+// isLoading: if there's an ongoing request and no "loaded data". Fallback data and previous data are not considered "loaded data"
 // isValidating: if there's a request or revalidation loading
 // mutate(data?, options?): function to mutate the cached data
 // mutate: same as useSWR's bound mutate function but manipulates the data array
@@ -23,7 +23,8 @@ const fetchData = (url: string) => {
 // setSize: set the number of pages that need to be fetched
 
 export const usePaginationTypicodeComments = () => {
-	const { data, error, size, setSize } = useSWRInfinite(
+	//isValidating
+	const { data, error, isLoading, size, setSize } = useSWRInfinite(
 		(index: number) => {
 			return `https://jsonplaceholder.typicode.com/comments?_page=${index + 1}&_limit=40`},
 			fetchData,
@@ -47,6 +48,7 @@ export const usePaginationTypicodeComments = () => {
 	return {
 		comments,
 		error,
+		isLoading,
 		isFetchingMore,
 		size,
 		setSize,
