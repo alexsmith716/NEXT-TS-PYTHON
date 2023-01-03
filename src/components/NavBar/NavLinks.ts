@@ -10,7 +10,12 @@ export const NavLinks = [
 		linkType: 'navLink',
 	},
 	{
-		title: 'AboutSWR',
+		title: 'SWR',
+		url: 'swrgithubgists',
+		linkType: 'navLink',
+	},
+	{
+		title: 'SWRInfinite',
 		url: 'aboutswrinfinite',
 		linkType: 'navLink',
 	},

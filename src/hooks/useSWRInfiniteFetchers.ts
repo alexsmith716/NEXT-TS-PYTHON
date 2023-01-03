@@ -1,33 +1,14 @@
 import useSWRInfinite from 'swr/infinite';
-
-const fetchData = (url: string) => {
-	return fetch(url)
-		.then((res) => {
-			if (!res.ok) {
-				throw new Error('Network response error');
-			}
-			return res.json()
-		})
-		.catch((error: Error) => {
-			throw error;
-		});
-}
-
-// data: an array of fetch response values of each page
-// error: error thrown by fetcher (or undefined)
-// isLoading: if there's an ongoing request and no "loaded data". Fallback data and previous data are not considered "loaded data"
-// isValidating: if there's a request or revalidation loading
-// mutate(data?, options?): function to mutate the cached data
-// mutate: same as useSWR's bound mutate function but manipulates the data array
-// size: the number of pages that will be fetched and returned
-// setSize: set the number of pages that need to be fetched
+import fetcher from '../utils/fetchData';
 
 export const usePaginationTypicodeComments = () => {
+	const apiEndPoint = 'https://jsonplaceholder.typicode.com/comments';
+
 	//isValidating
 	const { data, error, isLoading, size, setSize } = useSWRInfinite(
 		(index: number) => {
-			return `https://jsonplaceholder.typicode.com/comments?_page=${index + 1}&_limit=40`},
-			fetchData,
+			return `${apiEndPoint}?_page=${index + 1}&_limit=40`},
+			fetcher,
 			{
 				shouldRetryOnError: true, //retry when fetcher has an error
 				revalidateIfStale: false, //automatically revalidate even if there is stale data
