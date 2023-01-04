@@ -1,33 +1,32 @@
 import type { NextPage } from 'next';
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
-//import Loading from '../components/Loading';
+import Loading from '../components/Loading';
 //import Button from '../components/Button';
 
-//import fetcher from '../utils/fetchData';
-//import { useGithubGists } from '../hooks/useSWRGithubGists';
+import Gist from '../components/Gist/Gist';
+import { useGithubGists } from '../hooks/useSWRFetchers';
 
 interface SwrGithubGistsProps {
 	documentTitle?: string;
 };
 
 const SwrGithubGists: NextPage<SwrGithubGistsProps> = ({ documentTitle }) => {
-	//const {
-	//	gists,
-	//	error,
-	//	isLoading,
-	//	isFetchingMore,
-	//	allDataLoaded,
-	//} = useGithubGists();
-
 	const [title, setTitle] = useState('');
+
+	const {
+		data,
+		error,
+		isLoading,
+		//isValidating,
+	} = useGithubGists();
 
 	useEffect(() => {
 		setTitle(documentTitle+':\u0020SWR\u0020Github\u0020Gists');
 	}, [documentTitle]);
 
 	//const handleSetGistsClick = () => {
-	//	//
+	//  //
 	//};
 
 	return (
@@ -41,20 +40,45 @@ const SwrGithubGists: NextPage<SwrGithubGistsProps> = ({ documentTitle }) => {
 
 				<h1 className="mt-4 mb-3">SWR Github Gists</h1>
 
-				<div className="bg-color-ivory container-padding-border-radius-1 mb-5">
+				<div className="mb-3">
+					<p>
+						The 10 most recent gists from the Github REST API endpoint `<code>/gists/public</code>` are listed below. SWR Automatic Revalidation occurs on Interval every 15 seconds.
+					</p>
+				</div>
 
-					<div className="container-padding-border-radius-2">
-						<div className="comment-grid-container">
-							<div className="bg-color-cadetblue container-padding-radius-10">
-								<b>Description:</b>A new Gist was created here.<br/>
-								<b>URL:</b>https://api.github.com/gists/eb05ff0305bd<br/>
-								<b>Comments:</b>2<br/>
-								<b>Comments Url:</b>https://api.github.com/gists/eb05ff0305bd<br/>
-								<b>Owner:</b>A new Gist with interesting information.<br/>
-								<b>Created at:</b>Tue Jan 3 10:31 AM
+				<div className="word-break-all container-padding-border-radius-1 bg-color-ivory mb-5">
+
+					{isLoading && !error && (
+						<div className="flex-column align-items-center">
+							<div className="text-center">
+								<div className="container-padding-radius-10">
+									<Loading text="Loading" />
+								</div>
 							</div>
 						</div>
-					</div>
+					)}
+
+					{error && (
+						<div className="flex-column align-items-center mb-3">
+							<div className="text-center">
+								<div className="bg-warn-red container-padding-radius-10 text-color-white">
+									Error when attempting to fetch resource.
+								</div>
+							</div>
+						</div>
+					)}
+
+					{data && (
+						<>
+							<div>
+								<div className="comment-grid-container">
+									{Object.entries(data).map(([key, value]) => (
+										<Gist key={key} index={value} className="bg-color-cadetblue container-padding-radius-10"/>
+									))}
+								</div>
+							</div>
+						</>
+					)}
 
 				</div>
 			</div>
