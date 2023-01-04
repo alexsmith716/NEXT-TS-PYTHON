@@ -53,6 +53,11 @@ export const GlobalStyle = createGlobalStyle`
 		row-gap: 10px;
 	}
 
+	.comment-grid-container-gist {
+		display: grid;
+		row-gap: 2px;
+	}
+
 	.block-element-p {
 		margin-top: 16px;
 		margin-right: 16px;
@@ -229,6 +234,11 @@ export const GlobalStyle = createGlobalStyle`
 		padding: 10px 10px;
 		border: 2px solid #b0c4de;
 		border-radius: 3px;
+	}
+
+	.container-padding-2-radius-6 {
+		padding: 2px;
+		border-radius: 6px;
 	}
 
 	.container-padding-radius-10 {

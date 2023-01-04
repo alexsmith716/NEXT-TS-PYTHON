@@ -6,19 +6,18 @@ export const usePaginationTypicodeComments = () => {
 
 	//isValidating
 	const { data, error, isLoading, size, setSize } = useSWRInfinite(
-		(index: number) => {
-			return `${apiEndPoint}?_page=${index + 1}&_limit=40`},
-			fetcher,
-			{
-				shouldRetryOnError: true, //retry when fetcher has an error
-				revalidateIfStale: false, //automatically revalidate even if there is stale data
-				revalidateOnFocus: false, //automatically revalidate when window gets focused
-				revalidateOnReconnect: false, //automatically revalidate when the browser regains a network connection (via navigator.onLine)
-				//refreshInterval: 40000, //automatically refetch data
-				revalidateAll: false, //always try to revalidate all pages
-				persistSize: true,
-			}
-		);
+		(index: number,) => { return `${apiEndPoint}?_page=${index + 1}&_limit=40` },
+		fetcher,
+		{
+			shouldRetryOnError: true, //retry when fetcher has an error
+			revalidateIfStale: false, //automatically revalidate even if there is stale data
+			revalidateOnFocus: false, //automatically revalidate when window gets focused
+			revalidateOnReconnect: false, //automatically revalidate when the browser regains a network connection (via navigator.onLine)
+			//refreshInterval: 40000, //automatically refetch data
+			revalidateAll: false, //always try to revalidate all pages
+			persistSize: true,
+		}
+	);
 
 	const comments = data ? data.flat(1) : [];
 
