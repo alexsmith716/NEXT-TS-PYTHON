@@ -26,7 +26,7 @@ const SwrGithubGists: NextPage<SwrGithubGistsProps> = ({ documentTitle }) => {
 	}, [documentTitle]);
 
 	//const handleSetGistsClick = () => {
-	//	//
+	//  //
 	//};
 
 	return (
@@ -46,7 +46,7 @@ const SwrGithubGists: NextPage<SwrGithubGistsProps> = ({ documentTitle }) => {
 					</p>
 				</div>
 
-				<div className="bg-color-ivory container-padding-border-radius-1 mb-5">
+				<div className="word-break-all container-padding-border-radius-1 bg-color-ivory mb-5">
 
 					{isLoading && !error && (
 						<div className="flex-column align-items-center">
@@ -70,10 +70,10 @@ const SwrGithubGists: NextPage<SwrGithubGistsProps> = ({ documentTitle }) => {
 
 					{data && (
 						<>
-							<div className="container-padding-border-radius-2">
-								<div className="comment-grid-container-gist">
+							<div>
+								<div className="comment-grid-container">
 									{Object.entries(data).map(([key, value]) => (
-										<Gist key={key} index={value} className="bg-color-cadetblue container-padding-2-radius-6"/>
+										<Gist key={key} index={value} className="bg-color-cadetblue container-padding-radius-10"/>
 									))}
 								</div>
 							</div>

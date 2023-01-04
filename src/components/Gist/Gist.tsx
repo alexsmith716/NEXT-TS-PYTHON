@@ -7,10 +7,9 @@ export default function Gist({ index, className }: { index: any; className: any;
 
 	return (
 		<div className={`${className}`}>
-			<b>ID:</b>{gistID}<br/>
-			{/* <b>Description:</b>{gistDescription}<br/> */}
-			<b>Owner:</b>{gistOwner}<br/>
-			<b>Created At:</b>{gistCreatedAt}
+			<b>id:</b>{gistID}<br/>
+			<b>owner:</b>{gistOwner}<br/>
+			<b>created:</b>{gistCreatedAt}
 		</div>
 	);
 };
