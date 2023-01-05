@@ -18,7 +18,7 @@ export const useGithubGists = () => {
 		`${apiEndPoint}?per_page=10`,
 		fetcher,
 		{
-			refreshInterval: 15000,
+			refreshInterval: 60000,
 		}
 	);
 
