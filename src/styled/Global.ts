@@ -55,7 +55,7 @@ export const GlobalStyle = createGlobalStyle`
 
 	.comment-grid-container-gist {
 		display: grid;
-		row-gap: 2px;
+		row-gap: 4px;
 	}
 
 	.block-element-p {
@@ -236,8 +236,8 @@ export const GlobalStyle = createGlobalStyle`
 		border-radius: 3px;
 	}
 
-	.container-padding-2-radius-6 {
-		padding: 2px;
+	.container-padding-4-radius-6 {
+		padding: 4px;
 		border-radius: 6px;
 	}
 

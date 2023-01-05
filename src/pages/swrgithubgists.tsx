@@ -21,6 +21,8 @@ const SwrGithubGists: NextPage<SwrGithubGistsProps> = ({ documentTitle }) => {
 		//isValidating,
 	} = useGithubGists();
 
+	// https://github.com/vercel/swr-site/blob/main/pages/docs/advanced/performance.en-US.mdx
+
 	useEffect(() => {
 		setTitle(documentTitle+':\u0020SWR\u0020Github\u0020Gists');
 	}, [documentTitle]);
@@ -42,7 +44,7 @@ const SwrGithubGists: NextPage<SwrGithubGistsProps> = ({ documentTitle }) => {
 
 				<div className="mb-3">
 					<p>
-						The 10 most recent gists from the Github REST API endpoint `<code>/gists/public</code>` are listed below. SWR Automatic Revalidation occurs on Interval every 15 seconds.
+						The 10 most recent gists from the Github REST API endpoint `<code>/gists/public</code>` are listed below. SWR Automatic Revalidation occurs on Interval every minute.
 					</p>
 				</div>
 
@@ -71,9 +73,9 @@ const SwrGithubGists: NextPage<SwrGithubGistsProps> = ({ documentTitle }) => {
 					{data && (
 						<>
 							<div>
-								<div className="comment-grid-container">
+								<div className="comment-grid-container-gist">
 									{Object.entries(data).map(([key, value]) => (
-										<Gist key={key} index={value} className="bg-color-cadetblue container-padding-radius-10"/>
+										<Gist key={key} index={value} className="bg-color-cadetblue container-padding-4-radius-6"/>
 									))}
 								</div>
 							</div>
