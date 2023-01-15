@@ -14,7 +14,7 @@ import fetcher from '../utils/fetchData';
 export const useGithubGists = () => {
 	const apiEndPoint = 'https://api.github.com/gists/public';
 
-	const { data, error, isLoading, isValidating } = useSWR(
+	const { data, error, isLoading, } = useSWR(
 		`${apiEndPoint}?per_page=10`,
 		fetcher,
 		{
@@ -26,6 +26,6 @@ export const useGithubGists = () => {
 		data,
 		error,
 		isLoading,
-		isValidating,
+		//isValidating,
 	};
 };
