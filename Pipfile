@@ -6,8 +6,6 @@ name = "pypi"
 [packages]
 boto3 = "*"
 fastapi = "*"
-graphql-core = "*"
-strawberry-graphql = "*"
 uvicorn = "*"
 
 [dev-packages]
