@@ -42,7 +42,7 @@ const NYCBridgeRatings: NextPage<NYCBridgeRatingsPageProps> = ({documentTitle}) 
 
 				<h2 className="mb-3">Bridge Conditions, NYS Department of Transportation</h2>
 
-				<h3 className="mb-3">Metadata Updated: November 12, 2020</h3>
+				<h3 className="mb-3">Dataset Updated: April 1, 2022</h3>
 
 				<div className="mb-3">
 					<p>

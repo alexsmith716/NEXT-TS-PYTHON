@@ -280,7 +280,7 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 										console.error(error);
 									})
 							}}
-							buttonText="Get Brooklyn Bridges Replacement Cost"
+							buttonText="Get Brooklyn's Bridges Replacement Cost"
 						/>
 						{bBReplacementCostLoading && (
 							<div className="mt-1 ml-2">
