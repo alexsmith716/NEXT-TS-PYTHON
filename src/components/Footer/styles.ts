@@ -27,6 +27,13 @@ export const SvgFooterHeadphones = styled.span`
 	color: ${colors.gold};
 `;
 
-export const FooterBlurd = styled.div`
+export const FooterSource = styled.a`
+	font-family: 'OpenSansBold', sans-serif;
+	color: #0645AD;
+	text-decoration: underline;
+	cursor: pointer;
+`;
+
+export const FooterBlurb = styled.div`
 	font-family: 'Norwester', sans-serif;
 `;

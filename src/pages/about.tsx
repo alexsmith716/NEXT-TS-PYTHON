@@ -42,6 +42,9 @@ const About: NextPage<AboutPageProps> = ({documentTitle}) => {
 							<b>This component utilizes the CSS Grid Layout module.</b>
 						</p>
 						<p>
+							<b>This Project&apos;s Source Code is here: <a href="https://github.com/alexsmith716/NEXT-TS-PYTHON" target="_blank" rel="noreferrer">https://github.com/alexsmith716/NEXT-TS-PYTHON</a>.</b>
+						</p>
+						<p>
 							&quot;Other than in Internet Explorer, CSS Grid Layout is unprefixed in Safari,
 							Chrome, Opera, Firefox and Edge. Support for all the properties and values
 							detailed in these guides is interoperable across browsers. This means that if you

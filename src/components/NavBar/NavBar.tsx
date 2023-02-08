@@ -42,6 +42,17 @@ const NavBar = () => {
 							</Styles.NavBarNavA>
 						</li>
 
+						<li>
+							<Styles.NavBarNavA
+								onClick={() => {
+									window.open('https://github.com/alexsmith716/NEXT-TS-PYTHON', '_blank');
+									setClicked(false);
+								}}
+							>
+								Source
+							</Styles.NavBarNavA>
+						</li>
+
 						{NavLinks.map((item, index) => {
 							const a = activeRoute === `/${item.url}`;
 							return (
