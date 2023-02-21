@@ -1,5 +1,3 @@
-import csv
-import json
 from typing import Generator
 #from sys import getsizeof
 from .fetchS3 import fetch_s3
