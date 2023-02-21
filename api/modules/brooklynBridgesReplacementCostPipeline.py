@@ -17,7 +17,7 @@ def brooklyn_bridges_replacement_cost_pipeline() -> Generator[dict, None, None]:
 		replacementBrooklynTotal += i
 
 	returnData = {
-		'data': str(replacementBrooklynTotal),
+		'data': replacementBrooklynTotal,
 	}
 
 	yield returnData

@@ -11,6 +11,7 @@ def bridge_ratings_pipeline() -> Generator[str, None, None]:
 	dictionaries = (dict(zip(heading, data)) for data in rows)
 
 	headers = (
+		'BIN',
 		'Borough',
 		'Bridge',
 		'CurrentRating',
@@ -49,6 +50,7 @@ def bridge_ratings_pipeline() -> Generator[str, None, None]:
 			i['BORO'] = 'Staten Island'
 
 		values = (
+			i['BIN'],
 			i['BORO'],
 			i['FEATURE CARRIED'],
 			i['Current Rating*'],
