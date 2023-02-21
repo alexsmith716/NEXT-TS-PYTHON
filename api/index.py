@@ -49,9 +49,9 @@ def read_root() -> dict:
 	return { 'message': "The Todo List API." }
 
 @app.get('/todosapi/todos', tags=['todos'])
-async def get_todos() -> dict:
+def get_todos() -> dict:
 	if todos:
-		return { 'data': todos }
+		return { "data": todos }
 	else:
 		raise CustomException(name = "error")
 
@@ -59,7 +59,7 @@ async def get_todos() -> dict:
 def get_fibonacci(len: int) -> dict:
 	if len > 1:
 		try:
-			return { 'data': fib_func(len) }
+			return { "data": fib_func(len) }
 		except:
 			raise CustomException(name = "error")
 	else:
@@ -68,7 +68,7 @@ def get_fibonacci(len: int) -> dict:
 @app.get('/nyccounty/{id}', tags=['nyc_county'])
 def get_nyc_county(id: int) -> dict:
 	if id > 0 and id < 6:
-		return { 'data': nyc_counties[id] }
+		return { "data": nyc_counties[id] }
 	else:
 		raise CustomException(name = "error")
 
@@ -109,6 +109,18 @@ def get_bridge_ratings_pipeline():
 					"Content-Type": "text/csv",
 				}
 			)
+	except Exception as error:
+		print(error)
+		raise CustomException(name = "error")
+
+@app.get('/botosssgetobject/streambridgeratingstest', tags=['stream_bridge_ratings_test'])
+def get_stream_bridge_ratings():
+	try:
+		if verify_credentials():
+			rows = (i.decode('utf-8').rstrip().split(',') for i in fetch_s3(False, True))
+			heading = rows.__next__()
+			dictionaries = (dict(zip(heading, data)) for data in rows)
+			return dictionaries
 	except Exception as error:
 		print(error)
 		raise CustomException(name = "error")
