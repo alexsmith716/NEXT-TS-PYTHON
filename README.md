@@ -38,6 +38,7 @@ The goal of this project is to work on Next.JS, TypeScript, core Python (data st
 * Cypress Webpack Preprocessor
 
 ## TODO:
+* Still with the the `@graphql-tools` on-again off-again errors? -Ignoring for now.
 * Add error handling to SWR hooks and fix the v2 update error.
 * Make `Home` component's `backgroundColorPalette` animation background dynamic
 * Add several more Python features
