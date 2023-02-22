@@ -58,6 +58,55 @@ export const GlobalStyle = createGlobalStyle`
 		row-gap: 4px;
 	}
 
+	.table-bridge-ratings-wrapper {
+		width: 100%;
+		//margin: 0 auto;
+	}
+
+	.table-bridge-ratings-csv-repeat-5 {
+		grid-template-columns: repeat(5, auto);
+	}
+
+	.table-bridge-ratings-csv-repeat-6 {
+		grid-template-columns: repeat(6, auto);
+	}
+
+	.table-bridge-ratings-dataframe-repeat-9 {
+		grid-template-columns: repeat(9, auto);
+	}
+
+	.table-bridge-ratings-display {
+		display: grid;
+		//display: inline-grid;
+		border-top: 1px solid ${colors.graySix};
+		border-left: 1px solid ${colors.graySix};
+	}
+
+	.table-bridge-ratings-cell {
+		//width: 6.5vw;
+		//height: 3vw;
+		padding: 2px 4px 2px 4px;
+		//border: 1px solid #009900;
+		border-collapse: collapse;
+		overflow: hidden;
+		border-bottom: 1px solid ${colors.graySix};
+		border-right: 1px solid ${colors.graySix};
+	}
+
+	.table-bridge-ratings-column-header {
+		background-color: ${colors.grayEight};
+		color: #fff;
+		padding-top: 3px;
+		padding-bottom: 3px;
+	}
+
+	.table-bridge-ratings-item {
+		font-weight: bold;
+		text-align: right;
+		//margin-top: 0.5vw;
+		font-size: .85vw;
+	}
+
 	.block-element-p {
 		margin-top: 16px;
 		margin-right: 16px;
@@ -205,6 +254,12 @@ export const GlobalStyle = createGlobalStyle`
 		flex-direction: row;
 	}
 
+	.container-border-1-radius-1 {
+		border: 1px solid ${colors.graySix};
+		border-radius: 1px;
+		background: ${colors.white};
+	}
+
 	.container-padding-2-border-1 {
 		border: 1px solid ${colors.graySix};
 		border-radius: 3px;
@@ -248,7 +303,7 @@ export const GlobalStyle = createGlobalStyle`
 
 	.container-overflow-height-small {
 		overflow: auto;
-		height: 110px;
+		height: 210px;
 	}
 
 	.width-fit-content {
@@ -841,11 +896,11 @@ export const GlobalStyle = createGlobalStyle`
 		background-color: #8ee5ee;
 	}
 
-	.row-color-odd {
-		background-color: ${colors.grayOne};
+	.bg-row-color-even {
+		background-color: ${colors.grayThree};
 	}
 
-	.row-color-even {
-		background-color: ${colors.grayThree};
+	.bg-row-color-odd {
+		background-color: ${colors.grayOne};
 	}
 `;

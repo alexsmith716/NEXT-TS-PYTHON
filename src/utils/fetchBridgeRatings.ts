@@ -84,6 +84,7 @@ async function doStreamToString(body: ReadableStream<any>) {
 						e['BORO'] = 'Staten Island';
 					}
 					return {
+						BIN: e['BIN'],
 						Borough: e['BORO'],
 						Bridge: e['FEATURE CARRIED'],
 						CurrentRating: e['Current Rating*'],
