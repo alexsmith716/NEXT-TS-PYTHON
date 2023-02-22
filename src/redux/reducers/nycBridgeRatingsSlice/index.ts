@@ -47,7 +47,7 @@ export function loadNYCBridgeRatings(): AnyAction {
 		type: [NYC_BRIDGE_RATINGS_LOAD, NYC_BRIDGE_RATINGS_LOAD_SUCCESS, NYC_BRIDGE_RATINGS_LOAD_FAIL],
 		httpClientPromise: () => fetchBridgeRatings()
 			.then((response) => {
-				return response.result;
+				return {'data': response.result};
 			})
 			.catch((error) => {
 				return Promise.reject(error.result);
