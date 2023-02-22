@@ -1,10 +1,8 @@
 import type { NextPage } from 'next';
-import React, { useState, useEffect } from 'react';
+import React, { ReactNode, useState, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import Head from 'next/head';
 import Button from '../components/Button';
-//import { useSelector, useDispatch } from 'react-redux';
-//import { AppState } from '../redux/store';
-//import { loadNYCBridgeRatings } from '../redux/reducers/nycBridgeRatingsSlice';
 import Loading from '../components/Loading';
 
 interface PythonAPIProps {
@@ -43,6 +41,33 @@ type BridgeRatingsType = {
 	data?: string;
 	error?: string;
 };
+
+//type DfTableSchemaFieldType  = {
+//	name?: string;
+//	type?: string | number;
+//};
+
+//type DfTableDataType = {
+//	index?: number;
+//	BIN?: number;
+//	Borough?: string;
+//	FeatureCarried?: string;
+//	CurrentRating?: number;
+//	VerbalRating?: string;
+//	ReplacementCost?: number;
+//	Latitude?: number;
+//	Longitude?: number;
+//};
+
+//type BridgeRatingsDataFrameType = {
+//	data?: {
+//		schema: {
+//			fields: DfTableSchemaFieldType[];
+//		};
+//		data: DfTableDataType[];
+//	};
+//	error?: string;
+//};
 
 const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 	const [title, setTitle] = useState("");
@@ -83,15 +108,6 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 		});
 	};
 
-	// revisit TS typing here later
-	function addCurrencyCommas(amount: any) {
-		if(amount.length > 0 || amount > 0) {
-			return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-		} else {
-			return '0';
-		}
-	};
-
 	useEffect(() => {
 		setTitle(documentTitle+':\u0020Python\u0020API');
 	}, [documentTitle]);
@@ -116,6 +132,43 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 			setBridgeRatingsLoading(false)
 		}
 	}, [todos, fibonacci, nycCounty, bBReplacementCost, bridgeRatingsFull, bridgeRatings]);
+
+	// revisit TS typing here later
+	function addCurrencyCommas(amount: any) {
+		if(amount.length > 0 || amount > 0) {
+			return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		} else {
+			return '0';
+		}
+	};
+
+	function bridgeRatingsCsvGridColumnHeader() {
+		let items:ReactNode[] = [];
+		//const bd = bridgeRatings?.data?.split("\n");
+		bridgeRatings?.data?.split("\n")?.shift()?.split(",")?.map((columnHeader: string) => (
+			items.push(
+				<div key={uuidv4()} className="table-bridge-ratings-cell table-bridge-ratings-column-header">
+					<div className="table-bridge-ratings-item">{columnHeader}</div>
+				</div>
+			)
+		))
+		return items;
+	};
+
+	function bridgeRatingsCsvGridRowItems() {
+		let items:ReactNode[] = [];
+		//const bd = bridgeRatings?.data?.split("\n");
+		bridgeRatings?.data?.split("\n").slice(1).map((column: string, index: number) => (
+			column.split(",").map((rowItem,) => (
+				items.push(
+					<div key={uuidv4()} className={`table-bridge-ratings-cell ${index % 2 === 0 ? 'bg-row-color-odd' : 'bg-row-color-even'}`}>
+						<div className="table-bridge-ratings-item">{rowItem}</div>
+					</div>
+				)
+			))
+		))
+		return items;
+	};
 
 	return (
 		<>
@@ -357,7 +410,7 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 					<div className="mb-3">
 						<Button
 							type="button"
-							className="btn-primary btn-md"
+							className={`btn-primary btn-md ${bridgeRatingsLoading ? 'disabled' : ''}`}
 							onClick={() => {
 								setBridgeRatingsLoading(true)
 								fetchData('botosssgetobject/bridgeratings')
@@ -365,7 +418,7 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 										setBridgeRatings({'data': data});
 									})
 									.catch(error => {
-										setBridgeRatings({ error: 'Error when attempting to fetch resource.' })
+										setBridgeRatings({ 'error': 'Error when attempting to fetch resource.' })
 										console.error(error);
 									})
 							}}
@@ -389,15 +442,21 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 								)}
 
 								{bridgeRatings && bridgeRatings.data && (
-									<div className="mt-1 ml-2 container-padding-border-1 container-overflow-height-small">
-										<pre>
-											{bridgeRatings.data}
-										</pre>
+									<div className="mt-1 ml-2 container-border-1-radius-1 container-overflow-height-small">
+										<div>
+											<div className="table-bridge-ratings-wrapper">
+												<div className="table-bridge-ratings-csv-repeat-6 table-bridge-ratings-display">
+													{bridgeRatingsCsvGridColumnHeader()}
+													{bridgeRatingsCsvGridRowItems()}
+												</div>
+											</div>
+										</div>
 									</div>
 								)}
 							</>
 						)}
 					</div>
+
 				</div>
 			</div>
 		</>

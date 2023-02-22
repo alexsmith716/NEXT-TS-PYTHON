@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { ReactNode, useState, useEffect } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useSelector, useDispatch } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
 import { AppState } from '../redux/store';
 import { loadNYCBridgeRatings } from '../redux/reducers/nycBridgeRatingsSlice';
 import Loading from '../components/Loading';
@@ -31,6 +32,35 @@ const NYCBridgeRatings: NextPage<NYCBridgeRatingsPageProps> = ({documentTitle}) 
 		setTitle(documentTitle+':\u0020NYCBridgeRatings');
 	}, [documentTitle]);
 
+	function bridgeRatingsCsvGridColumnHeader() {
+		let items:ReactNode[] = [];
+		const bd = data?.split("\n");
+		const columnHeaders = bd.shift();
+		columnHeaders.split(",").map((columnHeader: string) => (
+			items.push(
+				<div key={uuidv4()} className="table-bridge-ratings-cell table-bridge-ratings-column-header">
+					<div className="table-bridge-ratings-item">{columnHeader}</div>
+				</div>
+			)
+		))
+		return items;
+	};
+
+	function bridgeRatingsCsvGridRowItems() {
+		let items:ReactNode[] = [];
+		const bd = data?.split("\n");
+		bd.slice(1).map((column: string, index: number) => (
+			column.split(",").map((rowItem,) => (
+				items.push(
+					<div key={uuidv4()} className={`table-bridge-ratings-cell ${index % 2 === 0 ? 'bg-row-color-odd' : 'bg-row-color-even'}`}>
+						<div className="table-bridge-ratings-item">{rowItem}</div>
+					</div>
+				)
+			))
+		))
+		return items;
+	};
+
 	return (
 		<>
 			<Head>
@@ -43,6 +73,8 @@ const NYCBridgeRatings: NextPage<NYCBridgeRatingsPageProps> = ({documentTitle}) 
 				<h2 className="mb-3">Bridge Conditions, NYS Department of Transportation</h2>
 
 				<h3 className="mb-3">Dataset Updated: April 1, 2022</h3>
+
+				<h4 className="mb-3">Data Source here: <a href="https://data.cityofnewyork.us/Transportation/Bridge-Ratings/4yue-vjfc" target="_blank" rel="noreferrer">https://data.cityofnewyork.us/Transportation/Bridge-Ratings/4yue-vjfc</a>.</h4>
 
 				<div className="mb-3">
 					<p>
@@ -76,7 +108,12 @@ const NYCBridgeRatings: NextPage<NYCBridgeRatingsPageProps> = ({documentTitle}) 
 					{/* (>>>>>>>>>>>>>>>>>>>>>>>> LOADED >>>>>>>>>>>>>>>>>>>>>>>>) */}
 					{!loading && loaded && data && (
 						<div className="bg-color-ivory container-padding-border-radius-1">
-							<pre>{data}</pre>
+							<div className="table-bridge-ratings-wrapper">
+								<div className="table-bridge-ratings-csv-repeat-6 table-bridge-ratings-display">
+									{bridgeRatingsCsvGridColumnHeader()}
+									{bridgeRatingsCsvGridRowItems()}
+								</div>
+							</div>
 						</div>
 					)}
 				</div>

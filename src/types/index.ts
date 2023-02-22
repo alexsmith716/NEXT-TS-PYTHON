@@ -16,6 +16,7 @@ export type ActionLoadPromiseType = {
 };
 
 export type BridgeRatingType = {
+	BIN: String;
 	Borough: string;
 	Bridge: string;
 	CurrentRating: number;

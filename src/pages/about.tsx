@@ -45,22 +45,6 @@ const About: NextPage<AboutPageProps> = ({documentTitle}) => {
 							<b>This Project&apos;s Source Code is here: <a href="https://github.com/alexsmith716/NEXT-TS-PYTHON" target="_blank" rel="noreferrer">https://github.com/alexsmith716/NEXT-TS-PYTHON</a>.</b>
 						</p>
 						<p>
-							&quot;Other than in Internet Explorer, CSS Grid Layout is unprefixed in Safari,
-							Chrome, Opera, Firefox and Edge. Support for all the properties and values
-							detailed in these guides is interoperable across browsers. This means that if you
-							write some Grid Layout code in Firefox, it should work in the same way in Chrome.
-							This is no longer an experimental specification, and you are safe to use it in
-							production.&quot;
-						</p>
-						<p>
-							CSS Grid Layout supporting browsers documented here:{' '}
-							<span className="word-break-all">
-								<b>
-									&quot;https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/CSS_Grid_and_Progressive_Enhancement#the_supporting_browsers&quot;
-								</b>
-							</span>
-						</p>
-						<p>
 							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et, consequuntur, modi
 							mollitia corporis ipsa voluptate corrupti eum ratione ex ea praesentium quibusdam?
 							Aut, in eum facere corrupti necessitatibus perspiciatis quis?
