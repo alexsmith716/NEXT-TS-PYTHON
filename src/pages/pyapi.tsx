@@ -1,8 +1,8 @@
 import type { NextPage } from 'next';
-import React, { ReactNode, useState, useEffect } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Button from '../components/Button';
+import { bridgeRatingsCsvGridColumnHeader, bridgeRatingsCsvGridRowItems } from '../utils/gridCsvHeaderRows';
 import Loading from '../components/Loading';
 
 interface PythonAPIProps {
@@ -142,34 +142,6 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 		}
 	};
 
-	function bridgeRatingsCsvGridColumnHeader() {
-		let items:ReactNode[] = [];
-		//const bd = bridgeRatings?.data?.split("\n");
-		bridgeRatings?.data?.split("\n")?.shift()?.split(",")?.map((columnHeader: string) => (
-			items.push(
-				<div key={uuidv4()} className="table-bridge-ratings-cell table-bridge-ratings-column-header">
-					<div className="table-bridge-ratings-item">{columnHeader}</div>
-				</div>
-			)
-		))
-		return items;
-	};
-
-	function bridgeRatingsCsvGridRowItems() {
-		let items:ReactNode[] = [];
-		//const bd = bridgeRatings?.data?.split("\n");
-		bridgeRatings?.data?.split("\n").slice(1).map((column: string, index: number) => (
-			column.split(",").map((rowItem,) => (
-				items.push(
-					<div key={uuidv4()} className={`table-bridge-ratings-cell ${index % 2 === 0 ? 'bg-row-color-odd' : 'bg-row-color-even'}`}>
-						<div className="table-bridge-ratings-item">{rowItem}</div>
-					</div>
-				)
-			))
-		))
-		return items;
-	};
-
 	return (
 		<>
 			<Head>
@@ -188,7 +160,7 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 					<div className="mb-3">
 						<Button
 							type="button"
-							className="btn-primary btn-md"
+							className={`btn-primary btn-md ${todosLoading ? 'disabled' : ''}`}
 							onClick={() => {
 								setTodosLoading(true)
 								fetchData('todosapi/todos')
@@ -233,7 +205,7 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 					<div className="mb-3">
 						<Button
 							type="button"
-							className="btn-primary btn-md"
+							className={`btn-primary btn-md ${fibonacciLoading ? 'disabled' : ''}`}
 							onClick={() => {
 								setFibonacciLoading(true)
 								fetchData('fibonacci', '200')
@@ -277,7 +249,7 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 					<div className="mb-3">
 						<Button
 							type="button"
-							className="btn-primary btn-md"
+							className={`btn-primary btn-md ${nycCountyLoading ? 'disabled' : ''}`}
 							onClick={() => {
 								setNycCountyLoading(true)
 								fetchData('nyccounty', '1')
@@ -321,7 +293,7 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 					<div className="mb-3">
 						<Button
 							type="button"
-							className="btn-primary btn-md"
+							className={`btn-primary btn-md ${bBReplacementCostLoading ? 'disabled' : ''}`}
 							onClick={() => {
 								setBBReplacementCostLoading(true)
 								fetchData('botosssgetobject/brooklynbridgesreplacementcost')
@@ -365,7 +337,7 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 					<div className="mb-3">
 						<Button
 							type="button"
-							className="btn-primary btn-md"
+							className={`btn-primary btn-md ${bridgeRatingsFullLoading ? 'disabled' : ''}`}
 							onClick={() => {
 								setBridgeRatingsFullLoading(true)
 								fetchData('botosssgetobject/streambridgeratings')
@@ -446,8 +418,8 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 										<div>
 											<div className="table-bridge-ratings-wrapper">
 												<div className="table-bridge-ratings-csv-repeat-6 table-bridge-ratings-display">
-													{bridgeRatingsCsvGridColumnHeader()}
-													{bridgeRatingsCsvGridRowItems()}
+													{bridgeRatingsCsvGridColumnHeader(bridgeRatings)}
+													{bridgeRatingsCsvGridRowItems(bridgeRatings)}
 												</div>
 											</div>
 										</div>
