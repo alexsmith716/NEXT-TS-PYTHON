@@ -4,7 +4,7 @@ import Head from 'next/head';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../redux/store';
 import { loadNYCBridgeRatings } from '../redux/reducers/nycBridgeRatingsSlice';
-import { bridgeRatingsCsvGridColumnHeader, bridgeRatingsCsvGridRowItems } from '../utils/gridCsvHeaderRows';
+import { bridgeRatingsCsvGridColumnHeader, bridgeRatingsCsvGridRowItems } from '../components/BridgeRatingsCsvGrid';
 import Loading from '../components/Loading';
 
 interface NYCBridgeRatingsPageProps {

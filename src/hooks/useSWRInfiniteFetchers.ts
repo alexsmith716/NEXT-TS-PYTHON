@@ -1,5 +1,5 @@
 import useSWRInfinite from 'swr/infinite';
-import fetcher from '../utils/fetchData';
+import { fetchData } from '../utils/fetchData';
 
 export const usePaginationTypicodeComments = () => {
 	const apiEndPoint = 'https://jsonplaceholder.typicode.com/comments';
@@ -7,7 +7,7 @@ export const usePaginationTypicodeComments = () => {
 	//isValidating
 	const { data, error, isLoading, size, setSize } = useSWRInfinite(
 		(index: number,) => { return `${apiEndPoint}?_page=${index + 1}&_limit=40` },
-		fetcher,
+		fetchData,
 		{
 			shouldRetryOnError: true, //retry when fetcher has an error
 			revalidateIfStale: false, //automatically revalidate even if there is stale data

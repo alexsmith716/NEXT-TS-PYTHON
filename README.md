@@ -38,7 +38,8 @@ The goal of this project is to work on Next.JS, TypeScript, core Python (data st
 * Cypress Webpack Preprocessor
 
 ## TODO:
-* Still with the the `@graphql-tools` on-again off-again errors? -Ignoring for now.
+* Use SWR caching for `bBReplacementCost`, `bridgeRatingsFull` and `bridgeRatings`.
+* Component `RickAndMorty` pagination needs several fixes/updates.
 * Remove & replace `styled-components`.
 * Add error handling to SWR hooks and fix the v2 update error.
 * Make `Home` component's `backgroundColorPalette` animation background dynamic
@@ -46,8 +47,5 @@ The goal of this project is to work on Next.JS, TypeScript, core Python (data st
 * Add Strawberry GraphQL feature
 * Migrate Next.js 13 from pages to app (in a slow progress)
 * Add new Cypress Tests
-* Performance refactoring and TS checks are needed
 * `StarRating` responds to user generated rating
-* Fix all TS type-checks (`pyapi.tsx`)
-* Add `pyapi.tsx` api responses to state container
 * Add more unit and E2E testing

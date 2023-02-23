@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import fetcher from '../utils/fetchData';
+import { fetchData } from '../utils/fetchData';
 
 // per_page integer
 // The number of results per page (max 100)
@@ -16,7 +16,7 @@ export const useGithubGists = () => {
 
 	const { data, error, isLoading, } = useSWR(
 		`${apiEndPoint}?per_page=10`,
-		fetcher,
+		fetchData,
 		{
 			refreshInterval: 60000,
 		}

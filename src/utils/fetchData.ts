@@ -1,4 +1,4 @@
-export default async function fetchData<T = any>(url: string, config?: RequestInit): Promise<T> {
+export async function fetchData<T = any>(url: string, config?: RequestInit): Promise<T> {
 	// for now going with "res.json()" return type "Promise<any>"
 	try {
 		const res = await fetch(url, config);

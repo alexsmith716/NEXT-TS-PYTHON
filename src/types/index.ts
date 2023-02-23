@@ -87,3 +87,36 @@ export type CharactersInfo = {
 	pages: number;
 	count: number;
 };
+
+export type TodosType = {
+	data?: {
+		id: number
+		item: string
+	}[];
+	error?: string;
+};
+
+export type FibonacciType = {
+	data?: number[];
+	error?: string;
+};
+
+export type NycCountyType = {
+	data?: string;
+	error?: string;
+};
+
+export type CurrencyCommasType = {
+	data?: number;
+	error?: string;
+};
+
+export type BridgeRatingsFullType = {
+	data?: string;
+	error?: string;
+};
+
+export type BridgeRatingsType = {
+	data?: string;
+	error?: string;
+};
