@@ -59,7 +59,6 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 	};
 
 	// will be using SWR caching for `bBReplacementCost`, `bridgeRatingsFull` and `bridgeRatings`
-	const addCurrCommas = useMemo(() => addCurrencyCommas(bBReplacementCost!), [bBReplacementCost]);
 	const createBRatingsFull = useMemo(() => createBridgeRatingsFull(bridgeRatingsFull!), [bridgeRatingsFull]);
 	const bridgeRCGColumnHeader = useMemo(() => bridgeRatingsCsvGridColumnHeader(bridgeRatings!), [bridgeRatings]);
 	const bridgeRCGRowItems = useMemo(() => bridgeRatingsCsvGridRowItems(bridgeRatings!), [bridgeRatings]);
@@ -254,7 +253,7 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 								{bBReplacementCost && bBReplacementCost.data && (
 									<div className="mt-1 ml-2 container-padding-border-1 width-fit-content">
 										<pre>
-											${addCurrCommas}
+											${addCurrencyCommas(bBReplacementCost)}
 										</pre>
 									</div>
 								)}
