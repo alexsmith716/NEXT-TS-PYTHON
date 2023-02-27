@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useSelector, useDispatch } from 'react-redux';
@@ -32,6 +32,9 @@ const NYCBridgeRatings: NextPage<NYCBridgeRatingsPageProps> = ({documentTitle}) 
 	useEffect(() => {
 		setTitle(documentTitle+':\u0020NYCBridgeRatings');
 	}, [documentTitle]);
+
+	const bridgeRCGColumnHeader = useMemo(() => BridgeRatingsCsvGridColumnHeader(data!), [data]);
+	const bridgeRCGRowItems = useMemo(() => BridgeRatingsCsvGridRowItems(data!), [data]);
 
 	return (
 		<>
@@ -86,8 +89,8 @@ const NYCBridgeRatings: NextPage<NYCBridgeRatingsPageProps> = ({documentTitle}) 
 						<div className="bg-color-ivory container-padding-border-radius-1">
 							<div className="table-bridge-ratings-wrapper">
 								<div className="table-bridge-ratings-csv-repeat-6 table-bridge-ratings-display">
-									{BridgeRatingsCsvGridColumnHeader(data)}
-									{BridgeRatingsCsvGridRowItems(data)}
+									{bridgeRCGColumnHeader}
+									{bridgeRCGRowItems}
 								</div>
 							</div>
 						</div>
