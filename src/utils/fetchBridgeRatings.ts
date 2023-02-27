@@ -46,8 +46,6 @@ function streamToString(stream: ReadableStream): Promise<string> {
 	});
 }
 
-// ********** currently unable to type table headers for "Bridge_Ratings.csv" **********
-// ********** so, using 'any' type on line 59 below **********
 async function doStreamToString(body: ReadableStream<any>) {
 	try {
 		const responseString: string = await streamToString(body);

@@ -11,6 +11,10 @@ import dateNowReducer from './reducers/dateNowSlice';
 import nycBridgeRatingsReducer from './reducers/nycBridgeRatingsSlice';
 import aboutCSVBReducer from './reducers/aboutCSVBSlice';
 import openWeathermapReducer from './reducers/openWeathermapSlice';
+import bridgeRatingsFullReducer from './reducers/bridgeRatingsFullSlice';
+import bridgeRatingsReplacementCostReducer from './reducers/bridgeRatingsReplacementCostSlice';
+import bridgeRatingsReducer from './reducers/bridgeRatingsSlice';
+
 import apiClient from '../utils/apiClient';
 
 export interface ApiClient {
@@ -23,6 +27,9 @@ const rootReducer = combineReducers({
 	nycBridgeRatingsReducer,
 	aboutCSVBReducer,
 	openWeathermapReducer,
+	bridgeRatingsFullReducer,
+	bridgeRatingsReplacementCostReducer,
+	bridgeRatingsReducer,
 });
 
 //const logger: Middleware = store => next => action => {
@@ -64,6 +71,9 @@ const makeStore = () => {
 				'nycBridgeRatingsReducer',
 				'aboutCSVBReducer',
 				'openWeathermapReducer',
+				'bridgeRatingsFullReducer',
+				'bridgeRatingsReplacementCostReducer',
+				'bridgeRatingsReducer',
 			],
 			storage,
 		};

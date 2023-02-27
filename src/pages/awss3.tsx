@@ -4,7 +4,8 @@ import Head from 'next/head';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from '../redux/store';
 import { loadNYCBridgeRatings } from '../redux/reducers/nycBridgeRatingsSlice';
-import { bridgeRatingsCsvGridColumnHeader, bridgeRatingsCsvGridRowItems } from '../components/BridgeRatingsCsvGrid';
+import BridgeRatingsCsvGridColumnHeader from '../components/BridgeRatingsCsvGridColumnHeader';
+import BridgeRatingsCsvGridRowItems from '../components/BridgeRatingsCsvGridRowItems';
 import Loading from '../components/Loading';
 
 interface NYCBridgeRatingsPageProps {
@@ -16,7 +17,7 @@ const NYCBridgeRatings: NextPage<NYCBridgeRatingsPageProps> = ({documentTitle}) 
 
 	const loading = useSelector((state: AppState) => state.nycBridgeRatingsReducer.loading);
 	const loaded = useSelector((state: AppState) => state.nycBridgeRatingsReducer.loaded);
-	const data = useSelector((state: AppState) => state.nycBridgeRatingsReducer.dateNowData);
+	const data = useSelector((state: AppState) => state.nycBridgeRatingsReducer.data);
 	const [title, setTitle] = useState('');
 
 	useEffect(() => {
@@ -85,8 +86,8 @@ const NYCBridgeRatings: NextPage<NYCBridgeRatingsPageProps> = ({documentTitle}) 
 						<div className="bg-color-ivory container-padding-border-radius-1">
 							<div className="table-bridge-ratings-wrapper">
 								<div className="table-bridge-ratings-csv-repeat-6 table-bridge-ratings-display">
-									{bridgeRatingsCsvGridColumnHeader(data)}
-									{bridgeRatingsCsvGridRowItems(data)}
+									{BridgeRatingsCsvGridColumnHeader(data)}
+									{BridgeRatingsCsvGridRowItems(data)}
 								</div>
 							</div>
 						</div>
