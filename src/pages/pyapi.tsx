@@ -307,7 +307,6 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 							type="button"
 							className={`btn-primary btn-md ${bridgeRatingsFullLoading ? 'disabled' : ''}`}
 							onClick={() => {
-								console.log('>>>>>>>>>>>> PYAPI > dispatch > fetchBridgeRatingsFull > onClick 00000000000')
 								dispatchLoadBridgeRatingsFull()
 							}}
 							buttonText="Get Full Bridge Ratings"
@@ -346,7 +345,6 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 							type="button"
 							className={`btn-primary btn-md ${bridgeRatingsLoading ? 'disabled' : ''}`}
 							onClick={() => {
-								console.log('>>>>>>>>>>>> PYAPI > dispatch > fetchBridgeRatings > onClick 00000000000')
 								dispatchLoadBridgeRatings()
 							}}
 							buttonText="Get Bridge Ratings"
