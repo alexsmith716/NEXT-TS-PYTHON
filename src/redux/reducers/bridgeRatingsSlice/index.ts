@@ -1,32 +1,32 @@
 import { HYDRATE } from 'next-redux-wrapper';
 import { AnyAction } from 'redux';
 import { ActionLoadPromiseType, HydrateActionType } from '../../../types';
-import { fetchBridgeRatings } from '../../../utils/fetchBridgeRatings';
+import { fetchData } from '../../../utils/fetchAPI';
 
-const NYC_BRIDGE_RATINGS_LOAD = 'NYC_BRIDGE_RATINGS_LOAD';
-const NYC_BRIDGE_RATINGS_LOAD_SUCCESS = 'NYC_BRIDGE_RATINGS_LOAD_SUCCESS';
-const NYC_BRIDGE_RATINGS_LOAD_FAIL = 'NYC_BRIDGE_RATINGS_LOAD_FAIL';
+const BRIDGE_RATINGS_LOAD = 'BRIDGE_RATINGS_LOAD';
+const BRIDGE_RATINGS_LOAD_SUCCESS = 'BRIDGE_RATINGS_LOAD_SUCCESS';
+const BRIDGE_RATINGS_LOAD_FAIL = 'BRIDGE_RATINGS_LOAD_FAIL';
 
 const reducer = (state = {}, action: ActionLoadPromiseType | HydrateActionType) => {
 	switch (action.type) {
 		case HYDRATE:
 			return {
 				...state,
-				...action.payload.nycBridgeRatingsReducer,
+				...action.payload.bridgeRatingsReducer,
 			};
-		case NYC_BRIDGE_RATINGS_LOAD:
+		case BRIDGE_RATINGS_LOAD:
 			return {
 				...state,
 				loading: true,
 			};
-		case NYC_BRIDGE_RATINGS_LOAD_SUCCESS:
+		case BRIDGE_RATINGS_LOAD_SUCCESS:
 			return {
 				...state,
 				loading: false,
 				loaded: true,
 				data: action['result'],
 			};
-		case NYC_BRIDGE_RATINGS_LOAD_FAIL:
+		case BRIDGE_RATINGS_LOAD_FAIL:
 			return {
 				...state,
 				loading: false,
@@ -42,15 +42,15 @@ const reducer = (state = {}, action: ActionLoadPromiseType | HydrateActionType) 
 
 export default reducer;
 
-export function loadNYCBridgeRatings(): AnyAction {
+export function loadBridgeRatings(): AnyAction {
 	return {
-		type: [NYC_BRIDGE_RATINGS_LOAD, NYC_BRIDGE_RATINGS_LOAD_SUCCESS, NYC_BRIDGE_RATINGS_LOAD_FAIL],
-		httpClientPromise: () => fetchBridgeRatings()
+		type: [BRIDGE_RATINGS_LOAD, BRIDGE_RATINGS_LOAD_SUCCESS, BRIDGE_RATINGS_LOAD_FAIL],
+		httpClientPromise: () => fetchData('botosssgetobject/bridgeratings')
 			.then((response) => {
-				return {'data': response.result};
+				return {'data': response};
 			})
 			.catch((error) => {
-				return Promise.reject(error.result);
+				return Promise.reject(error);
 			})
 	};
 };

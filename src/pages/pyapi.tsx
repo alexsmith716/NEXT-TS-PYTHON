@@ -1,23 +1,48 @@
 import type { NextPage } from 'next';
 import React, { useState, useEffect, useMemo } from 'react';
 import Head from 'next/head';
+import { useSelector, useDispatch } from 'react-redux';
 import Button from '../components/Button';
 import Loading from '../components/Loading';
+import { AppState } from '../redux/store';
+import BridgeRatingsCsvGridColumnHeader from '../components/BridgeRatingsCsvGridColumnHeader';
+import BridgeRatingsCsvGridRowItems from '../components/BridgeRatingsCsvGridRowItems';
 import { fetchData } from '../utils/fetchAPI';
-import { TodosType, FibonacciType, NycCountyType, BridgeRatingsFullType, BridgeRatingsType, CurrencyCommasType } from '../types';
+import { TodosType, FibonacciType, NycCountyType, BridgeRatingsFullType, } from '../types';
 import { addCurrencyCommas } from '../utils/addCurrencyCommas';
-import { bridgeRatingsCsvGridColumnHeader, bridgeRatingsCsvGridRowItems } from '../components/BridgeRatingsCsvGrid';
+import { loadBridgeRatingsFull } from '../redux/reducers/bridgeRatingsFullSlice';
+import { loadBridgeRatingsReplacementCost } from '../redux/reducers/bridgeRatingsReplacementCostSlice';
+import { loadBridgeRatings } from '../redux/reducers/bridgeRatingsSlice';
 
 interface PythonAPIProps {
 	documentTitle?: string;
 };
 
 const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
+
+	useEffect(() => {
+		setTitle(documentTitle+':\u0020Python\u0020API');
+	}, [documentTitle]);
+
 	const [title, setTitle] = useState("");
+	const dispatch = useDispatch();
+
+	const loadingBridgeRatingsFull = useSelector((state: AppState) => state.bridgeRatingsFullReducer.loading);
+	const loadedBridgeRatingsFull = useSelector((state: AppState) => state.bridgeRatingsFullReducer.loaded);
+	const dataBridgeRatingsFull = useSelector((state: AppState) => state.bridgeRatingsFullReducer.data);
+
+	const loadingBridgeRatingsReplacementCost = useSelector((state: AppState) => state.bridgeRatingsReplacementCostReducer.loading);
+	const loadedBridgeRatingsReplacementCost = useSelector((state: AppState) => state.bridgeRatingsReplacementCostReducer.loaded);
+	const dataBridgeRatingsReplacementCost = useSelector((state: AppState) => state.bridgeRatingsReplacementCostReducer.data);
+
+	const loadingBridgeRatings = useSelector((state: AppState) => state.bridgeRatingsReducer.loading);
+	const loadedBridgeRatings = useSelector((state: AppState) => state.bridgeRatingsReducer.loaded);
+	const dataBridgeRatings = useSelector((state: AppState) => state.bridgeRatingsReducer.data);
 
 	const [todosLoading, setTodosLoading] = useState(false);
 	const [fibonacciLoading, setFibonacciLoading] = useState(false);
 	const [nycCountyLoading, setNycCountyLoading] = useState(false);
+
 	const [bBReplacementCostLoading, setBBReplacementCostLoading] = useState(false);
 	const [bridgeRatingsFullLoading, setBridgeRatingsFullLoading] = useState(false);
 	const [bridgeRatingsLoading, setBridgeRatingsLoading] = useState(false);
@@ -25,13 +50,6 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 	const [todos, setTodos] = useState<TodosType>();
 	const [fibonacci, setFibonacci] = useState<FibonacciType>();
 	const [nycCounty, setNycCounty] = useState<NycCountyType>();
-	const [bBReplacementCost, setBBReplacementCost] = useState<CurrencyCommasType>();
-	const [bridgeRatingsFull, setBridgeRatingsFull] = useState<BridgeRatingsFullType>();
-	const [bridgeRatings, setBridgeRatings] = useState<BridgeRatingsType>();
-
-	useEffect(() => {
-		setTitle(documentTitle+':\u0020Python\u0020API');
-	}, [documentTitle]);
 
 	useEffect(() => {
 		if(todos) {
@@ -43,25 +61,51 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 		if(nycCounty) {
 			setNycCountyLoading(false)
 		}
-		if(bBReplacementCost) {
-			setBBReplacementCostLoading(false)
-		}
-		if(bridgeRatingsFull) {
+		if(dataBridgeRatingsFull) {
 			setBridgeRatingsFullLoading(false)
 		}
-		if(bridgeRatings) {
+		if(dataBridgeRatingsReplacementCost) {
+			setBBReplacementCostLoading(false)
+		}
+		if(dataBridgeRatings) {
 			setBridgeRatingsLoading(false)
 		}
-	}, [todos, fibonacci, nycCounty, bBReplacementCost, bridgeRatingsFull, bridgeRatings]);
+	}, [ todos, fibonacci, nycCounty, dataBridgeRatingsFull, dataBridgeRatingsReplacementCost, dataBridgeRatings ]);
 
 	function createBridgeRatingsFull(reponse: BridgeRatingsFullType) {
 		return reponse?.data;
 	};
 
-	// will be using SWR caching for `bBReplacementCost`, `bridgeRatingsFull` and `bridgeRatings`
-	const createBRatingsFull = useMemo(() => createBridgeRatingsFull(bridgeRatingsFull!), [bridgeRatingsFull]);
-	const bridgeRCGColumnHeader = useMemo(() => bridgeRatingsCsvGridColumnHeader(bridgeRatings!), [bridgeRatings]);
-	const bridgeRCGRowItems = useMemo(() => bridgeRatingsCsvGridRowItems(bridgeRatings!), [bridgeRatings]);
+	function dispatchLoadBridgeRatingsFull() {
+		if(!loadingBridgeRatingsFull && !loadedBridgeRatingsFull) {
+			setBridgeRatingsFullLoading(true)
+			dispatch(loadBridgeRatingsFull())
+				.then(() => {})
+				.catch(() => {})
+		}
+	};
+
+	function dispatchLoadBridgeRatingsReplacementCost() {
+		if(!loadingBridgeRatingsReplacementCost && !loadedBridgeRatingsReplacementCost) {
+			setBBReplacementCostLoading(true)
+			dispatch(loadBridgeRatingsReplacementCost())
+				.then(() => {})
+				.catch(() => {})
+		}
+	};
+
+	function dispatchLoadBridgeRatings() {
+		if(!loadingBridgeRatings && !loadedBridgeRatings) {
+			setBridgeRatingsLoading(true)
+			dispatch(loadBridgeRatings())
+				.then(() => {})
+				.catch(() => {})
+		}
+	};
+
+	const createBRatingsFull = useMemo(() => createBridgeRatingsFull(dataBridgeRatingsFull!), [dataBridgeRatingsFull]);
+	const bridgeRCGColumnHeader = useMemo(() => BridgeRatingsCsvGridColumnHeader(dataBridgeRatings!), [dataBridgeRatings]);
+	const bridgeRCGRowItems = useMemo(() => BridgeRatingsCsvGridRowItems(dataBridgeRatings!), [dataBridgeRatings]);
 
 	return (
 		<>
@@ -77,6 +121,8 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 				{/* ---------------------------------------------- */}
 
 				<div className="bg-color-ivory container-padding-border-radius-1 overflow-wrap-break-word mb-5">
+
+					{/* ============================================== */}
 
 					<div className="mb-3">
 						<Button
@@ -222,15 +268,8 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 							type="button"
 							className={`btn-primary btn-md ${bBReplacementCostLoading ? 'disabled' : ''}`}
 							onClick={() => {
-								setBBReplacementCostLoading(true)
-								fetchData('botosssgetobject/brooklynbridgesreplacementcost')
-									.then(data => {
-										setBBReplacementCost(data);
-									})
-									.catch(error => {
-										setBBReplacementCost({ 'error': 'Error when attempting to fetch resource.' })
-										console.error(error);
-									})
+								console.log('>>>>>>>>>>>> PYAPI > dispatch > fetchBridgeRatingsReplacementCost > onClick 00000000000')
+								dispatchLoadBridgeRatingsReplacementCost()
 							}}
 							buttonText="Get Brooklyn's Bridges Replacement Cost"
 						/>
@@ -242,18 +281,18 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 
 						{!bBReplacementCostLoading && (
 							<>
-								{bBReplacementCost && bBReplacementCost.error && (
+								{!loadedBridgeRatingsReplacementCost && dataBridgeRatingsReplacementCost && (
 									<div className="mt-1 ml-2">
 										<div className="bg-warn-red container-padding-radius-10 width-fit-content text-color-white">
-											Error when attempting to fetch resource.
+											{dataBridgeRatingsReplacementCost.error}
 										</div>
 									</div>
 								)}
 
-								{bBReplacementCost && bBReplacementCost.data && (
+								{loadedBridgeRatingsReplacementCost && dataBridgeRatingsReplacementCost && (
 									<div className="mt-1 ml-2 container-padding-border-1 width-fit-content">
 										<pre>
-											${addCurrencyCommas(bBReplacementCost)}
+											${addCurrencyCommas(dataBridgeRatingsReplacementCost.data)}
 										</pre>
 									</div>
 								)}
@@ -268,19 +307,11 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 							type="button"
 							className={`btn-primary btn-md ${bridgeRatingsFullLoading ? 'disabled' : ''}`}
 							onClick={() => {
-								setBridgeRatingsFullLoading(true)
-								fetchData('botosssgetobject/streambridgeratings')
-									.then(data => {
-										setBridgeRatingsFull({'data': data});
-									})
-									.catch(error => {
-										setBridgeRatingsFull({ 'error': 'Error when attempting to fetch resource.' })
-										console.error(error);
-									})
+								console.log('>>>>>>>>>>>> PYAPI > dispatch > fetchBridgeRatingsFull > onClick 00000000000')
+								dispatchLoadBridgeRatingsFull()
 							}}
 							buttonText="Get Full Bridge Ratings"
 						/>
-
 						{bridgeRatingsFullLoading && (
 							<div className="mt-1 ml-2">
 								<Loading text="Loading" />
@@ -289,15 +320,15 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 
 						{!bridgeRatingsFullLoading && (
 							<>
-								{bridgeRatingsFull && bridgeRatingsFull.error && (
+								{!loadedBridgeRatingsFull && dataBridgeRatingsFull && (
 									<div className="mt-1 ml-2">
 										<div className="bg-warn-red container-padding-radius-10 width-fit-content text-color-white">
-											Error when attempting to fetch resource.
+											{dataBridgeRatingsFull.error}
 										</div>
 									</div>
 								)}
 
-								{bridgeRatingsFull && bridgeRatingsFull.data && (
+								{loadedBridgeRatingsFull && dataBridgeRatingsFull && (
 									<div className="mt-1 ml-2 container-padding-border-1 container-overflow-height-small">
 										<pre>
 											{createBRatingsFull}
@@ -315,19 +346,11 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 							type="button"
 							className={`btn-primary btn-md ${bridgeRatingsLoading ? 'disabled' : ''}`}
 							onClick={() => {
-								setBridgeRatingsLoading(true)
-								fetchData('botosssgetobject/bridgeratings')
-									.then(data => {
-										setBridgeRatings({'data': data});
-									})
-									.catch(error => {
-										setBridgeRatings({ 'error': 'Error when attempting to fetch resource.' })
-										console.error(error);
-									})
+								console.log('>>>>>>>>>>>> PYAPI > dispatch > fetchBridgeRatings > onClick 00000000000')
+								dispatchLoadBridgeRatings()
 							}}
 							buttonText="Get Bridge Ratings"
 						/>
-
 						{bridgeRatingsLoading && (
 							<div className="mt-1 ml-2">
 								<Loading text="Loading" />
@@ -336,15 +359,15 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 
 						{!bridgeRatingsLoading && (
 							<>
-								{bridgeRatings && bridgeRatings.error && (
+								{!loadedBridgeRatings && dataBridgeRatings && (
 									<div className="mt-1 ml-2">
 										<div className="bg-warn-red container-padding-radius-10 width-fit-content text-color-white">
-											Error when attempting to fetch resource.
+											{dataBridgeRatings.error}
 										</div>
 									</div>
 								)}
 
-								{bridgeRatings && bridgeRatings.data && (
+								{loadedBridgeRatings && dataBridgeRatings && (
 									<div className="mt-1 ml-2 container-border-1-radius-1 container-overflow-height-small">
 										<div>
 											<div className="table-bridge-ratings-wrapper">
@@ -359,6 +382,8 @@ const PythonAPI: NextPage<PythonAPIProps> = ({ documentTitle }) => {
 							</>
 						)}
 					</div>
+
+					{/* ============================================== */}
 
 				</div>
 			</div>

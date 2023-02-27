@@ -1,4 +1,4 @@
-export function fetchData<T = any>(url: string, config?: string): Promise<T> {
+export function fetchData<T = any>(url: string, config?: any): Promise<T> {
 	return fetch('/'+url+`${config?'/'+config:''}`, {
 		method: 'GET',
 	})
@@ -14,8 +14,7 @@ export function fetchData<T = any>(url: string, config?: string): Promise<T> {
 			return res
 		}
 	})
-	.catch((error: Error) => {
-		//throw error;
-		return Promise.reject(error);
+	.catch(() => {
+		return Promise.reject({ error: 'Error when attempting to fetch resource.' });
 	});
 };

@@ -38,7 +38,6 @@ The goal of this project is to work on Next.JS, TypeScript, core Python (data st
 * Cypress Webpack Preprocessor
 
 ## TODO:
-* Use SWR caching for `bBReplacementCost`, `bridgeRatingsFull` and `bridgeRatings`.
 * Component `RickAndMorty` pagination needs several fixes/updates.
 * Remove & replace `styled-components`.
 * Add error handling to SWR hooks and fix the v2 update error.
