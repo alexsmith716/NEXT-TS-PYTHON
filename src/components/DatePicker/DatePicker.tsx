@@ -1,7 +1,13 @@
-import React, { useRef, useState, } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Button from '../Button';
 
+// https://caniuse.com/?search=input%20date
+// Safari on iOS does not support Input Date Object property 'max/min'
+// of course, there are other ways to accomplish all of this
+
 const DatePicker = () => {
+	const [errorField, setErrorField] = useState(false);
+
 	const [errorMessage, setErrorMessage] = useState('');
 	const [inputError, setInputError] = useState(false);
 	const [hoursWorked, setHoursWorked] = useState('');
@@ -18,31 +24,29 @@ const DatePicker = () => {
 	const [punchOutTimeTime, setPunchOutTimeTime] = useState('');
 
 	function calculateUtcDst() {
-		const inYear = Number(punchInDate.split("-")[0]);
-		const inMonth = Number(punchInDate.split("-")[1].replace(/^0+/, ''));
-		const inDay = Number(punchInDate.split("-")[2].replace(/^0+/, ''));
-		const inHour = Number(punchInTimeTime.split(":")[0].replace(/^0+/, ''));
-		const inMinute = Number(punchInTimeTime.split(":")[1].replace(/^0+/, ''));
+		const inYear = Number(punchInDate.split('-')[0]);
+		const inMonth = Number(punchInDate.split('-')[1].replace(/^0+/, ''));
+		const inDay = Number(punchInDate.split('-')[2].replace(/^0+/, ''));
+		const inHour = Number(punchInTimeTime.split(':')[0].replace(/^0+/, ''));
+		const inMinute = Number(punchInTimeTime.split(':')[1].replace(/^0+/, ''));
 		// ------
-		const outYear = Number(punchOutDate.split("-")[0]);
-		const outMonth = Number(punchOutDate.split("-")[1].replace(/^0+/, ''));
-		const outDay = Number(punchOutDate.split("-")[2].replace(/^0+/, ''));
-		const outHour = Number(punchOutTimeTime.split(":")[0].replace(/^0+/, ''));
-		const outMinute = Number(punchOutTimeTime.split(":")[1].replace(/^0+/, ''));
+		const outYear = Number(punchOutDate.split('-')[0]);
+		const outMonth = Number(punchOutDate.split('-')[1].replace(/^0+/, ''));
+		const outDay = Number(punchOutDate.split('-')[2].replace(/^0+/, ''));
+		const outHour = Number(punchOutTimeTime.split(':')[0].replace(/^0+/, ''));
+		const outMinute = Number(punchOutTimeTime.split(':')[1].replace(/^0+/, ''));
 		// ------
 		const utcPunchIn = Date.UTC(inYear,inMonth,inDay,inHour,inMinute);
 		const utcPunchOut = Date.UTC(outYear,outMonth,outDay,outHour,outMinute);
 		const utcDiff = utcPunchOut - utcPunchIn;
 		// ------
-		const dstPunchIn = new Date(inYear,inMonth-1,inDay,inHour,inMinute);
-		const punchInM = dstPunchIn.getTime();
-		const dstPunchOut = new Date(outYear,outMonth-1,outDay,outHour,outMinute);
-		const punchOutM = dstPunchOut.getTime();
+		const punchInM = new Date(inYear,inMonth-1,inDay,inHour,inMinute).getTime();
+		const punchOutM = new Date(outYear,outMonth-1,outDay,outHour,outMinute).getTime();
 
 		return {
 			_utcDiff: utcDiff,
+			_punchInM: punchInM,
 			_punchOutM: punchOutM,
-			_punchInM: punchInM
 		};
 	};
 
@@ -52,11 +56,25 @@ const DatePicker = () => {
 	}
 
 	const handlePunchInDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		if(punchOutDate!==''){
+			if(new Date(e.target.value).getTime() > new Date(punchOutDate).getTime()){
+				setInputError(true);
+				setErrorMessage("Time In Must be Before Time Out");
+				return;
+			}
+		}
 		clearErrors();
 		setPunchInDate(e.target.value);
 	};
 
 	const handlePunchOutDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		if(punchInDate!==''){
+			if(new Date(e.target.value).getTime() < new Date(punchInDate).getTime()){
+				setInputError(true);
+				setErrorMessage("Time Out Must be After Time In");
+				return;
+			}
+		}
 		clearErrors();
 		setPunchOutDate(e.target.value);
 	};
