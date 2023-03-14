@@ -322,10 +322,16 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
   info: GraphQLResolveInfo
 ) => TResult | Promise<TResult>;
 
+/** Mapping of union types */
+export type ResolversUnionTypes = {
+  AddAuthorResponse: ( Author ) | ( AuthorExists );
+  AddBookResponse: ( AuthorNameMissing ) | ( AuthorNotFound ) | ( Book );
+};
+
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  AddAuthorResponse: ResolversTypes['Author'] | ResolversTypes['AuthorExists'];
-  AddBookResponse: ResolversTypes['AuthorNameMissing'] | ResolversTypes['AuthorNotFound'] | ResolversTypes['Book'];
+  AddAuthorResponse: ResolverTypeWrapper<ResolversUnionTypes['AddAuthorResponse']>;
+  AddBookResponse: ResolverTypeWrapper<ResolversUnionTypes['AddBookResponse']>;
   Author: ResolverTypeWrapper<Author>;
   AuthorExists: ResolverTypeWrapper<AuthorExists>;
   AuthorNameMissing: ResolverTypeWrapper<AuthorNameMissing>;
@@ -353,8 +359,8 @@ export type ResolversTypes = {
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  AddAuthorResponse: ResolversParentTypes['Author'] | ResolversParentTypes['AuthorExists'];
-  AddBookResponse: ResolversParentTypes['AuthorNameMissing'] | ResolversParentTypes['AuthorNotFound'] | ResolversParentTypes['Book'];
+  AddAuthorResponse: ResolversUnionTypes['AddAuthorResponse'];
+  AddBookResponse: ResolversUnionTypes['AddBookResponse'];
   Author: Author;
   AuthorExists: AuthorExists;
   AuthorNameMissing: AuthorNameMissing;
