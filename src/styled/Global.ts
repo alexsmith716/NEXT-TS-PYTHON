@@ -48,6 +48,17 @@ export const GlobalStyle = createGlobalStyle`
 		white-space: pre-wrap;
 	}
 
+	.time-container-grid {
+		display: grid;
+		grid-template-columns: repeat(3, auto);
+		grid-gap: 5px;
+	}
+
+	.time-container-grid-styled {
+		border: 2px solid #b0c4de;
+		padding: 16px;
+	}
+
 	.comment-grid-container {
 		display: grid;
 		row-gap: 10px;
@@ -858,6 +869,10 @@ export const GlobalStyle = createGlobalStyle`
 
 	.bg-color-slategray {
 		background-color: #708090;
+	}
+
+	.bg-color-darkseagreen-1 {
+		background-color: #c1ffc1;
 	}
 
 	.bg-color-olivedrab-2 {
