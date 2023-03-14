@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, } from 'react';
 import Button from '../Button';
 
 // https://caniuse.com/?search=input%20date
@@ -6,8 +6,6 @@ import Button from '../Button';
 // of course, there are other ways to accomplish all of this
 
 const DatePicker = () => {
-	const [errorField, setErrorField] = useState(false);
-
 	const [errorMessage, setErrorMessage] = useState('');
 	const [inputError, setInputError] = useState(false);
 	const [hoursWorked, setHoursWorked] = useState('');
