@@ -6,6 +6,7 @@ import DateNow from '../DateNow/DateNow';
 import OpenWeathermap from '../OpenWeathermap/OpenWeathermap';
 import UserAgent from '../UserAgent/UserAgent';
 import Footer from '../Footer/Footer';
+import DatePicker from '../DatePicker/DatePicker';
 
 import { useReactContext } from '../../styled/ThemeContext';
 import { AppTheme } from '../../styled';
@@ -46,9 +47,11 @@ export const Layout = ({ children, title = 'Alex Smith\'s App' }: Props) => {
 
 			{children}
 
-			<DateNow />
+			<DatePicker />
 
 			<OpenWeathermap />
+
+			<DateNow />
 
 			<UserAgent />
 
