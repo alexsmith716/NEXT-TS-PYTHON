@@ -51,13 +51,14 @@ const DatePicker = () => {
 	function clearErrors() {
 		setInputError(false);
 		setErrorMessage('');
+		setHoursWorked('')
 	}
 
 	const handlePunchInDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if(punchOutDate!==''){
 			if(new Date(e.target.value).getTime() > new Date(punchOutDate).getTime()){
 				setInputError(true);
-				setErrorMessage("Time In Must be Before Time Out");
+				setErrorMessage("Time In Must be Earlier than Time Out");
 				return;
 			}
 		}
@@ -69,7 +70,7 @@ const DatePicker = () => {
 		if(punchInDate!==''){
 			if(new Date(e.target.value).getTime() < new Date(punchInDate).getTime()){
 				setInputError(true);
-				setErrorMessage("Time Out Must be After Time In");
+				setErrorMessage("Time Out Must be Later than Time In");
 				return;
 			}
 		}
@@ -108,7 +109,7 @@ const DatePicker = () => {
 				setHoursWorked(worked)
 			} else {
 				setInputError(true);
-				setErrorMessage("Time Out Must be Greater Than Time In");
+				setErrorMessage("Time Out Must be Later than Time In");
 			}
 		} else {
 			setInputError(true);
