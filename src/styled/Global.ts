@@ -59,6 +59,10 @@ export const GlobalStyle = createGlobalStyle`
 		padding: 16px;
 	}
 
+	.formFieldError {
+		border: 2px solid #dc3545;
+	}
+
 	.comment-grid-container {
 		display: grid;
 		row-gap: 10px;
