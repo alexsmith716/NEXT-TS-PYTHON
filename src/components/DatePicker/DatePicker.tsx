@@ -178,7 +178,7 @@ const DatePicker = () => {
 									type="date"
 									aria-label="Time In Day"
 									name="punchInDate"
-									//max={`${punchOutDate ? punchOutDate : ''}`}
+									max={`${punchOutDate ? punchOutDate : ''}`}
 									onChange={handlePunchInDateChange}
 									ref={punchInDateInputRef}
 								/>
@@ -189,7 +189,7 @@ const DatePicker = () => {
 									type="date"
 									aria-label="Time Out Day"
 									name="punchOutDate"
-									//min={`${punchInDate ? punchInDate : ''}`}
+									min={`${punchInDate ? punchInDate : ''}`}
 									onChange={handlePunchOutDateChange}
 									ref={punchOutDateInputRef}
 								/>
