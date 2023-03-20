@@ -36,29 +36,29 @@ const RickAndMorty: NextPage<RickAndMortyPageProps> = ({ documentTitle }) => {
 	} = useQuery(GetAllRickAndMortyCharactersDocument, {
 		notifyOnNetworkStatusChange: true,
 		// ***** still going over this. getting a React warning but setState inside 'onCompleted' should work? *****
-		//	onError: (error) => {
-		//		console.error(error);
-		//		setQueryError(true);
-		//	},
-		//	onCompleted: (data) => {
-		//		setQueryPage(data.characters.info.next);
-		//		setQueryError(false);
-		//		const { characters: { info } } = data;
-		//		if (info) {
-		//			setRickAndMortyCharactersInfo(info);
-		//			if (!info.prev && info.next) {
-		//				setRickAndMortyCharactersCurrentPage(1);
-		//				setCharactersLoaded((info.next - 1)*20);
-		//			} else if (info.next && info.prev) {
-		//				setRickAndMortyCharactersCurrentPage(info.next - 1);
-		//				setCharactersLoaded((info.next - 1)*20);
-		//			} else {
-		//				setRickAndMortyCharactersCurrentPage(info.pages);
-		//				setCharactersLoaded(info.count);
-		//				setAllCharactersLoaded(true);
-		//			}
-		//		}
-		//	},
+		//  onError: (error) => {
+		//    console.error(error);
+		//    setQueryError(true);
+		//  },
+		//  onCompleted: (data) => {
+		//    setQueryPage(data.characters.info.next);
+		//    setQueryError(false);
+		//    const { characters: { info } } = data;
+		//    if (info) {
+		//      setRickAndMortyCharactersInfo(info);
+		//      if (!info.prev && info.next) {
+		//        setRickAndMortyCharactersCurrentPage(1);
+		//        setCharactersLoaded((info.next - 1)*20);
+		//      } else if (info.next && info.prev) {
+		//        setRickAndMortyCharactersCurrentPage(info.next - 1);
+		//        setCharactersLoaded((info.next - 1)*20);
+		//      } else {
+		//        setRickAndMortyCharactersCurrentPage(info.pages);
+		//        setCharactersLoaded(info.count);
+		//        setAllCharactersLoaded(true);
+		//      }
+		//    }
+		//  },
 	});
 
 	const isFetchingMore = networkStatus === NetworkStatus.fetchMore;
@@ -71,7 +71,7 @@ const RickAndMorty: NextPage<RickAndMortyPageProps> = ({ documentTitle }) => {
 	}, [error]);
 
 	useEffect(() => {
-		if(data && data.characters.info) {
+		if(data && data.characters?.info) {
 			setQueryPage(data.characters.info.next);
 			setQueryError(false);
 			const { characters: { info } } = data;
@@ -93,7 +93,7 @@ const RickAndMorty: NextPage<RickAndMortyPageProps> = ({ documentTitle }) => {
 	}, [data]);
 
 	useEffect(() => {
-		setTitle(documentTitle+':\u0020Rick\u0020And\u0020Morty\u0020Query');
+		setTitle(documentTitle+':\u0020graphqlquery');
 	}, [documentTitle]);
 
 	const scrollToTop = () => {
@@ -184,7 +184,7 @@ const RickAndMorty: NextPage<RickAndMortyPageProps> = ({ documentTitle }) => {
 					)}
 
 					<div className="row-grid-rickandmorty">
-						{data && data.characters.results.map((character: Character, index:number) => (
+						{data && data.characters?.results?.map((character: Character, index:number) => (
 							<div key={index} className="mb-3 container-padding-border-radius-2">
 								<div
 									onClick={() => {

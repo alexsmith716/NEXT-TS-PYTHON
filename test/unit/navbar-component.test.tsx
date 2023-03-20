@@ -44,7 +44,7 @@ describe('Navbar Component', () => {
 			</ThemeProvider>
 		);
 
-		expect(await screen.findByText('DarkTheme')).toBeInTheDocument();
+		expect(await screen.findByText('Dark')).toBeInTheDocument();
 
 		for(let i = 0; i < NavLinks.length; i++) {
 			expect(await screen.findByText(`${NavLinks[i].title}`)).toBeInTheDocument();
