@@ -15,7 +15,7 @@ function RickAndMortyCharacter({character, index}: {character: Character; index:
 		const { character: { rating } } = client.readQuery({
 			query: GetRickAndMortyCharacterStarRatingDocument,
 			variables: { id: character.id },
-		});
+		}) || {"character": {"rating": 0}};
 		setTheStarRating(rating);
 	}, [client, character.id]);
 
