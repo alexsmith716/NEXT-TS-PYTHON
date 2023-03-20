@@ -141,8 +141,7 @@ const DatePicker = () => {
 	};
 
 	return (
-		<div className="container">
-
+		<div className="container" data-testid="datepicker-component">
 			<div className="flex-column align-items-center mb-5 ">
 
 				<div className="time-container-grid-styled bg-color-darkseagreen-1 flex-column align-items-center">

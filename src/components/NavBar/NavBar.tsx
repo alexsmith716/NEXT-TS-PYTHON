@@ -18,12 +18,8 @@ const NavBar = () => {
 		setActiveRoute(location);
 	}, [location]);
 
-	//const memoizedValue = useMemo(() => {
-	//  return location
-	//}, [location]);
-
 	return (
-		<Styles.NavBar>
+		<Styles.NavBar data-testid="navbar-component">
 			<div className="container">
 				<Styles.Expand>
 					<Styles.NavBarBrandLink href="/" passHref data-testid="navbar-brand-link" onClick={() => setClicked(false)}>

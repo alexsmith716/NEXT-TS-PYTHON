@@ -8,7 +8,7 @@ const UserAgent = () => {
 	const isBot = useSelector((state: AppState) => state.userAgentReducer.isBot);
 
 	return (
-		<div className="container">
+		<div className="container" data-testid="useragent-component">
 			<div className="flex-column align-items-center mb-5">
 				<Styles.UserAgentStyled className="flex-column align-items-center">
 

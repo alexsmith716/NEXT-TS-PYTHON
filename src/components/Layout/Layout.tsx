@@ -51,9 +51,9 @@ export const Layout = ({ children, title = 'Alex Smith\'s App' }: Props) => {
 
 			<OpenWeathermap />
 
-			<DateNow />
-
 			<UserAgent />
+
+			<DateNow />
 
 			<Footer />
 		</ThemeProvider>

@@ -45,7 +45,7 @@ const OpenWeathermap = () => {
 	};
 
 	return (
-		<div className="container">
+		<div className="container" data-testid="openweathermap-component">
 			<Styles.OpenWeathermapContainerBgColor className="flex-column align-items-center mb-5">
 				<Styles.OpenWeathermapContainer className="flex-column align-items-center">
 					{/* (>>>>>>>>>>>>>>>>>>>>>> LOADING >>>>>>>>>>>>>>>>>>>>>>>>) */}

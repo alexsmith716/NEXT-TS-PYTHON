@@ -27,7 +27,7 @@ export default function Home() {
 	}, []);
 
 	return (
-		<>
+		<div data-testid="home-component">
 			<Styles.Masthead className="mb-5">
 				<div className="container">
 					<Styles.MastheadHeadingOne>Alex Smith&apos;s App</Styles.MastheadHeadingOne>
@@ -100,6 +100,6 @@ export default function Home() {
 					</div>
 				</div>
 			</div>
-		</>
+		</div>
 	)
 }

@@ -14,7 +14,7 @@ const DateNow = () => {
 	const data = useSelector((state: AppState) => state.dateNowReducer.dateNowData);
 
 	return (
-		<div className="container">
+		<div className="container" data-testid="datenow-component">
 			<Styles.DateNowContainerBgColor className="flex-column align-items-center mb-5">
 				<Styles.DateNowContainer className="flex-column align-items-center">
 					{/* (>>>>>>>>>>>>>>>>>>>>>> LOADING >>>>>>>>>>>>>>>>>>>>>>>>) */}
