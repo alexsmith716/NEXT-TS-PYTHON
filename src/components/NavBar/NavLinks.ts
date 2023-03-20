@@ -10,12 +10,12 @@ export const NavLinks = [
 		linkType: 'navLink',
 	},
 	{
-		title: 'SWR',
+		title: 'SwrGithubGists',
 		url: 'swrgithubgists',
 		linkType: 'navLink',
 	},
 	{
-		title: 'SWRInfinite',
+		title: 'AboutSwrInfinite',
 		url: 'aboutswrinfinite',
 		linkType: 'navLink',
 	},

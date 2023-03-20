@@ -2,7 +2,7 @@ import * as Styles from './styles';
 
 export default function Footer() {
 	return (
-		<Styles.FooterStyled>
+		<Styles.FooterStyled data-testid="footer-component">
 			<div className="container">
 				<Styles.FooterContainer className="flex-column align-items-center pt-4 pb-4">
 					<div className="flex-row align-items-center">
